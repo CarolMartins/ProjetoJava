@@ -44,7 +44,6 @@ public class Marca extends javax.swing.JInternalFrame {
         jBSalvar = new javax.swing.JButton();
         jBEditar = new javax.swing.JButton();
         jBCancelar = new javax.swing.JButton();
-        jBPesquisar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableMarca = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
@@ -104,14 +103,6 @@ public class Marca extends javax.swing.JInternalFrame {
             }
         });
 
-        jBPesquisar.setText("Pesquisar");
-        jBPesquisar.setPreferredSize(new java.awt.Dimension(75, 23));
-        jBPesquisar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBPesquisarActionPerformed(evt);
-            }
-        });
-
         jTableMarca.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jTableMarca.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -134,6 +125,16 @@ public class Marca extends javax.swing.JInternalFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        jTableMarca.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableMarcaMouseClicked(evt);
+            }
+        });
+        jTableMarca.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTableMarcaKeyReleased(evt);
             }
         });
         jScrollPane2.setViewportView(jTableMarca);
@@ -184,9 +185,8 @@ public class Marca extends javax.swing.JInternalFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jBCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jBPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jBExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jBExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(93, 93, 93))))
                 .addGap(46, 46, 46))
         );
         jPanel1Layout.setVerticalGroup(
@@ -206,11 +206,10 @@ public class Marca extends javax.swing.JInternalFrame {
                     .addComponent(jBSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -296,9 +295,13 @@ public class Marca extends javax.swing.JInternalFrame {
         } 
     }//GEN-LAST:event_jBExcluirActionPerformed
 
-    private void jBPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBPesquisarActionPerformed
-        habilitar();
-    }//GEN-LAST:event_jBPesquisarActionPerformed
+    private void jTableMarcaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTableMarcaKeyReleased
+        pegaLinhaSelecionada();
+    }//GEN-LAST:event_jTableMarcaKeyReleased
+
+    private void jTableMarcaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMarcaMouseClicked
+        pegaLinhaSelecionada();
+    }//GEN-LAST:event_jTableMarcaMouseClicked
 
     /**
      * @param args the command line arguments
@@ -310,7 +313,6 @@ public class Marca extends javax.swing.JInternalFrame {
     private javax.swing.JButton jBEditar;
     private javax.swing.JButton jBExcluir;
     private javax.swing.JButton jBNovo;
-    private javax.swing.JButton jBPesquisar;
     private javax.swing.JButton jBSalvar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
@@ -331,7 +333,7 @@ public class Marca extends javax.swing.JInternalFrame {
       jBSalvar.setEnabled(false);
       jBExcluir.setEnabled(true);
       jBCancelar.setEnabled(false);
-      jBPesquisar.setEnabled(true);
+     
     }
      public void habilitar(){
       jTextId.setEnabled(false);
@@ -341,7 +343,7 @@ public class Marca extends javax.swing.JInternalFrame {
       jBSalvar.setEnabled(true);
       jBExcluir.setEnabled(false);
       jBCancelar.setEnabled(true);
-      jBPesquisar.setEnabled(false);
+      
     }
      
      public void preencherTabela(){

@@ -108,7 +108,7 @@ public class TelaPrincipal extends javax.swing.JFrame{
         jDesktopPaneLayout.setVerticalGroup(
             jDesktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPaneLayout.createSequentialGroup()
-                .addContainerGap(165, Short.MAX_VALUE)
+                .addContainerGap(164, Short.MAX_VALUE)
                 .addGroup(jDesktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelSejaBemVindo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -127,7 +127,7 @@ public class TelaPrincipal extends javax.swing.JFrame{
         );
 
         jMenuBar1.setBackground(new java.awt.Color(217, 233, 251));
-        jMenuBar1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(23, 23, 127), null));
+        jMenuBar1.setBorder(null);
         jMenuBar1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         jMenuCadastrar.setBackground(new java.awt.Color(221, 231, 229));
