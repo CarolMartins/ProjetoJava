@@ -47,6 +47,11 @@ public class Cargo {
     public void setComissao(Double comissao) {
         this.comissao = comissao;
     }
+
+    @Override
+    public String toString() {
+        return this.getDescricao();
+    }
     
     
     

@@ -21,6 +21,12 @@ public class Cliente extends Pessoa{
     public void setSituacaoCliente(Boolean situacaoCliente) {
         this.situacaoCliente = situacaoCliente;
     }
+
+    @Override
+    public String toString() {
+        return this.getNome();
+    }
+    
     
     
     

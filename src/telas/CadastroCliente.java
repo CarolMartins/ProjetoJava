@@ -1,19 +1,39 @@
 package telas;
 
+import Classes.Cargo;
+import Classes.Cidade;
+import Classes.Cliente;
+import Classes.Estado;
+import Classes.Funcionario;
 import javax.swing.JOptionPane;
 import Classes.Pessoa;
+import Classes.TipoLogradouro;
+import conexao.CargoDAO;
+import conexao.CidadeDAO;
+import conexao.ClienteDAO;
+import conexao.EstadoDAO;
+import conexao.FuncionarioDAO;
+import conexao.TipoLogradouroDAO;
+import java.util.Date;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 
 /*
  
  * @author Carol
  */
 public class CadastroCliente extends javax.swing.JInternalFrame {
-
+    
+    String op = "";
     Pessoa p = new Pessoa() {};
     
     public CadastroCliente() {
         initComponents();
         desabilitarCampos();
+        carregartipoLogradouro();
+        carregarEstado();
+        
+        
     }
 
     /**
@@ -26,8 +46,7 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         buttonSexo = new javax.swing.ButtonGroup();
-        buttonGroup1 = new javax.swing.ButtonGroup();
-        buttonGroup2 = new javax.swing.ButtonGroup();
+        buttonSituacaoCliente = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -65,7 +84,7 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
         jComboCidade = new javax.swing.JComboBox<>();
         jLabel21 = new javax.swing.JLabel();
         jComboEstado = new javax.swing.JComboBox<>();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jDateDataCadastro = new com.toedter.calendar.JDateChooser();
         jDataNascimento = new com.toedter.calendar.JDateChooser();
         jButtonNovo = new javax.swing.JButton();
         jButtonCancelar = new javax.swing.JButton();
@@ -180,6 +199,12 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
         jLabel21.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel21.setText("Estado");
 
+        jComboEstado.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboEstadoItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -260,6 +285,8 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
                 .addGap(60, 60, 60))
         );
 
+        jDateDataCadastro.setEnabled(false);
+
         jButtonNovo.setText("Novo");
         jButtonNovo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -308,10 +335,12 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(23, 23, 127), null), "Situação do Cliente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12), new java.awt.Color(23, 23, 127))); // NOI18N
 
         jRadioAtivo.setBackground(new java.awt.Color(217, 233, 251));
+        buttonSituacaoCliente.add(jRadioAtivo);
         jRadioAtivo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jRadioAtivo.setText("Ativo");
 
         jRadioBloqueado.setBackground(new java.awt.Color(217, 233, 251));
+        buttonSituacaoCliente.add(jRadioBloqueado);
         jRadioBloqueado.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jRadioBloqueado.setText("Bloqueado");
 
@@ -361,7 +390,7 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
                             .addGap(419, 419, 419)
                             .addComponent(jLabel1)
                             .addGap(4, 4, 4)
-                            .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jDateDataCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGap(10, 10, 10)
                             .addComponent(jLabel2)
@@ -435,7 +464,7 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(5, 5, 5)
                         .addComponent(jLabel1))
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jDateDataCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3)
@@ -525,6 +554,40 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
         desabilitarCampos();
+        desabilitarCampos();
+        Cliente c = new Cliente();
+        c.setNome(jTextNome.getText());
+        c.setDatanascimento(jDataNascimento.getDate());
+        if(jRadioMasculino.isSelected())
+            c.setSexo("M");
+        else if (jRadioFeminino.isSelected())
+            c.setSexo("F");
+        c.setCpf(jFCpf.getText());
+        c.setRg(jTextRg.getText());
+        c.setTelefoneresidencial(jFTelefone1.getText());
+        c.setTelefoneCelular(jFTelefone2.getText());
+        c.setEmail(jTextEmail.getText());
+        c.setCep(jFCep.getText());
+        c.setTipoLogradouro((TipoLogradouro)jComboTipo.getSelectedItem());
+        c.setLogradouro(jTextLogradouro.getText());
+        c.setNumero(Integer.parseInt(jTextNumero.getText()));
+        c.setComplemento(jTextComplemento.getText());
+        c.setBairro(jTextBairro.getText());
+        c.setCidade((Cidade)jComboCidade.getSelectedItem());
+        c.setEstado((Estado)jComboEstado.getSelectedItem());
+        if(jRadioAtivo.isSelected())
+            c.setSituacaoCliente(true);
+        else if (jRadioBloqueado.isSelected())
+            c.setSituacaoCliente(false);
+        c.setObservacoes(jTextObservacao.getText()); 
+        
+        ClienteDAO clienteDAO = new ClienteDAO();
+        //if(op.equals("novo"))
+            //clienteDAO.salvar(c);
+        //else
+            //funcionarioDAO.editar(funcionario);
+        
+        JOptionPane.showMessageDialog(this, "Funcionário Gravado com sucesso!");
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
@@ -533,6 +596,8 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
 
     private void jButtonNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNovoActionPerformed
         habilitarCampos();
+        jDateDataCadastro.setDate(new Date());
+        op = "novo";
     }//GEN-LAST:event_jButtonNovoActionPerformed
 
     private void jTextIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextIdActionPerformed
@@ -549,11 +614,16 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
         jButtonPesquisar.setEnabled(false);
     }//GEN-LAST:event_jButtonPesquisarActionPerformed
 
+    private void jComboEstadoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboEstadoItemStateChanged
+       Estado estado = (Estado) jComboEstado.getSelectedItem();
+        if(estado != null)
+            carregarCidade(estado.getId());
+    }//GEN-LAST:event_jComboEstadoItemStateChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonSexo;
+    private javax.swing.ButtonGroup buttonSituacaoCliente;
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonEdtar;
     private javax.swing.JButton jButtonExcluir;
@@ -564,7 +634,7 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> jComboEstado;
     private javax.swing.JComboBox<String> jComboTipo;
     private com.toedter.calendar.JDateChooser jDataNascimento;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private com.toedter.calendar.JDateChooser jDateDataCadastro;
     private javax.swing.JFormattedTextField jFCep;
     private javax.swing.JFormattedTextField jFCpf;
     private javax.swing.JFormattedTextField jFTelefone1;
@@ -651,7 +721,7 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
         jButtonSalvar.setEnabled(true);
         jButtonEdtar.setEnabled(true);
         jButtonExcluir.setEnabled(false);
-        jDateChooser1.setEnabled(true);
+        jDateDataCadastro.setEnabled(true);
         jButtonPesquisar.setEnabled(false);
         jTextObservacao.setEnabled(true);
         jRadioAtivo.setEnabled(true);
@@ -683,13 +753,55 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
         jButtonSalvar.setEnabled(false);
         jButtonEdtar.setEnabled(false);
         jButtonExcluir.setEnabled(false);
-        jDateChooser1.setEnabled(false);
+        jDateDataCadastro.setEnabled(false);
         jTextObservacao.setEnabled(false);
         jButtonPesquisar.setEnabled(true);
         jRadioAtivo.setEnabled(false);
         jRadioBloqueado.setEnabled(false);
+ }
+    public void limparCampos(){
+        jTextId.setText("");
+        jTextNome.setText("");
+        jDataNascimento.setDate(null);
+        jRadioFeminino.setText("");
+        jRadioMasculino.setText("");
+        jFCpf.setText("");
+        jTextRg.setText("");
+        jFTelefone1.setText("");
+        jFTelefone2.setText("");
+        jTextEmail.setText("");
+        jFCep.setText("");
+        jComboTipo.setSelectedItem(null);
+        jTextLogradouro.setText("");
+        jTextNumero.setText("");
+        jTextComplemento.setText("");
+        jTextBairro.setText("");
+        jComboCidade.setSelectedItem(null);
+        jComboEstado.setSelectedItem(null);
+        
+ }
+    public void carregartipoLogradouro(){
+       TipoLogradouroDAO logradouroDAO = new TipoLogradouroDAO();
+       List <TipoLogradouro> itens = logradouroDAO.listarTipoLogradouro();
+       //adiciona o primeiro vazio
+       itens.add(0, null);
+       jComboTipo.setModel(new DefaultComboBoxModel(itens.toArray()));
+    }
 
-
+     public void carregarEstado(){
+       EstadoDAO estadoDAO = new EstadoDAO();
+       List <Estado> itens = estadoDAO.listarEstado();
+       //adiciona o primeiro vazio
+       itens.add(0, null);
+       jComboEstado.setModel(new DefaultComboBoxModel(itens.toArray()));
+    }
+     
+     public void carregarCidade(int idEstado){
+       CidadeDAO cidadeDAO = new CidadeDAO();
+       List <Cidade> itens = cidadeDAO.listarCidade(idEstado);
+       //adiciona o primeiro vazio
+       itens.add(0, null);
+       jComboCidade.setModel(new DefaultComboBoxModel(itens.toArray()));
     }
     
 }

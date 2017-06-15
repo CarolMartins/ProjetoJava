@@ -20,6 +20,7 @@ public class CadastroCargoFuncionario extends javax.swing.JInternalFrame {
      */
     public CadastroCargoFuncionario() {
         initComponents();
+        
     }
 
     /**
@@ -230,7 +231,7 @@ public class CadastroCargoFuncionario extends javax.swing.JInternalFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        setBounds(0, 0, 589, 360);
+        setBounds(300, 150, 589, 360);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalvarActionPerformed

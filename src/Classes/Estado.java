@@ -38,6 +38,11 @@ public class Estado {
     public void setNomeEstado(String nomeEstado) {
         this.nomeEstado = nomeEstado;
     }
+
+    @Override
+    public String toString() {
+        return this.sigla;
+    }
     
     
     

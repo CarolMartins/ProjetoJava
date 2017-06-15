@@ -164,6 +164,11 @@ public class Fornecedor {
     public void setSituacaoFornecedor(Boolean situacaoFornecedor) {
         this.situacaoFornecedor = situacaoFornecedor;
     }
+
+    @Override
+    public String toString() {
+        return this.razaoSocial;
+    }
     
     
 }

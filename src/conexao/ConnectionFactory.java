@@ -15,7 +15,7 @@ public class ConnectionFactory {
     private String driver = "com.mysql.jdbc.Driver";
     private String url = "jdbc:mysql://localhost/projetojava";
     private String user = "root";
-    private String pass = "";
+    private String pass = "123456";
     
     public Connection getConnection(){
        

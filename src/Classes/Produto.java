@@ -146,6 +146,11 @@ public class Produto {
     public void setEstoqueAtual(int estoqueAtual) {
         this.estoqueAtual = estoqueAtual;
     }
+
+    @Override
+    public String toString() {
+        return this.descricaoProduto;
+    }
    
     
     

@@ -66,10 +66,9 @@ public class TipoLogradouroDAO {
             ps.setInt (3, tipoLogradouro.getId());
             ps.executeUpdate();
             conn.close();
-            JOptionPane.showMessageDialog(null, "atualizado com Sucesso!");
-        } catch (SQLException ex) {
+            } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "Erro ao atualizar " + ex);
-            }           
+              }           
     }
     
     
@@ -79,7 +78,7 @@ public class TipoLogradouroDAO {
             PreparedStatement ps = null;
             ResultSet rsCodigo = null;
             
-            String sql = "select * from tipologradouro";
+            String sql = "select * from tipologradouro order by Sigla asc";
             ps = conn.prepareStatement(sql); 
             rsCodigo = ps.executeQuery();
             
@@ -92,7 +91,7 @@ public class TipoLogradouroDAO {
                 logradouro.add(tipoLogradouro);
                 
             }
-            
+            conn.close();
         } catch (SQLException ex) {
             throw new RuntimeException ("Erro SQL: " + ex);
         }

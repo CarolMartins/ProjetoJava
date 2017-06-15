@@ -1,5 +1,6 @@
 package telas;
 
+import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,6 +30,8 @@ public class TelaPrincipal extends javax.swing.JFrame{
     GrupoProdutos grupo;
     Pagamento pagamento;
     ConsultaVendas consultar;
+    
+    
 
     /**
      * Creates new form TelaPrincipal
@@ -89,7 +92,7 @@ public class TelaPrincipal extends javax.swing.JFrame{
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/LogoAzul.png"))); // NOI18N
 
         jLabelSejaBemVindo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabelSejaBemVindo.setText("SEJA BEM-VINDO, ");
+        jLabelSejaBemVindo.setText("SEJA BEM-VINDO");
 
         jDesktopPane.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane.setLayer(jLabelSejaBemVindo, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -108,7 +111,7 @@ public class TelaPrincipal extends javax.swing.JFrame{
         jDesktopPaneLayout.setVerticalGroup(
             jDesktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPaneLayout.createSequentialGroup()
-                .addContainerGap(165, Short.MAX_VALUE)
+                .addContainerGap(164, Short.MAX_VALUE)
                 .addGroup(jDesktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelSejaBemVindo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -126,8 +129,8 @@ public class TelaPrincipal extends javax.swing.JFrame{
             .addComponent(jDesktopPane)
         );
 
-        jMenuBar1.setBackground(new java.awt.Color(217, 233, 251));
-        jMenuBar1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(23, 23, 127), null));
+        jMenuBar1.setBackground(new java.awt.Color(185, 209, 238));
+        jMenuBar1.setBorder(null);
         jMenuBar1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         jMenuCadastrar.setBackground(new java.awt.Color(221, 231, 229));
@@ -451,7 +454,7 @@ public class TelaPrincipal extends javax.swing.JFrame{
     private javax.swing.JMenu jProduto;
     // End of variables declaration//GEN-END:variables
 
-
+    
     
 
 }

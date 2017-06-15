@@ -29,6 +29,11 @@ public class GrupoProduto {
     public void setGrupo(String grupo) {
         this.grupo = grupo;
     }
+
+    @Override
+    public String toString() {
+        return this.grupo;
+    }
     
     
 }

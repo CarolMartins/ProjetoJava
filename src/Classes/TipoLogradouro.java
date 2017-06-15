@@ -38,7 +38,12 @@ public class TipoLogradouro {
     public void setNome(String nome) {
         this.descricao = nome;
     }
+
+    @Override
+    public String toString() {
+        return this.sigla;
+    }
     
-    
+   
     
 }

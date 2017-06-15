@@ -5,17 +5,24 @@
  */
 package telas;
 
+import Classes.MarcaProduto;
+import conexao.MarcaDAO;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author Carol
  */
 public class Marca extends javax.swing.JInternalFrame {
-
-    /**
-     * Creates new form CargoFuncionario
-     */
+    
+    private String op = "";
+    
+    MarcaDAO mDAO = new MarcaDAO();
+    
     public Marca() {
         initComponents();
+        desabilitar();
+        preencherTabela();
     }
 
     /**
@@ -31,17 +38,16 @@ public class Marca extends javax.swing.JInternalFrame {
         jTable1 = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jBNome = new javax.swing.JButton();
+        jTextMarca = new javax.swing.JTextField();
+        jBNovo = new javax.swing.JButton();
         jBSalvar = new javax.swing.JButton();
         jBEditar = new javax.swing.JButton();
         jBCancelar = new javax.swing.JButton();
-        jBExcluir = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        jTableMarca = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jBExcluir1 = new javax.swing.JButton();
+        jTextId = new javax.swing.JTextField();
+        jBExcluir = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -65,22 +71,39 @@ public class Marca extends javax.swing.JInternalFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel1.setText("Marca");
 
-        jBNome.setText("Novo");
-        jBNome.setPreferredSize(new java.awt.Dimension(75, 23));
+        jBNovo.setText("Novo");
+        jBNovo.setPreferredSize(new java.awt.Dimension(75, 23));
+        jBNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBNovoActionPerformed(evt);
+            }
+        });
 
         jBSalvar.setText("Salvar");
         jBSalvar.setPreferredSize(new java.awt.Dimension(75, 23));
+        jBSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBSalvarActionPerformed(evt);
+            }
+        });
 
         jBEditar.setText("Editar");
         jBEditar.setPreferredSize(new java.awt.Dimension(75, 23));
+        jBEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBEditarActionPerformed(evt);
+            }
+        });
 
         jBCancelar.setText("Cancelar");
+        jBCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBCancelarActionPerformed(evt);
+            }
+        });
 
-        jBExcluir.setText("Pesquisar");
-        jBExcluir.setPreferredSize(new java.awt.Dimension(75, 23));
-
-        jTable2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        jTableMarca.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jTableMarca.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -103,16 +126,31 @@ public class Marca extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable2);
-        if (jTable2.getColumnModel().getColumnCount() > 0) {
-            jTable2.getColumnModel().getColumn(0).setMaxWidth(50);
+        jTableMarca.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableMarcaMouseClicked(evt);
+            }
+        });
+        jTableMarca.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTableMarcaKeyReleased(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jTableMarca);
+        if (jTableMarca.getColumnModel().getColumnCount() > 0) {
+            jTableMarca.getColumnModel().getColumn(0).setMaxWidth(50);
         }
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel4.setText("ID");
 
-        jBExcluir1.setText("Excluir");
-        jBExcluir1.setPreferredSize(new java.awt.Dimension(75, 23));
+        jBExcluir.setText("Excluir");
+        jBExcluir.setPreferredSize(new java.awt.Dimension(75, 23));
+        jBExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBExcluirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -124,15 +162,15 @@ public class Marca extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextId, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addComponent(jTextField1)))
+                            .addComponent(jTextMarca)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jBNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jBNovo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jBSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -140,9 +178,8 @@ public class Marca extends javax.swing.JInternalFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jBCancelar)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jBExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jBExcluir1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jBExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(93, 93, 93))))
                 .addGap(46, 46, 46))
         );
         jPanel1Layout.setVerticalGroup(
@@ -154,19 +191,18 @@ public class Marca extends javax.swing.JInternalFrame {
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jBNome, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBExcluir1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jBExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -183,6 +219,78 @@ public class Marca extends javax.swing.JInternalFrame {
         setBounds(0, 0, 564, 331);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jBNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBNovoActionPerformed
+        habilitar();
+        op = "novo";
+        limpar();
+    }//GEN-LAST:event_jBNovoActionPerformed
+
+    private void jBSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalvarActionPerformed
+      desabilitar();
+      MarcaProduto marca = new MarcaProduto();
+      marca.setMarca(jTextMarca.getText());
+      
+      MarcaDAO m = new MarcaDAO();
+      
+      if (op.equals("novo")){
+          m.salvar(marca);
+          jTextId.setText(marca.getId()+ "");
+      }
+      else {
+          marca.setId(Integer.parseInt(jTextId.getText()));
+          m.editar(marca);
+      }
+      
+        JOptionPane.showMessageDialog(null, "Gravado com Sucesso!");
+        
+        preencherTabela();
+    }//GEN-LAST:event_jBSalvarActionPerformed
+
+    private void jBEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEditarActionPerformed
+      if (jTableMarca.getSelectedRow () != -1){
+            
+                preencherTabela();
+                
+                op = "editar";
+                
+                habilitar();
+        }
+    }//GEN-LAST:event_jBEditarActionPerformed
+
+    private void jBCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCancelarActionPerformed
+       limpar();
+       desabilitar();
+    }//GEN-LAST:event_jBCancelarActionPerformed
+
+    private void jBExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBExcluirActionPerformed
+        if((jTableMarca.getSelectedRow() !=-1)){
+            if (JOptionPane.showConfirmDialog(this, "Deseja excluir?", "Exclusão", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+
+                MarcaProduto marca = new MarcaProduto();
+                MarcaDAO marcaDAO = new MarcaDAO();
+
+                marca.setId((int) jTableMarca.getValueAt(jTableMarca.getSelectedRow(), 0));
+                   
+                marcaDAO.excluir(marca);
+                
+                limpar();
+                preencherTabela();
+
+            } 
+        }else{
+            JOptionPane.showMessageDialog(this, "Selecione um item para excluir");
+        
+    }  
+    }//GEN-LAST:event_jBExcluirActionPerformed
+
+    private void jTableMarcaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTableMarcaKeyReleased
+        pegaLinhaSelecionada();
+    }//GEN-LAST:event_jTableMarcaKeyReleased
+
+    private void jTableMarcaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMarcaMouseClicked
+        pegaLinhaSelecionada();
+    }//GEN-LAST:event_jTableMarcaMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -192,8 +300,7 @@ public class Marca extends javax.swing.JInternalFrame {
     private javax.swing.JButton jBCancelar;
     private javax.swing.JButton jBEditar;
     private javax.swing.JButton jBExcluir;
-    private javax.swing.JButton jBExcluir1;
-    private javax.swing.JButton jBNome;
+    private javax.swing.JButton jBNovo;
     private javax.swing.JButton jBSalvar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
@@ -201,8 +308,55 @@ public class Marca extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTable jTableMarca;
+    private javax.swing.JTextField jTextId;
+    private javax.swing.JTextField jTextMarca;
     // End of variables declaration//GEN-END:variables
+
+public void desabilitar(){
+      jTextId.setEnabled(false);
+      jTextMarca.setEnabled(false);
+      jBNovo.setEnabled(true);
+      jBEditar.setEnabled(true);
+      jBSalvar.setEnabled(false);
+      jBExcluir.setEnabled(true);
+      jBCancelar.setEnabled(false);
+     
+    }
+     public void habilitar(){
+      jTextId.setEnabled(false);
+      jTextMarca.setEnabled(true);
+      jBNovo.setEnabled(false);
+      jBEditar.setEnabled(false);
+      jBSalvar.setEnabled(true);
+      jBExcluir.setEnabled(false);
+      jBCancelar.setEnabled(true);
+      
+    }
+     
+     public void preencherTabela(){
+         DefaultTableModel model = (DefaultTableModel) jTableMarca.getModel();
+         model.setNumRows(0);
+         MarcaDAO marcaDAO = new MarcaDAO();
+         
+         for (MarcaProduto mp : marcaDAO.listarMarca()){
+             model.addRow(new Object[]{
+                 mp.getId(),
+                 mp.getMarca()
+             });
+         }
+     }
+     
+     public void pegaLinhaSelecionada(){
+         if (jTableMarca.getSelectedRow() != -1){
+             jTextId.setText(jTableMarca.getValueAt(jTableMarca.getSelectedRow(),0).toString());
+             jTextMarca.setText(jTableMarca.getValueAt(jTableMarca.getSelectedRow(),1).toString());
+         }
+     }
+     
+     public void limpar(){
+        jTextId.setText("");
+        jTextMarca.setText(""); 
+    }
+
 }

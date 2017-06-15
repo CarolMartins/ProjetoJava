@@ -29,6 +29,11 @@ public class TipoPagamento {
     public void setTipoPagamento(String tipoPagamento) {
         this.tipoPagamento = tipoPagamento;
     }
+
+    @Override
+    public String toString() {
+        return this.tipoPagamento;
+    }
     
     
     
