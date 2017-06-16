@@ -5,6 +5,11 @@
  */
 package telas;
 
+import Classes.GrupoProduto;
+import conexao.GrupoProdutoDAO;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Carol
@@ -12,11 +17,14 @@ package telas;
 public class GrupoProdutos extends javax.swing.JInternalFrame
 {
 
-    /**
-     * Creates new form CargoFuncionario
-     */
+   private String op = "";
+   
+   GrupoProdutoDAO grupoDAO = new GrupoProdutoDAO();
+   
     public GrupoProdutos() {
         initComponents();
+        desabilitar();
+        preencherTabela();
     }
 
     /**
@@ -32,16 +40,16 @@ public class GrupoProdutos extends javax.swing.JInternalFrame
         jTable1 = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jBNome = new javax.swing.JButton();
+        jtfGrupo = new javax.swing.JTextField();
+        jBNovo = new javax.swing.JButton();
         jBSalvar = new javax.swing.JButton();
         jBEditar = new javax.swing.JButton();
         jBCancelar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        jTableGrupo = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jBExcluir1 = new javax.swing.JButton();
+        jtfID = new javax.swing.JTextField();
+        jBExcluir = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -59,26 +67,47 @@ public class GrupoProdutos extends javax.swing.JInternalFrame
         setBackground(new java.awt.Color(221, 231, 229));
         setClosable(true);
         setIconifiable(true);
-        setTitle("Grupo");
+        setResizable(true);
+        setTitle("Grupo Produto");
 
         jPanel1.setBackground(new java.awt.Color(221, 231, 229));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel1.setText("Grupo");
 
-        jBNome.setText("Novo");
-        jBNome.setPreferredSize(new java.awt.Dimension(75, 23));
+        jBNovo.setText("Novo");
+        jBNovo.setPreferredSize(new java.awt.Dimension(75, 23));
+        jBNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBNovoActionPerformed(evt);
+            }
+        });
 
         jBSalvar.setText("Salvar");
         jBSalvar.setPreferredSize(new java.awt.Dimension(75, 23));
+        jBSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBSalvarActionPerformed(evt);
+            }
+        });
 
         jBEditar.setText("Editar");
         jBEditar.setPreferredSize(new java.awt.Dimension(75, 23));
+        jBEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBEditarActionPerformed(evt);
+            }
+        });
 
         jBCancelar.setText("Cancelar");
+        jBCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBCancelarActionPerformed(evt);
+            }
+        });
 
-        jTable2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        jTableGrupo.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jTableGrupo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -101,16 +130,31 @@ public class GrupoProdutos extends javax.swing.JInternalFrame
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable2);
-        if (jTable2.getColumnModel().getColumnCount() > 0) {
-            jTable2.getColumnModel().getColumn(0).setMaxWidth(50);
+        jTableGrupo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableGrupoMouseClicked(evt);
+            }
+        });
+        jTableGrupo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTableGrupoKeyReleased(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jTableGrupo);
+        if (jTableGrupo.getColumnModel().getColumnCount() > 0) {
+            jTableGrupo.getColumnModel().getColumn(0).setMaxWidth(50);
         }
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel4.setText("ID");
 
-        jBExcluir1.setText("Excluir");
-        jBExcluir1.setPreferredSize(new java.awt.Dimension(75, 23));
+        jBExcluir.setText("Excluir");
+        jBExcluir.setPreferredSize(new java.awt.Dimension(75, 23));
+        jBExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBExcluirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -124,11 +168,11 @@ public class GrupoProdutos extends javax.swing.JInternalFrame
                         .addGap(39, 39, 39)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jtfID, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
-                        .addComponent(jTextField1))
+                        .addComponent(jtfGrupo))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jBNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jBNovo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(6, 6, 6)
                         .addComponent(jBSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(6, 6, 6)
@@ -136,7 +180,7 @@ public class GrupoProdutos extends javax.swing.JInternalFrame
                         .addGap(6, 6, 6)
                         .addComponent(jBCancelar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jBExcluir1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jBExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(93, 93, 93))
         );
@@ -149,16 +193,16 @@ public class GrupoProdutos extends javax.swing.JInternalFrame
                     .addComponent(jLabel1))
                 .addGap(6, 6, 6)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jtfID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtfGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jBNome, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jBCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jBExcluir1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jBExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(11, 11, 11)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -177,6 +221,73 @@ public class GrupoProdutos extends javax.swing.JInternalFrame
         setBounds(0, 0, 477, 348);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jBNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBNovoActionPerformed
+        habilitar();
+        op = "novo";
+        limpar();
+    }//GEN-LAST:event_jBNovoActionPerformed
+
+    private void jBSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalvarActionPerformed
+      desabilitar();
+      GrupoProduto grupo = new GrupoProduto();
+      grupo.setGrupo(jtfGrupo.getText());
+      
+      GrupoProdutoDAO g = new GrupoProdutoDAO();
+      
+      if (op.equals("novo")){
+          g.salvar(grupo);
+          jtfID.setText(grupo.getId()+ "");
+      }
+      else {
+          grupo.setId(Integer.parseInt(jtfID.getText()));
+          g.editar(grupo);
+      }
+        JOptionPane.showMessageDialog(null, "Gravado com Sucesso!");     
+        preencherTabela();
+    }//GEN-LAST:event_jBSalvarActionPerformed
+
+    private void jBEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEditarActionPerformed
+        if (jTableGrupo.getSelectedRow () != -1){
+            
+                preencherTabela();
+                op = "editar";
+                habilitar();
+        }
+    }//GEN-LAST:event_jBEditarActionPerformed
+
+    private void jBCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCancelarActionPerformed
+        limpar();
+        desabilitar();
+        pegaLinhaSelecionada();
+    }//GEN-LAST:event_jBCancelarActionPerformed
+
+    private void jBExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBExcluirActionPerformed
+       if((jTableGrupo.getSelectedRow() !=-1)){
+            if (JOptionPane.showConfirmDialog(this, "Deseja excluir?", "Exclusão", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+
+                GrupoProduto grupo = new GrupoProduto();
+                GrupoProdutoDAO grupoDAO = new GrupoProdutoDAO();
+
+                grupo.setId((int) jTableGrupo.getValueAt(jTableGrupo.getSelectedRow(), 0));
+                   
+                grupoDAO.excluir(grupo);
+                
+                limpar();
+                preencherTabela();
+            } 
+        }else{
+            JOptionPane.showMessageDialog(this, "Selecione um item para excluir");
+        } 
+    }//GEN-LAST:event_jBExcluirActionPerformed
+
+    private void jTableGrupoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTableGrupoKeyReleased
+      pegaLinhaSelecionada();
+    }//GEN-LAST:event_jTableGrupoKeyReleased
+
+    private void jTableGrupoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableGrupoMouseClicked
+       pegaLinhaSelecionada();
+    }//GEN-LAST:event_jTableGrupoMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -185,8 +296,8 @@ public class GrupoProdutos extends javax.swing.JInternalFrame
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBCancelar;
     private javax.swing.JButton jBEditar;
-    private javax.swing.JButton jBExcluir1;
-    private javax.swing.JButton jBNome;
+    private javax.swing.JButton jBExcluir;
+    private javax.swing.JButton jBNovo;
     private javax.swing.JButton jBSalvar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
@@ -194,8 +305,54 @@ public class GrupoProdutos extends javax.swing.JInternalFrame
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTable jTableGrupo;
+    private javax.swing.JTextField jtfGrupo;
+    private javax.swing.JTextField jtfID;
     // End of variables declaration//GEN-END:variables
+      
+    public void desabilitar(){
+      jtfID.setEnabled(false);
+      jtfGrupo.setEnabled(false);
+      jBNovo.setEnabled(true);
+      jBEditar.setEnabled(true);
+      jBSalvar.setEnabled(false);
+      jBExcluir.setEnabled(true);
+      jBCancelar.setEnabled(false);
+     
+    }
+
+    public void habilitar(){
+      jtfID.setEnabled(false);
+      jtfGrupo.setEnabled(true);
+      jBNovo.setEnabled(false);
+      jBEditar.setEnabled(false);
+      jBSalvar.setEnabled(true);
+      jBExcluir.setEnabled(false);
+      jBCancelar.setEnabled(true);
+    }
+    
+    public void preencherTabela(){
+         DefaultTableModel model = (DefaultTableModel) jTableGrupo.getModel();
+         model.setNumRows(0);
+         GrupoProdutoDAO grupoDAO = new GrupoProdutoDAO();
+         
+         for (GrupoProduto gp : grupoDAO.listarGrupo()){
+             model.addRow(new Object[]{
+                 gp.getId(),
+                 gp.getGrupo()
+             });
+         }
+     }
+    
+     public void pegaLinhaSelecionada(){
+         if (jTableGrupo.getSelectedRow() != -1){
+             jtfID.setText(jTableGrupo.getValueAt(jTableGrupo.getSelectedRow(),0).toString());
+             jtfGrupo.setText(jTableGrupo.getValueAt(jTableGrupo.getSelectedRow(),1).toString());
+         }
+     }
+     
+     public void limpar(){
+        jtfID.setText("");
+        jtfGrupo.setText("");
+    }
 }
