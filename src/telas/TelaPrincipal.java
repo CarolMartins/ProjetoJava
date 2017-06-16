@@ -89,7 +89,7 @@ public class TelaPrincipal extends javax.swing.JFrame{
 
         jDesktopPane.setBackground(new java.awt.Color(217, 233, 251));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/LogoAzulClaro.png"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/LOGO2.png"))); // NOI18N
 
         jLabelSejaBemVindo.setBackground(new java.awt.Color(222, 252, 254));
         jLabelSejaBemVindo.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -104,10 +104,10 @@ public class TelaPrincipal extends javax.swing.JFrame{
         jDesktopPaneLayout.setHorizontalGroup(
             jDesktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPaneLayout.createSequentialGroup()
-                .addContainerGap(259, Short.MAX_VALUE)
+                .addContainerGap(383, Short.MAX_VALUE)
                 .addGroup(jDesktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabelSejaBemVindo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabelSejaBemVindo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
         jDesktopPaneLayout.setVerticalGroup(
@@ -115,8 +115,9 @@ public class TelaPrincipal extends javax.swing.JFrame{
             .addGroup(jDesktopPaneLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabelSejaBemVindo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 188, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -308,7 +309,7 @@ public class TelaPrincipal extends javax.swing.JFrame{
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        setSize(new java.awt.Dimension(722, 338));
+        setSize(new java.awt.Dimension(759, 464));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -320,6 +321,7 @@ public class TelaPrincipal extends javax.swing.JFrame{
             cadastrarTipoLogradouro = new CadastrarTipoLogradouro();
             cadastrarTipoLogradouro.setVisible(true);
             jDesktopPane.add(cadastrarTipoLogradouro);
+            centralizar(cadastrarTipoLogradouro);
         }
     }//GEN-LAST:event_jMenuTipoActionPerformed
 
@@ -328,6 +330,8 @@ public class TelaPrincipal extends javax.swing.JFrame{
             cadastroCliente = new CadastroCliente();
             cadastroCliente.setVisible(true);
             jDesktopPane.add(cadastroCliente);
+            centralizar(cadastroCliente);
+            
         }
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
@@ -336,6 +340,7 @@ public class TelaPrincipal extends javax.swing.JFrame{
         cadastroFuncionario = new CadastroFuncionario();
         cadastroFuncionario.setVisible(true);
         jDesktopPane.add(cadastroFuncionario);
+        centralizar(cadastroFuncionario);
       }
       
     }//GEN-LAST:event_jMenuItem3ActionPerformed
@@ -345,6 +350,7 @@ public class TelaPrincipal extends javax.swing.JFrame{
             cargoFuncionario = new CadastroCargoFuncionario();
             cargoFuncionario.setVisible(true);
             jDesktopPane.add(cargoFuncionario);
+            centralizar(cargoFuncionario);
         }
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
@@ -353,6 +359,7 @@ public class TelaPrincipal extends javax.swing.JFrame{
             cadastroFornecedor = new CadastroFornecedor();
             cadastroFornecedor.setVisible(true);
             jDesktopPane.add(cadastroFornecedor);
+            centralizar(cadastroFornecedor);
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
@@ -361,6 +368,7 @@ public class TelaPrincipal extends javax.swing.JFrame{
             cadastrarProduto = new CadastrarProduto();
             cadastrarProduto.setVisible(true);
             jDesktopPane.add(cadastrarProduto);
+            centralizar(cadastrarProduto);
         }
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
@@ -369,6 +377,7 @@ public class TelaPrincipal extends javax.swing.JFrame{
             marca = new Marca();
             marca.setVisible(true);
             jDesktopPane.add(marca);
+            centralizar(marca);
         }
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
@@ -377,6 +386,7 @@ public class TelaPrincipal extends javax.swing.JFrame{
             categoria = new TipoCategoria();
             categoria.setVisible(true);
             jDesktopPane.add(categoria);
+            centralizar(categoria);
        }
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
@@ -385,6 +395,7 @@ public class TelaPrincipal extends javax.swing.JFrame{
             venda = new Venda();
             venda.setVisible(true);
             jDesktopPane.add(venda);
+            centralizar(venda);
         }
     }//GEN-LAST:event_jMenuItem14ActionPerformed
 
@@ -393,6 +404,7 @@ public class TelaPrincipal extends javax.swing.JFrame{
             pagamento = new Pagamento();
             pagamento.setVisible(true);
             jDesktopPane.add(pagamento);
+            centralizar(pagamento);
         }
     }//GEN-LAST:event_jMenuItem17ActionPerformed
 
@@ -401,6 +413,7 @@ public class TelaPrincipal extends javax.swing.JFrame{
             grupo = new GrupoProdutos();
             grupo.setVisible(true);
             jDesktopPane.add(grupo);
+            centralizar(grupo);
         }
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
@@ -409,6 +422,7 @@ public class TelaPrincipal extends javax.swing.JFrame{
             consultar = new ConsultaVendas();
             consultar.setVisible(true);
             jDesktopPane.add(consultar);
+            centralizar(consultar);
         }
                
     }//GEN-LAST:event_jMenuItem15ActionPerformed
@@ -456,6 +470,12 @@ public class TelaPrincipal extends javax.swing.JFrame{
     // End of variables declaration//GEN-END:variables
 
     
-    
+    public void centralizar(JInternalFrame frame){
+        Dimension desktopSize = jDesktopPane.getSize();
+        Dimension jInternalFrameSize = frame.getSize();
+        frame.setLocation((desktopSize.width - jInternalFrameSize.width)/2,
+            (desktopSize.height- jInternalFrameSize.height)/2);     
+        frame.toFront();
+    }
 
 }

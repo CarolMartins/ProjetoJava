@@ -6,20 +6,28 @@
 package telas;
 
 import Classes.Cargo;
+import Classes.MarcaProduto;
 import conexao.CargoDAO;
+import conexao.MarcaDAO;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Carol
  */
 public class CadastroCargoFuncionario extends javax.swing.JInternalFrame {
-
+    
+     private String op = "";
+    
+     CargoDAO cargoDAO = new CargoDAO();
     /**
      * Creates new form CargoFuncionario
      */
     public CadastroCargoFuncionario() {
         initComponents();
+        desabilitar();
+        preencherTabela();
         
     }
 
@@ -41,16 +49,15 @@ public class CadastroCargoFuncionario extends javax.swing.JInternalFrame {
         jTextSalario = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jTextComissao = new javax.swing.JTextField();
-        jBNome = new javax.swing.JButton();
+        jBNovo = new javax.swing.JButton();
         jBSalvar = new javax.swing.JButton();
         jBEditar = new javax.swing.JButton();
         jBCancelar = new javax.swing.JButton();
-        jBExcluir = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        jTableCargo = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
         jTextId = new javax.swing.JTextField();
-        jBExcluir1 = new javax.swing.JButton();
+        jBExcluir = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -81,11 +88,11 @@ public class CadastroCargoFuncionario extends javax.swing.JInternalFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText("Comissão");
 
-        jBNome.setText("Novo");
-        jBNome.setPreferredSize(new java.awt.Dimension(75, 23));
-        jBNome.addActionListener(new java.awt.event.ActionListener() {
+        jBNovo.setText("Novo");
+        jBNovo.setPreferredSize(new java.awt.Dimension(75, 23));
+        jBNovo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBNomeActionPerformed(evt);
+                jBNovoActionPerformed(evt);
             }
         });
 
@@ -102,11 +109,8 @@ public class CadastroCargoFuncionario extends javax.swing.JInternalFrame {
 
         jBCancelar.setText("Cancelar");
 
-        jBExcluir.setText("Pesquisar");
-        jBExcluir.setPreferredSize(new java.awt.Dimension(75, 23));
-
-        jTable2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        jTableCargo.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jTableCargo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -129,19 +133,29 @@ public class CadastroCargoFuncionario extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable2);
-        if (jTable2.getColumnModel().getColumnCount() > 0) {
-            jTable2.getColumnModel().getColumn(0).setMaxWidth(50);
-            jTable2.getColumnModel().getColumn(1).setMaxWidth(300);
-            jTable2.getColumnModel().getColumn(2).setMaxWidth(100);
-            jTable2.getColumnModel().getColumn(3).setMaxWidth(100);
+        jTableCargo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableCargoMouseClicked(evt);
+            }
+        });
+        jTableCargo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTableCargoKeyReleased(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jTableCargo);
+        if (jTableCargo.getColumnModel().getColumnCount() > 0) {
+            jTableCargo.getColumnModel().getColumn(0).setMaxWidth(50);
+            jTableCargo.getColumnModel().getColumn(1).setMaxWidth(300);
+            jTableCargo.getColumnModel().getColumn(2).setMaxWidth(100);
+            jTableCargo.getColumnModel().getColumn(3).setMaxWidth(100);
         }
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel4.setText("ID");
 
-        jBExcluir1.setText("Excluir");
-        jBExcluir1.setPreferredSize(new java.awt.Dimension(75, 23));
+        jBExcluir.setText("Excluir");
+        jBExcluir.setPreferredSize(new java.awt.Dimension(75, 23));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -163,24 +177,25 @@ public class CadastroCargoFuncionario extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jBNome, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jBSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jBEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jLabel2)
-                                    .addComponent(jTextSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(6, 6, 6)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(jTextSalario, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                            .addComponent(jBNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(jBSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jLabel2))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextComissao, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel3)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jBCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(jTextComissao, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jBEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(6, 6, 6)
+                                                .addComponent(jBCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jBExcluir1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jBExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(jBExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 526, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
@@ -207,12 +222,11 @@ public class CadastroCargoFuncionario extends javax.swing.JInternalFrame {
                         .addComponent(jTextComissao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jBNome, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBExcluir1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jBExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(15, Short.MAX_VALUE))
@@ -229,34 +243,64 @@ public class CadastroCargoFuncionario extends javax.swing.JInternalFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        setBounds(300, 150, 559, 360);
+        setBounds(350, 0, 559, 360);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalvarActionPerformed
-       Cargo cargo = new Cargo();
-       cargo.setDescricao(jTextDescricao.getText());
-       cargo.setSalario(Double.parseDouble(jTextSalario.getText()));
-       cargo.setComissao(Double.parseDouble(jTextComissao.getText()));
-       
-       CargoDAO cargoDAO = new CargoDAO();
-       cargoDAO.salvar(cargo);
-        //Pega o código que foi gerado na classe e joga na caixinha Id
-        jTextId.setText(cargo.getId()+"");
-        
-        JOptionPane.showMessageDialog(null, "Gravado com Sucesso!");
+       if (jTextDescricao.getText().equals("")){
+           JOptionPane.showMessageDialog(this, "Informe a Descricao!");
+           jTextDescricao.requestFocus();
+       }else if (jTextSalario.getText().equals("")){
+           JOptionPane.showMessageDialog(this, "Informe o Salário!");
+           jTextSalario.requestFocus();
+       }else if (jTextComissao.getText().equals("")){
+           JOptionPane.showMessageDialog(this, "Informe a Comissão!");
+           jTextComissao.requestFocus();
+       }else{
+            desabilitar();
+            Cargo cargo = new Cargo();
+            cargo.setDescricao(jTextDescricao.getText());
+            cargo.setSalario(Double.parseDouble(jTextSalario.getText()));
+            cargo.setComissao(Double.parseDouble(jTextComissao.getText()));
+
+            CargoDAO cargoDAO = new CargoDAO();
+            if (op.equals("novo")){
+               cargoDAO.salvar(cargo);
+               jTextId.setText(cargo.getId()+ "");
+           }
+           //else {
+               //cargo.setId(Integer.parseInt(jTextId.getText()));
+               //cargoDAO.editar(cargo);
+           //}
+            //Pega o código que foi gerado na classe e joga na caixinha Id
+             jTextId.setText(cargo.getId()+"");
+
+             JOptionPane.showMessageDialog(null, "Gravado com Sucesso!");
+
+             preencherTabela();
+       }
     }//GEN-LAST:event_jBSalvarActionPerformed
 
-    private void jBNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBNomeActionPerformed
+    private void jBNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBNovoActionPerformed
+       habilitar();
+       op = "novo";
        limpar();
-    }//GEN-LAST:event_jBNomeActionPerformed
+    }//GEN-LAST:event_jBNovoActionPerformed
+
+    private void jTableCargoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTableCargoKeyReleased
+       pegaLinhaSelecionada();
+    }//GEN-LAST:event_jTableCargoKeyReleased
+
+    private void jTableCargoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableCargoMouseClicked
+        pegaLinhaSelecionada();
+    }//GEN-LAST:event_jTableCargoMouseClicked
 
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBCancelar;
     private javax.swing.JButton jBEditar;
     private javax.swing.JButton jBExcluir;
-    private javax.swing.JButton jBExcluir1;
-    private javax.swing.JButton jBNome;
+    private javax.swing.JButton jBNovo;
     private javax.swing.JButton jBSalvar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -266,7 +310,7 @@ public class CadastroCargoFuncionario extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTableCargo;
     private javax.swing.JTextField jTextComissao;
     private javax.swing.JTextField jTextDescricao;
     private javax.swing.JTextField jTextId;
@@ -279,5 +323,59 @@ public void limpar(){
     jTextSalario.setText("");
     jTextComissao.setText("");
 }
-
+public void desabilitar(){
+      jTextId.setEnabled(false);
+      jTextDescricao.setEnabled(false);
+      jTextSalario.setEnabled(false);
+      jTextComissao.setEnabled(false);
+      jBNovo.setEnabled(true);
+      jBSalvar.setEnabled(false);
+      jBEditar.setEnabled(true);
+      jBCancelar.setEnabled(false);
+      jBExcluir.setEnabled(true);
+     
+    }
+     public void habilitar(){
+      jTextId.setEnabled(false);
+      jTextDescricao.setEnabled(true);
+      jTextSalario.setEnabled(true);
+      jTextComissao.setEnabled(true);
+      jBNovo.setEnabled(false);
+      jBSalvar.setEnabled(true);
+      jBEditar.setEnabled(false);
+      jBCancelar.setEnabled(true);
+      jBExcluir.setEnabled(false);
+      
+    }
+     
+     public void preencherTabela(){
+         DefaultTableModel model = (DefaultTableModel) jTableCargo.getModel();
+         model.setNumRows(0);
+         CargoDAO cargoDAO = new CargoDAO();
+         
+         for (Cargo c : cargoDAO.listarCargo()){
+             model.addRow(new Object[]{
+                 c.getId(),
+                 c.getDescricao(),
+                 c.getSalario(),
+                 c.getComissao(),
+             });
+         }
+     }
+     
+     public void pegaLinhaSelecionada(){
+         if (jTableCargo.getSelectedRow() != -1){
+             jTextId.setText(jTableCargo.getValueAt(jTableCargo.getSelectedRow(),0).toString());
+             jTextDescricao.setText(jTableCargo.getValueAt(jTableCargo.getSelectedRow(),1).toString());
+             jTextSalario.setText(jTableCargo.getValueAt(jTableCargo.getSelectedRow(),2).toString());
+             jTextComissao.setText(jTableCargo.getValueAt(jTableCargo.getSelectedRow(), 3).toString());
+         }
+     }
+     
+     public void limparTela(){
+        jTextId.setText("");
+        jTextDescricao.setText("");
+        jTextSalario.setText("");
+        jTextComissao.setText("");
+    }
 }
