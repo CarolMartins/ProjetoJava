@@ -11,6 +11,7 @@ package Classes;
  */
 public class Produto {
     
+    private int IdProduto;
     private int codigo;
     private int codigoBarra;
     private Boolean statusProduto;
@@ -150,6 +151,14 @@ public class Produto {
     @Override
     public String toString() {
         return this.descricaoProduto;
+    }
+
+    public int getIdProduto() {
+        return IdProduto;
+    }
+
+    public void setIdProduto(int Id) {
+        this.IdProduto = Id;
     }
    
     
