@@ -59,6 +59,7 @@ public class GrupoProdutos extends javax.swing.JInternalFrame
 
         setBackground(new java.awt.Color(221, 231, 229));
         setClosable(true);
+        setIconifiable(true);
         setTitle("Grupo");
 
         jPanel1.setBackground(new java.awt.Color(221, 231, 229));
@@ -178,7 +179,7 @@ public class GrupoProdutos extends javax.swing.JInternalFrame
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        setBounds(0, 0, 552, 348);
+        setBounds(0, 0, 539, 348);
     }// </editor-fold>//GEN-END:initComponents
 
     /**

@@ -67,6 +67,7 @@ public class CadastroCargoFuncionario extends javax.swing.JInternalFrame {
 
         setBackground(new java.awt.Color(221, 231, 229));
         setClosable(true);
+        setIconifiable(true);
         setTitle("Cargo Funcionário");
 
         jPanel1.setBackground(new java.awt.Color(221, 231, 229));

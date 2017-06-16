@@ -29,6 +29,7 @@
       <Color blue="e5" green="e7" red="dd" type="rgb"/>
     </Property>
     <Property name="closable" type="boolean" value="true"/>
+    <Property name="iconifiable" type="boolean" value="true"/>
     <Property name="title" type="java.lang.String" value="Consulta de Venda"/>
   </Properties>
   <SyntheticProperties>

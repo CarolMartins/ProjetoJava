@@ -53,6 +53,7 @@ public class ConsultaVendas extends javax.swing.JInternalFrame {
 
         setBackground(new java.awt.Color(221, 231, 229));
         setClosable(true);
+        setIconifiable(true);
         setTitle("Consulta de Venda");
 
         jPanel1.setBackground(new java.awt.Color(221, 231, 229));

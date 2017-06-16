@@ -55,6 +55,7 @@ public class CadastrarTipoLogradouro extends javax.swing.JInternalFrame {
         jLabel2.setText("jLabel2");
 
         setClosable(true);
+        setIconifiable(true);
         setTitle("Logradouro");
 
         jPanel1.setBackground(new java.awt.Color(221, 231, 229));
@@ -213,11 +214,11 @@ public class CadastrarTipoLogradouro extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 440, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE)
         );
 
         setBounds(0, 0, 450, 334);

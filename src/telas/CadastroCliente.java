@@ -100,6 +100,7 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
         jLabel10 = new javax.swing.JLabel();
 
         setClosable(true);
+        setIconifiable(true);
         setTitle("Cadastro Cliente");
 
         jPanel1.setBackground(new java.awt.Color(217, 233, 251));
@@ -605,8 +606,8 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTextIdActionPerformed
 
     private void jButtonPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarActionPerformed
-        Pesquisar pesquisar = new Pesquisar();
-        pesquisar.setVisible(true);
+        //Pesquisar pesquisar = new Pesquisar();
+       // pesquisar.setVisible(true);
         jButtonEdtar.setEnabled(true);
         jButtonCancelar.setEnabled(true);
         jButtonExcluir.setEnabled(true);

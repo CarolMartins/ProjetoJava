@@ -144,7 +144,7 @@ public class FuncionarioDAO {
               }           
     }
     
-    public List<Funcionario> listarFuncionario(){
+    public List<Funcionario> listarFuncionarioPorNome(String nome){
         Connection conn = factory.getConnection();
         List<Funcionario> funcionarios = new ArrayList <>();
         try {
@@ -161,8 +161,10 @@ public class FuncionarioDAO {
                          "left join cargo on cargo.idCargo = funcionario.idCargo\n" +
                          "left join cidade on cidade.idCidade = pessoa.IdCidade\n" +
                          "left join estado on estado.idEstado = cidade.IdEstado\n" +
+                         "where pessoa.nome like ?\n"+
                          "order by pessoa.nome asc";
             ps = conn.prepareStatement(sql); 
+            ps.setString(1, "%"+nome+"%");
             resultSet = ps.executeQuery();
             
             while(resultSet.next()){
@@ -222,4 +224,244 @@ public class FuncionarioDAO {
         }
         return funcionarios;
     }
+    
+    public List<Funcionario> listarFuncionarioPorCpf(String cpf){
+        Connection conn = factory.getConnection();
+        List<Funcionario> funcionarios = new ArrayList <>();
+        try {
+            PreparedStatement ps = null;
+            ResultSet resultSet = null;
+            
+            String sql = "select *, \n" +
+                         "       tipologradouro.descricao as descricaoTipoLogradouro,\n" +
+                         "       estado.Sigla as siglaEstado,\n" +
+                         "       cargo.descricao as descricaoCargo\n" +
+                         "from pessoa\n" +
+                         "left join funcionario on pessoa.idPessoa = funcionario.idFuncionario\n" +
+                         "left join tipologradouro on pessoa.idTipoLogradouro = tipologradouro.idTipoLogradouro\n" +
+                         "left join cargo on cargo.idCargo = funcionario.idCargo\n" +
+                         "left join cidade on cidade.idCidade = pessoa.IdCidade\n" +
+                         "left join estado on estado.idEstado = cidade.IdEstado\n" +
+                         "where pessoa.cpf like ?\n"+
+                         "order by pessoa.nome asc";
+            ps = conn.prepareStatement(sql); 
+            ps.setString(1, "%"+cpf+"%");
+            resultSet = ps.executeQuery();
+            
+            while(resultSet.next()){
+                
+                Funcionario f = new Funcionario();
+                f.setId(resultSet.getInt("idFuncionario"));
+                f.setNome(resultSet.getString("nome"));
+                f.setDatanascimento(resultSet.getDate("dataNascimento"));
+                f.setSexo(resultSet.getString("sexo"));
+                f.setCpf(resultSet.getString("cpf"));
+                f.setRg(resultSet.getString("rg"));
+                f.setTelefoneresidencial(resultSet.getString("Telefoneresidencial"));
+                f.setTelefoneCelular(resultSet.getString("TelefoneCelular"));
+                f.setEmail(resultSet.getString("email"));
+                f.setCep(resultSet.getString("cep"));
+                
+                TipoLogradouro tipoLogradouro = new TipoLogradouro();
+                tipoLogradouro.setId(resultSet.getInt("idTipoLogradouro"));
+                tipoLogradouro.setNome(resultSet.getString("descricaoTipoLogradouro"));
+                
+                f.setTipoLogradouro(tipoLogradouro);
+                
+                f.setLogradouro(resultSet.getString("logradouro"));
+                f.setNumero(resultSet.getInt("numero"));
+                f.setBairro(resultSet.getString("bairro"));
+                f.setComplemento(resultSet.getString("complemento"));
+                
+                Estado estado = new Estado();
+                estado.setId(resultSet.getInt("idEstado"));
+                estado.setNomeEstado("nomeEstado");
+                estado.setSigla("siglaEstado");
+                
+                Cidade cidade = new Cidade();
+                cidade.setId(resultSet.getInt("idCidade"));
+                cidade.setEstado(estado);
+                cidade.setNomeCidade(resultSet.getString("nomeCidade"));
+                
+                f.setCidade(cidade);
+                f.setMeta(resultSet.getDouble("meta"));
+                f.setUsuario(resultSet.getString("usuario"));
+                f.setSenha(resultSet.getString("senha"));
+                
+                Cargo cargo = new Cargo();
+                cargo.setComissao(resultSet.getDouble("comissao"));
+                cargo.setDescricao(resultSet.getString("descricaoCargo"));
+                cargo.setSalario(resultSet.getDouble("salario"));
+                cargo.setId(resultSet.getInt("idCargo"));
+                
+                f.setCargo(cargo);
+                
+                funcionarios.add(f);
+                
+            }
+            conn.close();
+        } catch (SQLException ex) {
+            throw new RuntimeException ("Erro SQL: " + ex);
+        }
+        return funcionarios;
+    }    
+    
+    public List<Funcionario> listarFuncionarioPorRg(String rg){
+        Connection conn = factory.getConnection();
+        List<Funcionario> funcionarios = new ArrayList <>();
+        try {
+            PreparedStatement ps = null;
+            ResultSet resultSet = null;
+            
+            String sql = "select *, \n" +
+                         "       tipologradouro.descricao as descricaoTipoLogradouro,\n" +
+                         "       estado.Sigla as siglaEstado,\n" +
+                         "       cargo.descricao as descricaoCargo\n" +
+                         "from pessoa\n" +
+                         "left join funcionario on pessoa.idPessoa = funcionario.idFuncionario\n" +
+                         "left join tipologradouro on pessoa.idTipoLogradouro = tipologradouro.idTipoLogradouro\n" +
+                         "left join cargo on cargo.idCargo = funcionario.idCargo\n" +
+                         "left join cidade on cidade.idCidade = pessoa.IdCidade\n" +
+                         "left join estado on estado.idEstado = cidade.IdEstado\n" +
+                         "where pessoa.rg like ?\n"+
+                         "order by pessoa.nome asc";
+            ps = conn.prepareStatement(sql); 
+            ps.setString(1, "%"+rg+"%");
+            resultSet = ps.executeQuery();
+            
+            while(resultSet.next()){
+                
+                Funcionario f = new Funcionario();
+                f.setId(resultSet.getInt("idFuncionario"));
+                f.setNome(resultSet.getString("nome"));
+                f.setDatanascimento(resultSet.getDate("dataNascimento"));
+                f.setSexo(resultSet.getString("sexo"));
+                f.setCpf(resultSet.getString("cpf"));
+                f.setRg(resultSet.getString("rg"));
+                f.setTelefoneresidencial(resultSet.getString("Telefoneresidencial"));
+                f.setTelefoneCelular(resultSet.getString("TelefoneCelular"));
+                f.setEmail(resultSet.getString("email"));
+                f.setCep(resultSet.getString("cep"));
+                
+                TipoLogradouro tipoLogradouro = new TipoLogradouro();
+                tipoLogradouro.setId(resultSet.getInt("idTipoLogradouro"));
+                tipoLogradouro.setNome(resultSet.getString("descricaoTipoLogradouro"));
+                
+                f.setTipoLogradouro(tipoLogradouro);
+                
+                f.setLogradouro(resultSet.getString("logradouro"));
+                f.setNumero(resultSet.getInt("numero"));
+                f.setBairro(resultSet.getString("bairro"));
+                f.setComplemento(resultSet.getString("complemento"));
+                
+                Estado estado = new Estado();
+                estado.setId(resultSet.getInt("idEstado"));
+                estado.setNomeEstado("nomeEstado");
+                estado.setSigla("siglaEstado");
+                
+                Cidade cidade = new Cidade();
+                cidade.setId(resultSet.getInt("idCidade"));
+                cidade.setEstado(estado);
+                cidade.setNomeCidade(resultSet.getString("nomeCidade"));
+                
+                f.setCidade(cidade);
+                f.setMeta(resultSet.getDouble("meta"));
+                f.setUsuario(resultSet.getString("usuario"));
+                f.setSenha(resultSet.getString("senha"));
+                
+                Cargo cargo = new Cargo();
+                cargo.setComissao(resultSet.getDouble("comissao"));
+                cargo.setDescricao(resultSet.getString("descricaoCargo"));
+                cargo.setSalario(resultSet.getDouble("salario"));
+                cargo.setId(resultSet.getInt("idCargo"));
+                
+                f.setCargo(cargo);
+                
+                funcionarios.add(f);
+                
+            }
+            conn.close();
+        } catch (SQLException ex) {
+            throw new RuntimeException ("Erro SQL: " + ex);
+        }
+        return funcionarios;
+    }    
+    
+    public Funcionario buscarPorId(Integer id){
+        Connection conn = factory.getConnection();
+        Funcionario f = null;
+        try {
+            PreparedStatement ps = null;
+            ResultSet resultSet = null;
+            
+            String sql = "select *, \n" +
+                         "       tipologradouro.descricao as descricaoTipoLogradouro,\n" +
+                         "       estado.Sigla as siglaEstado,\n" +
+                         "       cargo.descricao as descricaoCargo\n" +
+                         "from pessoa\n" +
+                         "left join funcionario on pessoa.idPessoa = funcionario.idFuncionario\n" +
+                         "left join tipologradouro on pessoa.idTipoLogradouro = tipologradouro.idTipoLogradouro\n" +
+                         "left join cargo on cargo.idCargo = funcionario.idCargo\n" +
+                         "left join cidade on cidade.idCidade = pessoa.IdCidade\n" +
+                         "left join estado on estado.idEstado = cidade.IdEstado\n" +
+                         "where pessoa.idPessoa = ?\n"+
+                         "order by pessoa.nome asc";
+            ps = conn.prepareStatement(sql); 
+            ps.setString(1, id+"");
+            resultSet = ps.executeQuery();
+            
+            if(resultSet.next()){
+                f = new Funcionario();
+                f.setId(resultSet.getInt("idFuncionario"));
+                f.setNome(resultSet.getString("nome"));
+                f.setDatanascimento(resultSet.getDate("dataNascimento"));
+                f.setSexo(resultSet.getString("sexo"));
+                f.setCpf(resultSet.getString("cpf"));
+                f.setRg(resultSet.getString("rg"));
+                f.setTelefoneresidencial(resultSet.getString("Telefoneresidencial"));
+                f.setTelefoneCelular(resultSet.getString("TelefoneCelular"));
+                f.setEmail(resultSet.getString("email"));
+                f.setCep(resultSet.getString("cep"));
+                
+                TipoLogradouro tipoLogradouro = new TipoLogradouro();
+                tipoLogradouro.setId(resultSet.getInt("idTipoLogradouro"));
+                tipoLogradouro.setNome(resultSet.getString("descricaoTipoLogradouro"));
+                
+                f.setTipoLogradouro(tipoLogradouro);
+                
+                f.setLogradouro(resultSet.getString("logradouro"));
+                f.setNumero(resultSet.getInt("numero"));
+                f.setBairro(resultSet.getString("bairro"));
+                f.setComplemento(resultSet.getString("complemento"));
+                
+                Estado estado = new Estado();
+                estado.setId(resultSet.getInt("idEstado"));
+                estado.setNomeEstado("nomeEstado");
+                estado.setSigla("siglaEstado");
+                
+                Cidade cidade = new Cidade();
+                cidade.setId(resultSet.getInt("idCidade"));
+                cidade.setEstado(estado);
+                cidade.setNomeCidade(resultSet.getString("nomeCidade"));
+                
+                f.setCidade(cidade);
+                f.setMeta(resultSet.getDouble("meta"));
+                f.setUsuario(resultSet.getString("usuario"));
+                f.setSenha(resultSet.getString("senha"));
+                
+                Cargo cargo = new Cargo();
+                cargo.setComissao(resultSet.getDouble("comissao"));
+                cargo.setDescricao(resultSet.getString("descricaoCargo"));
+                cargo.setSalario(resultSet.getDouble("salario"));
+                cargo.setId(resultSet.getInt("idCargo"));
+                
+                f.setCargo(cargo);
+                
+            }
+            conn.close();
+        } catch (SQLException ex) {
+            throw new RuntimeException ("Erro SQL: " + ex);
+        }
+        return f;
+    }        
 }

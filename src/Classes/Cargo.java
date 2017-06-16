@@ -11,6 +11,7 @@ package Classes;
  */
 public class Cargo {
     
+    
     private int id;
     private String descricao;
     private Double salario;

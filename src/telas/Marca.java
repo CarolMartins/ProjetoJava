@@ -9,12 +9,13 @@ import Classes.MarcaProduto;
 import conexao.MarcaDAO;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Carol
  */
 public class Marca extends javax.swing.JInternalFrame {
-    
+
     private String op = "";
     
     MarcaDAO mDAO = new MarcaDAO();
@@ -144,6 +145,12 @@ public class Marca extends javax.swing.JInternalFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel4.setText("ID");
 
+        jTextId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextIdActionPerformed(evt);
+            }
+        });
+
         jBExcluir.setText("Excluir");
         jBExcluir.setPreferredSize(new java.awt.Dimension(75, 23));
         jBExcluir.addActionListener(new java.awt.event.ActionListener() {
@@ -176,7 +183,7 @@ public class Marca extends javax.swing.JInternalFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jBEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jBCancelar)
+                            .addComponent(jBCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jBExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(93, 93, 93))))
@@ -219,6 +226,10 @@ public class Marca extends javax.swing.JInternalFrame {
         setBounds(0, 0, 564, 331);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jTextIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextIdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextIdActionPerformed
+
     private void jBNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBNovoActionPerformed
         habilitar();
         op = "novo";
@@ -247,7 +258,8 @@ public class Marca extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jBSalvarActionPerformed
 
     private void jBEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEditarActionPerformed
-      if (jTableMarca.getSelectedRow () != -1){
+     
+        if (jTableMarca.getSelectedRow () != -1){
             
                 preencherTabela();
                 
@@ -260,10 +272,11 @@ public class Marca extends javax.swing.JInternalFrame {
     private void jBCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCancelarActionPerformed
        limpar();
        desabilitar();
+      //  pegaLinhaSelecionada();
     }//GEN-LAST:event_jBCancelarActionPerformed
 
     private void jBExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBExcluirActionPerformed
-        if((jTableMarca.getSelectedRow() !=-1)){
+       if((jTableMarca.getSelectedRow() !=-1)){
             if (JOptionPane.showConfirmDialog(this, "Deseja excluir?", "Exclusão", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 
                 MarcaProduto marca = new MarcaProduto();
@@ -279,8 +292,7 @@ public class Marca extends javax.swing.JInternalFrame {
             } 
         }else{
             JOptionPane.showMessageDialog(this, "Selecione um item para excluir");
-        
-    }  
+        } 
     }//GEN-LAST:event_jBExcluirActionPerformed
 
     private void jTableMarcaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTableMarcaKeyReleased
@@ -312,8 +324,7 @@ public class Marca extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTextId;
     private javax.swing.JTextField jTextMarca;
     // End of variables declaration//GEN-END:variables
-
-public void desabilitar(){
+   public void desabilitar(){
       jTextId.setEnabled(false);
       jTextMarca.setEnabled(false);
       jBNovo.setEnabled(true);
@@ -358,5 +369,4 @@ public void desabilitar(){
         jTextId.setText("");
         jTextMarca.setText(""); 
     }
-
 }

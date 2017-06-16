@@ -41,6 +41,7 @@ public class CadastroCidade extends javax.swing.JInternalFrame {
         jLabel2.setText("jLabel2");
 
         setClosable(true);
+        setIconifiable(true);
         setTitle("Cidade");
 
         jPanel1.setBackground(new java.awt.Color(221, 231, 229));

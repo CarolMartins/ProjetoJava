@@ -84,6 +84,7 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
         jTextPane1 = new javax.swing.JTextPane();
 
         setClosable(true);
+        setIconifiable(true);
         setTitle("Cadastro Fornecedor");
 
         jPanel1.setBackground(new java.awt.Color(221, 231, 229));
@@ -478,11 +479,11 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 764, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 758, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 598, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 602, Short.MAX_VALUE)
         );
 
         setBounds(0, 0, 774, 632);
