@@ -12,7 +12,7 @@ package Classes;
 public class TipoCategoriaProduto {
     
     private int id;
-    private String tipoCategoria;
+    private String TipoCategoria;
 
     public int getId() {
         return id;
@@ -23,16 +23,16 @@ public class TipoCategoriaProduto {
     }
 
     public String getTipoCategoria() {
-        return tipoCategoria;
+        return TipoCategoria;
     }
 
     public void setTipoCategoria(String tipoCategoria) {
-        this.tipoCategoria = tipoCategoria;
+        this.TipoCategoria = tipoCategoria;
     }
 
     @Override
     public String toString() {
-        return this.tipoCategoria;
+        return this.TipoCategoria;
     }
     
     
