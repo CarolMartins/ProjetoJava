@@ -11,6 +11,7 @@ import Classes.Icms;
 import Classes.MarcaProduto;
 import Classes.Produto;
 import Classes.TipoCategoriaProduto;
+import conexao.FornecedorDAO;
 import conexao.GrupoProdutoDAO;
 import conexao.MarcaDAO;
 import conexao.ProdutoDAO;
@@ -35,7 +36,6 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
         carregarFornecedor();
         carregarGrupo();
         carregarMarca();
-        carregarICMS();
         carregartipoCategoria();
     }
 
@@ -75,8 +75,6 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
         jTextPrecoVenda = new javax.swing.JTextField();
         jTextPrecoCusto = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        jComboICMS = new javax.swing.JComboBox<>();
         jTextPesoUni = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
@@ -122,9 +120,11 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(23, 23, 127), null), "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(23, 23, 127)), "Status", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(23, 23, 127))); // NOI18N
 
         jRadioAtivado.setBackground(new java.awt.Color(217, 233, 251));
+        buttonGroup1.add(jRadioAtivado);
         jRadioAtivado.setText("Ativado");
 
         jRadioDesativado.setBackground(new java.awt.Color(217, 233, 251));
+        buttonGroup1.add(jRadioDesativado);
         jRadioDesativado.setText("Desativado");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -236,27 +236,38 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel9.setText("Margem de Lucro");
 
+        jTextMargemCusto.setEditable(false);
+        jTextMargemCusto.setText("0.8");
+        jTextMargemCusto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextMargemCustoActionPerformed(evt);
+            }
+        });
+
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel10.setText("Preço de Venda");
 
         jTextPrecoVenda.setEditable(false);
         jTextPrecoVenda.setBackground(new java.awt.Color(187, 187, 187));
+        jTextPrecoVenda.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextPrecoVendaFocusLost(evt);
+            }
+        });
         jTextPrecoVenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextPrecoVendaActionPerformed(evt);
             }
         });
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel8.setText("Preço de Custo");
-
-        jLabel16.setText("ICMS");
-
-        jComboICMS.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboICMSActionPerformed(evt);
+        jTextPrecoCusto.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextPrecoCustoFocusLost(evt);
             }
         });
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel8.setText("Preço de Custo");
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel12.setText("Peso Unitário");
@@ -340,9 +351,7 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
                         .addGap(34, 34, 34)
                         .addComponent(jLabel9)
                         .addGap(28, 28, 28)
-                        .addComponent(jLabel10)
-                        .addGap(47, 47, 47)
-                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel10))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addComponent(jTextPesoUni, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -351,9 +360,7 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jTextMargemCusto, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextPrecoVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jComboICMS, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextPrecoVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addComponent(jLabel13)
@@ -391,23 +398,19 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(jLabel5))
-                .addGap(25, 25, 25)
+                .addGap(30, 30, 30)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(5, 5, 5)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel12)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel10))))
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel10))
                 .addGap(6, 6, 6)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jTextPesoUni)
                     .addComponent(jTextPrecoCusto)
-                    .addComponent(jTextMargemCusto)
-                    .addComponent(jTextPrecoVenda)
-                    .addComponent(jComboICMS))
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jTextMargemCusto)
+                        .addComponent(jTextPrecoVenda)))
                 .addGap(11, 11, 11)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel13)
@@ -457,7 +460,6 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
         desabilitarCampos();
         
         Produto p = new Produto();
-        p.setCodigo(Integer.parseInt(jTextCodigo.getText()));
         p.setCodigoBarra(Integer.parseInt(jTextCodigoBarras.getText()));
         p.setDescricaoProduto(jTextDescricao.getText());
         if(jRadioAtivado.isSelected())
@@ -467,7 +469,6 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
         p.setTipoCategoria((TipoCategoriaProduto) jComboCategoria.getSelectedItem());
         p.setFornecedor((Fornecedor) jComboFornecedor.getSelectedItem());
         p.setGrupo((GrupoProduto) jComboGrupo.getSelectedItem());
-        p.setIcms((Icms) jComboICMS.getSelectedItem());
         p.setMarca((MarcaProduto) jComboMarca.getSelectedItem());
         p.setPeso(Double.parseDouble(jTextPesoUni.getText()));
         p.setPrecoCusto(Double.parseDouble(jTextPrecoCusto.getText()));
@@ -486,6 +487,7 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
     private void jButtonNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNovoActionPerformed
             habilitarCampos();
             op = "novo";
+            limpar();
     }//GEN-LAST:event_jButtonNovoActionPerformed
 
     private void jTextPrecoVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextPrecoVendaActionPerformed
@@ -503,25 +505,35 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jButtonPesquisarActionPerformed
 
-    private void jComboICMSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboICMSActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboICMSActionPerformed
-
     private void jComboCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboCategoriaActionPerformed
         TipoCategoriaProduto tc= (TipoCategoriaProduto) jComboCategoria.getSelectedItem();
-        if(tc !=null){
-            carregartipoCategoria();
-        }
+        //if(tc !=null){
+            //carregartipoCategoria();
+        //}
     }//GEN-LAST:event_jComboCategoriaActionPerformed
     private void jComboGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboGrupoActionPerformed
-           GrupoProduto gp = (GrupoProduto) jComboGrupo.getSelectedItem();
-           if (gp != null)
-               carregarGrupo();
+        GrupoProduto gp = (GrupoProduto) jComboGrupo.getSelectedItem();
+           /*if (gp != null)
+               carregarGrupo();*/
     }//GEN-LAST:event_jComboGrupoActionPerformed
 
     private void jComboMarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboMarcaActionPerformed
       
     }//GEN-LAST:event_jComboMarcaActionPerformed
+
+    private void jTextMargemCustoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextMargemCustoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextMargemCustoActionPerformed
+
+    private void jTextPrecoCustoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextPrecoCustoFocusLost
+        // TODO add your handling code here:
+        System.out.println(Double.parseDouble(jTextPrecoCusto.getText())+ (Double.parseDouble(jTextPrecoCusto.getText())*0.8));
+    }//GEN-LAST:event_jTextPrecoCustoFocusLost
+
+    private void jTextPrecoVendaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextPrecoVendaFocusLost
+        double resultado;
+        resultado = (Double.parseDouble(jTextPrecoCusto.getText())+ (Double.parseDouble(jTextPrecoCusto.getText())*0.8));
+    }//GEN-LAST:event_jTextPrecoVendaFocusLost
 
     /**
      * @param args the command line arguments
@@ -540,7 +552,6 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> jComboCategoria;
     private javax.swing.JComboBox<String> jComboFornecedor;
     private javax.swing.JComboBox<String> jComboGrupo;
-    private javax.swing.JComboBox<String> jComboICMS;
     private javax.swing.JComboBox<String> jComboMarca;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -548,7 +559,6 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
@@ -596,7 +606,7 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
     jButtonExcluir.setEnabled(false);
     jButtonPesquisar.setEnabled(false);
     jComboMarca.setEnabled(true);
-    jComboICMS.setEnabled(true);    
+      
 }
     
     public void desabilitarCampos(){
@@ -617,11 +627,18 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
     jButtonNovo.setEnabled(true);
     jButtonCancelar.setEnabled(false);
     jButtonSalvar.setEnabled(false);
-    jButtonEdtar.setEnabled(true);
-    jButtonExcluir.setEnabled(true);
+    if (jTextCodigo.getText().equals(""))
+        jButtonEdtar.setEnabled(false);
+    else
+        jButtonEdtar.setEnabled(true);
+    
+    if(jTextCodigo.getText().equals(""))
+        jButtonExcluir.setEnabled(false);
+    else
+        jButtonExcluir.setEnabled(true);
     jButtonPesquisar.setEnabled(true);
     jComboMarca.setEnabled(false);
-    jComboICMS.setEnabled(false);
+    
 }
     
     public void limpar(){
@@ -637,8 +654,7 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
         jtfEstoque.setText("");
         jComboCategoria.setSelectedItem(null);
         jComboFornecedor.setSelectedItem(null);
-        jComboGrupo.setSelectedItem(null);
-        jComboICMS.setSelectedItem(null);
+        jComboGrupo.setSelectedItem(null);  
         jComboMarca.setSelectedItem(null);
     }
     public void carregartipoCategoria(){
@@ -649,6 +665,10 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
        jComboCategoria.setModel(new DefaultComboBoxModel(itens.toArray()));
     }
     public void carregarFornecedor(){
+        FornecedorDAO fdao = new FornecedorDAO();
+        List<Fornecedor> itens = fdao.listarFornecedor();
+        itens.add(0, null);
+        jComboFornecedor.setModel(new DefaultComboBoxModel(itens.toArray()));
         
     }
     
@@ -660,10 +680,6 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
         jComboGrupo.setModel(new DefaultComboBoxModel(itens.toArray()));
     }
     
-    public void carregarICMS(){
-        
-    }
-    
     public void carregarMarca(){
         MarcaDAO mDAO = new MarcaDAO();
         List<MarcaProduto> itens =  mDAO.listarMarca();
@@ -671,9 +687,10 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
         jComboMarca.setModel(new DefaultComboBoxModel(itens.toArray()));    
     }
     public void preencherTela(Produto p){
-         jTextCodigo.setText(p.getCodigo()+ "");
+         jTextCodigo.setText(p.getIdProduto()+ "");
          jTextDescricao.setText(p.getDescricaoProduto());
          jTextPrecoVenda.setText(p.getPrecoVenda() + "");
      }
-
+    
+    
 }
