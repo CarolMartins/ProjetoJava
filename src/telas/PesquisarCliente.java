@@ -5,7 +5,9 @@
  */
 package telas;
 
+import Classes.Cliente;
 import Classes.Funcionario;
+import conexao.ClienteDAO;
 import conexao.FuncionarioDAO;
 import java.awt.event.KeyEvent;
 import java.util.List;
@@ -15,13 +17,13 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author carolina
  */
-public class PesquisarFuncionario extends javax.swing.JDialog {
+public class PesquisarCliente extends javax.swing.JDialog {
 
     private int codSelecionado;
     /**
      * Creates new form TelaPesquisar
      */
-    public PesquisarFuncionario(java.awt.Frame parent, boolean modal) {
+    public PesquisarCliente(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
@@ -238,22 +240,22 @@ public class PesquisarFuncionario extends javax.swing.JDialog {
     public void preencherTabela(){
         DefaultTableModel model = (DefaultTableModel) jTablePesquisa.getModel();
         model.setNumRows(0);
-        FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
+        ClienteDAO clienteDAO = new ClienteDAO();
         
-        List<Funcionario> lista = null;
+        List<Cliente> lista = null;
         if (jRadioCpf.isSelected())
-            lista = funcionarioDAO.listarFuncionarioPorCpf(jTextPesquisa.getText());
+            lista = clienteDAO.listarClientePorCpf(jTextPesquisa.getText());
         else if (jRadioNome.isSelected())
-            lista = funcionarioDAO.listarFuncionarioPorNome(jTextPesquisa.getText());
+            lista = clienteDAO.listarClientePorNome(jTextPesquisa.getText());
         else
-            lista = funcionarioDAO.listarFuncionarioPorRg(jTextPesquisa.getText());
+            lista = clienteDAO.listarClientePorRg(jTextPesquisa.getText());
         
-        for (Funcionario f : lista){
+        for (Cliente c : lista){
             model.addRow(new Object []{
-              f.getId(),
-              f.getNome(),
-              f.getCpf(),
-              f.getRg(),
+              c.getId(),
+              c.getNome(),
+              c.getCpf(),
+              c.getRg(),
               ""
          });
         }      

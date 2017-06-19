@@ -4,12 +4,14 @@ package telas;
 import conexao.ConnectionFactory;
 import conexao.FuncionarioDAO;
 import java.awt.event.KeyEvent;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /*
@@ -159,9 +161,9 @@ public class Login extends javax.swing.JFrame {
         jPanel2.setBounds(30, 180, 350, 120);
 
         jLabel3.setBackground(new java.awt.Color(26, 34, 104));
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/LogoAzul.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/LOGO2.png"))); // NOI18N
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(50, 80, 327, 84);
+        jLabel3.setBounds(27, 24, 350, 150);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/abstract-blue-background_1048-1511.jpg"))); // NOI18N
         jLabel1.setText("jLabel1");
@@ -239,6 +241,14 @@ public void entrar(){
             
             if (resp == true){
                 TelaPrincipal tp = new TelaPrincipal(jTextUsuario.getText());
+                
+                //Código do Icon
+                URL iconURL = getClass().getResource("/images/icon.png");
+                ImageIcon icon = new ImageIcon(iconURL);
+                tp.setIconImage(icon.getImage());
+                
+                
+                
                 tp.setVisible(true);
                 dispose();
             }else{
@@ -251,7 +261,7 @@ public void entrar(){
 
 
     public static void main(String args[]){
- try {
+        try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
@@ -272,7 +282,13 @@ public void entrar(){
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Login().setVisible(true);
+                Login lg = new Login();
+                lg.setVisible(true);
+                
+                //Código do Icon
+                URL iconURL = getClass().getResource("/images/icon.png");
+                ImageIcon icon = new ImageIcon(iconURL);
+                lg.setIconImage(icon.getImage());
             }
         });
     }

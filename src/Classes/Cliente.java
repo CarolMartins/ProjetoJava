@@ -14,6 +14,14 @@ public class Cliente extends Pessoa{
     private int idCliente;
     private Boolean situacaoCliente;
 
+    public int getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
+    }
+
     public Boolean getSituacaoCliente() {
         return situacaoCliente;
     }

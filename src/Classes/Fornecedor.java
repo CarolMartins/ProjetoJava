@@ -5,6 +5,8 @@
  */
 package Classes;
 
+import java.util.Date;
+
 /**
  *
  * @author Carol
@@ -19,15 +21,17 @@ public class Fornecedor {
     private String telefoneContato1;
     private String telefoneContato2;
     private String email;
-    private String tipo;
+    private TipoLogradouro tipoLogradouro;
     private String logradouro;
     private int numero;
     private String complemento;
     private String bairro;
-    private String cidade;
-    private String estado;
+    private Cidade cidade;
+    private Estado estado;
     private String observacoes;
     private Boolean situacaoFornecedor;
+    private String cep;
+    private Date DataCadastro;
 
     public int getId() {
         return id;
@@ -93,12 +97,12 @@ public class Fornecedor {
         this.email = email;
     }
 
-    public String getTipo() {
-        return tipo;
+    public TipoLogradouro getTipoLogradouro() {
+        return tipoLogradouro;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setTipoLogradouro(TipoLogradouro tipoLogradouro) {
+        this.tipoLogradouro = tipoLogradouro;
     }
 
     public String getLogradouro() {
@@ -133,19 +137,19 @@ public class Fornecedor {
         this.bairro = bairro;
     }
 
-    public String getCidade() {
+    public Cidade getCidade() {
         return cidade;
     }
 
-    public void setCidade(String cidade) {
+    public void setCidade(Cidade cidade) {
         this.cidade = cidade;
     }
 
-    public String getEstado() {
+    public Estado getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(Estado estado) {
         this.estado = estado;
     }
 
@@ -164,6 +168,24 @@ public class Fornecedor {
     public void setSituacaoFornecedor(Boolean situacaoFornecedor) {
         this.situacaoFornecedor = situacaoFornecedor;
     }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
+    public Date getDataCadastro() {
+        return DataCadastro;
+    }
+
+    public void setDataCadastro(Date DataCadastro) {
+        this.DataCadastro = DataCadastro;
+    }
+    
+    
 
     @Override
     public String toString() {

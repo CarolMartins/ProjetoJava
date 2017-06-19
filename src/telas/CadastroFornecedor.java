@@ -1,8 +1,22 @@
 package telas;
 
+import Classes.Cargo;
 import javax.swing.JOptionPane;
 import Classes.Cidade;
+import Classes.Estado;
+import Classes.Fornecedor;
+import Classes.Funcionario;
 import Classes.Pessoa;
+import Classes.TipoLogradouro;
+import conexao.CargoDAO;
+import conexao.CidadeDAO;
+import conexao.EstadoDAO;
+import conexao.FornecedorDAO;
+import conexao.FuncionarioDAO;
+import conexao.TipoLogradouroDAO;
+import java.util.Date;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -17,10 +31,13 @@ import Classes.Pessoa;
 public class CadastroFornecedor extends javax.swing.JInternalFrame {
 
     Pessoa p = new Pessoa() {};
+    private String op;
     
     public CadastroFornecedor() {
         initComponents();
         desabilitarCampos();
+        carregartipoLogradouro();
+        carregarEstado();
     }
 
     /**
@@ -33,17 +50,17 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         buttonSexo = new javax.swing.ButtonGroup();
-        buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonSituacao = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jTextId = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextNome = new javax.swing.JTextField();
+        jTextRazaoSocial = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jFCpf = new javax.swing.JFormattedTextField();
+        jFCnpj = new javax.swing.JFormattedTextField();
         jLabel6 = new javax.swing.JLabel();
-        jTextRg = new javax.swing.JTextField();
+        jTextIe = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jFTelefone1 = new javax.swing.JFormattedTextField();
         jLabel9 = new javax.swing.JLabel();
@@ -60,28 +77,28 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
         jLabel17 = new javax.swing.JLabel();
         jTextComplemento = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
-        jComboTipo = new javax.swing.JComboBox<>();
+        jComboTipoLogradouro = new javax.swing.JComboBox<>();
         jLabel19 = new javax.swing.JLabel();
         jTextBairro = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
         jComboCidade = new javax.swing.JComboBox<>();
         jLabel21 = new javax.swing.JLabel();
         jComboEstado = new javax.swing.JComboBox<>();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jDataCadastro = new com.toedter.calendar.JDateChooser();
         jButtonNovo = new javax.swing.JButton();
         jButtonCancelar = new javax.swing.JButton();
         jButtonSalvar = new javax.swing.JButton();
         jButtonEdtar = new javax.swing.JButton();
         jButtonExcluir = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        jBPesquisar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        jRadioAtivo = new javax.swing.JRadioButton();
+        jRadioBloqueado = new javax.swing.JRadioButton();
         jLabel23 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jTextNomeFantasia = new javax.swing.JTextField();
         jLabel25 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextPane1 = new javax.swing.JTextPane();
+        jTextObservacao = new javax.swing.JTextPane();
 
         setClosable(true);
         setIconifiable(true);
@@ -105,7 +122,7 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
         jLabel5.setText("CNPJ");
 
         try {
-            jFCpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+            jFCnpj.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -148,6 +165,12 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
         jLabel15.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel15.setText("Logradouro");
 
+        jTextLogradouro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextLogradouroActionPerformed(evt);
+            }
+        });
+
         jLabel16.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel16.setText("Número");
 
@@ -165,6 +188,12 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
 
         jLabel21.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel21.setText("Estado");
+
+        jComboEstado.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboEstadoItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -197,7 +226,7 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel18)
-                                    .addComponent(jComboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jComboTipoLogradouro, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -217,7 +246,7 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(33, 33, 33)
+                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
                     .addComponent(jFCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -232,7 +261,7 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
                     .addComponent(jTextLogradouro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboTipoLogradouro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel19)
@@ -243,7 +272,7 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
                     .addComponent(jTextBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addGap(33, 33, 33))
         );
 
         jButtonNovo.setText("Novo");
@@ -281,23 +310,28 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jButton1.setText("Pesquisar");
-        jButton1.setPreferredSize(new java.awt.Dimension(63, 23));
-        jButton1.setRequestFocusEnabled(false);
+        jBPesquisar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jBPesquisar.setText("Pesquisar");
+        jBPesquisar.setPreferredSize(new java.awt.Dimension(63, 23));
+        jBPesquisar.setRequestFocusEnabled(false);
+        jBPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBPesquisarActionPerformed(evt);
+            }
+        });
 
         jPanel3.setBackground(new java.awt.Color(221, 231, 229));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Situação do Fornecedor", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
-        jRadioButton1.setBackground(new java.awt.Color(221, 231, 229));
-        jRadioButton1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jRadioButton1.setText("Ativo");
-        jRadioButton1.setEnabled(false);
+        jRadioAtivo.setBackground(new java.awt.Color(221, 231, 229));
+        buttonSituacao.add(jRadioAtivo);
+        jRadioAtivo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jRadioAtivo.setText("Ativo");
 
-        jRadioButton2.setBackground(new java.awt.Color(221, 231, 229));
-        jRadioButton2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jRadioButton2.setText("Bloqueado");
-        jRadioButton2.setEnabled(false);
+        jRadioBloqueado.setBackground(new java.awt.Color(221, 231, 229));
+        buttonSituacao.add(jRadioBloqueado);
+        jRadioBloqueado.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jRadioBloqueado.setText("Bloqueado");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -305,9 +339,9 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(85, Short.MAX_VALUE)
-                .addComponent(jRadioButton1)
+                .addComponent(jRadioAtivo)
                 .addGap(62, 62, 62)
-                .addComponent(jRadioButton2)
+                .addComponent(jRadioBloqueado)
                 .addGap(67, 67, 67))
         );
         jPanel3Layout.setVerticalGroup(
@@ -315,26 +349,21 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2))
+                    .addComponent(jRadioAtivo)
+                    .addComponent(jRadioBloqueado))
                 .addGap(17, 17, 17))
         );
 
         jLabel23.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel23.setText("Nome Fantasia");
 
-        jTextField1.setEditable(false);
-        jTextField1.setEnabled(false);
-
         jLabel25.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel25.setText("Observações:");
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
-        jTextPane1.setEditable(false);
-        jTextPane1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jTextPane1.setEnabled(false);
-        jScrollPane1.setViewportView(jTextPane1);
+        jTextObservacao.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jScrollPane1.setViewportView(jTextObservacao);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -354,7 +383,7 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
                         .addGap(6, 6, 6)
                         .addComponent(jButtonExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(6, 6, 6)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jBPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(14, 14, 14)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -376,11 +405,11 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jLabel1)
                                     .addGap(4, 4, 4)
-                                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jDataCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addComponent(jTextId, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(10, 10, 10)
-                                    .addComponent(jTextNome, javax.swing.GroupLayout.PREFERRED_SIZE, 630, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jTextRazaoSocial, javax.swing.GroupLayout.PREFERRED_SIZE, 630, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(310, 310, 310)
@@ -388,11 +417,11 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
                                     .addGap(100, 100, 100)
                                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextNomeFantasia, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(10, 10, 10)
-                                    .addComponent(jFCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jFCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(5, 5, 5)
-                                    .addComponent(jTextRg, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jTextIe, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addComponent(jLabel8)
                                     .addGap(55, 55, 55)
@@ -425,11 +454,11 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(5, 5, 5)
                                 .addComponent(jLabel1))
-                            .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jDataCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextRazaoSocial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -437,9 +466,9 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
                     .addComponent(jLabel6))
                 .addGap(5, 5, 5)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jFCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextRg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextNomeFantasia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jFCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextIe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(7, 7, 7)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
@@ -455,7 +484,7 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
                         .addGap(2, 2, 2)
                         .addComponent(jTextEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel25)
                 .addGap(7, 7, 7)
@@ -464,7 +493,7 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(1, 1, 1)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -484,38 +513,115 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 631, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)
         );
 
-        setBounds(0, 0, 764, 662);
+        setBounds(0, 0, 764, 614);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
-       
+        if (JOptionPane.showConfirmDialog(this, "Deseja excluir?", "Exclusão", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+
+                Fornecedor fornecedor = new Fornecedor();
+                FornecedorDAO fornecedorDAO = new FornecedorDAO();
+
+                fornecedor.setId(Integer.parseInt(jTextId.getText()));
+
+                fornecedorDAO.excluir(fornecedor);
+
+                limpar();
+                
+                desabilitarCampos();
+
+            
+            }       
     }//GEN-LAST:event_jButtonExcluirActionPerformed
 
     private void jButtonEdtarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEdtarActionPerformed
         habilitarCampos();
+        op = "editar";
     }//GEN-LAST:event_jButtonEdtarActionPerformed
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
+        FornecedorDAO fornecedorDAO = new FornecedorDAO();
+        Fornecedor fornecedor = new Fornecedor();
+        fornecedor.setRazaoSocial(jTextRazaoSocial.getText());
+        fornecedor.setNomeFantasia(jTextNomeFantasia.getText());
+        fornecedor.setCnpj(jFCnpj.getText());
+        fornecedor.setIe(jTextIe.getText());
+        fornecedor.setTelefoneContato1(jFTelefone1.getText());
+        fornecedor.setTelefoneContato2(jFTelefone2.getText());
+        fornecedor.setEmail(jTextEmail.getText());
+        fornecedor.setCep(jFCep.getText());
+        fornecedor.setTipoLogradouro((TipoLogradouro)jComboTipoLogradouro.getSelectedItem());
+        fornecedor.setLogradouro(jTextLogradouro.getText());
+        fornecedor.setNumero(Integer.parseInt(jTextNumero.getText()));
+        fornecedor.setComplemento(jTextComplemento.getText());
+        fornecedor.setBairro(jTextBairro.getText());
+        
+        fornecedor.setEstado((Estado)jComboEstado.getSelectedItem());
+        fornecedor.setCidade((Cidade)jComboCidade.getSelectedItem());
+        
+        fornecedor.setDataCadastro(jDataCadastro.getDate());
+        
+        fornecedor.setObservacoes(jTextObservacao.getText());
+        if (jRadioAtivo.isSelected())
+            fornecedor.setSituacaoFornecedor(true);
+        else if (jRadioBloqueado.isSelected())
+            fornecedor.setSituacaoFornecedor(false);
+        
+        if (op.equals("novo")){
+            fornecedorDAO.salvar(fornecedor);
+            jTextId.setText(fornecedor.getId()+"");
+        }else{
+            fornecedor.setId(Integer.parseInt(jTextId.getText()));
+            fornecedorDAO.editar(fornecedor);
+        }
+        
         desabilitarCampos();
+        
+        JOptionPane.showMessageDialog(this, "Fornecedor Gravado com sucesso!");
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
-        
+        limpar();
+        desabilitarCampos();        
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     private void jButtonNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNovoActionPerformed
+        limpar();
+        jDataCadastro.setDate(new Date());
         habilitarCampos();
+        op = "novo";
     }//GEN-LAST:event_jButtonNovoActionPerformed
+
+    private void jBPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBPesquisarActionPerformed
+        PesquisarFornecedor pesquisar = new PesquisarFornecedor(null, true);
+        pesquisar.setVisible(true);
+        FornecedorDAO fornecedorDAO = new FornecedorDAO();
+        Fornecedor fornecedor = fornecedorDAO.buscarPorId(pesquisar.getCodSelecionado());
+        if (fornecedor!=null){
+            preencherTela(fornecedor);
+            desabilitarCampos();
+        }
+    }//GEN-LAST:event_jBPesquisarActionPerformed
+
+    private void jComboEstadoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboEstadoItemStateChanged
+        Estado estado = (Estado) jComboEstado.getSelectedItem();
+        if(estado != null)
+        carregarCidade(estado.getId());
+    }//GEN-LAST:event_jComboEstadoItemStateChanged
+
+    private void jTextLogradouroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextLogradouroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextLogradouroActionPerformed
 
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonSexo;
-    private javax.swing.JButton jButton1;
+    private javax.swing.ButtonGroup buttonSituacao;
+    private javax.swing.JButton jBPesquisar;
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonEdtar;
     private javax.swing.JButton jButtonExcluir;
@@ -523,10 +629,10 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButtonSalvar;
     private javax.swing.JComboBox<String> jComboCidade;
     private javax.swing.JComboBox<String> jComboEstado;
-    private javax.swing.JComboBox<String> jComboTipo;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private javax.swing.JComboBox<String> jComboTipoLogradouro;
+    private com.toedter.calendar.JDateChooser jDataCadastro;
     private javax.swing.JFormattedTextField jFCep;
-    private javax.swing.JFormattedTextField jFCpf;
+    private javax.swing.JFormattedTextField jFCnpj;
     private javax.swing.JFormattedTextField jFTelefone1;
     private javax.swing.JFormattedTextField jFTelefone2;
     private javax.swing.JLabel jLabel1;
@@ -550,48 +656,53 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JRadioButton jRadioAtivo;
+    private javax.swing.JRadioButton jRadioBloqueado;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextBairro;
     private javax.swing.JTextField jTextComplemento;
     private javax.swing.JTextField jTextEmail;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextId;
+    private javax.swing.JTextField jTextIe;
     private javax.swing.JTextField jTextLogradouro;
-    private javax.swing.JTextField jTextNome;
+    private javax.swing.JTextField jTextNomeFantasia;
     private javax.swing.JTextField jTextNumero;
-    private javax.swing.JTextPane jTextPane1;
-    private javax.swing.JTextField jTextRg;
+    private javax.swing.JTextPane jTextObservacao;
+    private javax.swing.JTextField jTextRazaoSocial;
     // End of variables declaration//GEN-END:variables
 
 public void limpar(){
         jTextId.setText("");
-        jTextNome.setText("");
-        jFCpf.setText("");
-        jTextRg.setText("");
+        jTextRazaoSocial.setText("");
+        jFCnpj.setText("");
+        jTextIe.setText("");
         jFTelefone1.setText("");
         jFTelefone2.setText("");
         jTextEmail.setText("");
         jFCep.setText("");
-        jComboTipo.setSelectedItem(null);
+        jComboTipoLogradouro.setSelectedItem(null);
         jTextLogradouro.setText("");
         jTextNumero.setText("");
         jTextComplemento.setText("");
         jTextBairro.setText("");
         jComboCidade.setSelectedItem(null);
+        jDataCadastro.setDate(null);
+        jTextNomeFantasia.setText("");
+        jComboEstado.setSelectedItem(null);
+        jTextObservacao.setText("");
     }
     
-        public void habilitarCampos(){
+    public void habilitarCampos(){
         jTextId.setEnabled(true);
-        jTextNome.setEnabled(true);
-        jFCpf.setEnabled(true);
-        jTextRg.setEnabled(true);
+        jTextRazaoSocial.setEnabled(true);
+        jTextNomeFantasia.setEnabled(true);
+        jFCnpj.setEnabled(true);
+        jTextIe.setEnabled(true);
         jFTelefone1.setEnabled(true);
         jFTelefone2.setEnabled(true);
         jTextEmail.setEnabled(true);
         jFCep.setEnabled(true);
-        jComboTipo.setEnabled(true);
+        jComboTipoLogradouro.setEnabled(true);
         jTextLogradouro.setEnabled(true);
         jTextNumero.setEnabled(true);
         jTextComplemento.setEnabled(true);
@@ -603,20 +714,24 @@ public void limpar(){
         jButtonSalvar.setEnabled(true);
         jButtonEdtar.setEnabled(false);
         jButtonExcluir.setEnabled(true);
-        jDateChooser1.setEnabled(true);
+        jDataCadastro.setEnabled(true);
+        jTextObservacao.setEnabled(true);
+        jRadioAtivo.setEnabled(true);
+        jRadioBloqueado.setEnabled(true);
 
     }
 
     public void desabilitarCampos(){
         jTextId.setEnabled(false);
-        jTextNome.setEnabled(false);
-        jFCpf.setEnabled(false);
-        jTextRg.setEnabled(false);
+        jTextRazaoSocial.setEnabled(false);
+        jTextNomeFantasia.setEnabled(false);
+        jFCnpj.setEnabled(false);
+        jTextIe.setEnabled(false);
         jFTelefone1.setEnabled(false);
         jFTelefone2.setEnabled(false);
         jTextEmail.setEnabled(false);
         jFCep.setEnabled(false);
-        jComboTipo.setEnabled(false);
+        jComboTipoLogradouro.setEnabled(false);
         jTextLogradouro.setEnabled(false);
         jTextNumero.setEnabled(false);
         jTextComplemento.setEnabled(false);
@@ -626,11 +741,71 @@ public void limpar(){
         jButtonNovo.setEnabled(true);
         jButtonCancelar.setEnabled(false);
         jButtonSalvar.setEnabled(false);
-        jButtonEdtar.setEnabled(true);
-        jButtonExcluir.setEnabled(false);
-        jDateChooser1.setEnabled(false);
+        if (jTextId.getText().equals(""))
+            jButtonEdtar.setEnabled(false);
+        else
+            jButtonEdtar.setEnabled(true);
+        if(jTextId.getText().equals(""))
+            jButtonExcluir.setEnabled(false);
+        else
+            jButtonExcluir.setEnabled(true);
+        jDataCadastro.setEnabled(false);
+        jTextObservacao.setEnabled(false);
+        jRadioAtivo.setEnabled(false);
+        jRadioBloqueado.setEnabled(false);
 
     }
+    
+    public void carregartipoLogradouro(){
+       TipoLogradouroDAO logradouroDAO = new TipoLogradouroDAO();
+       List <TipoLogradouro> itens = logradouroDAO.listarTipoLogradouro();
+       //adiciona o primeiro vazio
+       itens.add(0, null);
+       jComboTipoLogradouro.setModel(new DefaultComboBoxModel(itens.toArray()));
+    }
+    
+    public void carregarEstado(){
+       EstadoDAO estadoDAO = new EstadoDAO();
+       List <Estado> itens = estadoDAO.listarEstado();
+       //adiciona o primeiro vazio
+       itens.add(0, null);
+       jComboEstado.setModel(new DefaultComboBoxModel(itens.toArray()));
+    }
+     
+     public void carregarCidade(int idEstado){
+       CidadeDAO cidadeDAO = new CidadeDAO();
+       List <Cidade> itens = cidadeDAO.listarCidade(idEstado);
+       //adiciona o primeiro vazio
+       itens.add(0, null);
+       jComboCidade.setModel(new DefaultComboBoxModel(itens.toArray()));
+    }
+     
+     public void preencherTela(Fornecedor f){
+         jTextId.setText(f.getId()+"");
+         jTextRazaoSocial.setText(f.getRazaoSocial());
+         jTextNomeFantasia.setText(f.getNomeFantasia());
+         jDataCadastro.setDate(f.getDataCadastro());
+         jFCnpj.setText(f.getCnpj());
+         jTextIe.setText(f.getIe());
+         jFTelefone1.setText(f.getTelefoneContato1());
+         jFTelefone2.setText(f.getTelefoneContato2());
+         jTextEmail.setText(f.getEmail());
+         jFCep.setText(f.getCep());
+         jComboTipoLogradouro.getModel().setSelectedItem(f.getTipoLogradouro());
+         jTextLogradouro.setText(f.getLogradouro());
+         jTextNumero.setText(f.getNumero()+"");
+         jTextComplemento.setText(f.getComplemento());
+         jTextBairro.setText(f.getBairro());
+         jComboEstado.getModel().setSelectedItem(f.getEstado());
+         jComboCidade.getModel().setSelectedItem(f.getCidade());
+         jTextObservacao.setText(f.getObservacoes());
+         if (f.getSituacaoFornecedor()== false)
+             jRadioBloqueado.setSelected(false);
+         else if (f.getSituacaoFornecedor()== true)
+             jRadioAtivo.setSelected(true);
+         
+             
+     }
 }
 
 

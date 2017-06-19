@@ -5,6 +5,8 @@
  */
 package Classes;
 
+import java.util.Objects;
+
 /**
  *
  * @author Carol
@@ -62,6 +64,6 @@ public class Funcionario extends Pessoa{
         return this.getNome();
     }
 
-    
+   
     
 }

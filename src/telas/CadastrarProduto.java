@@ -51,7 +51,6 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
         jTextField4 = new javax.swing.JTextField();
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
         jComboGrupo = new javax.swing.JComboBox<>();
         jLabel15 = new javax.swing.JLabel();
         jComboFornecedor = new javax.swing.JComboBox<>();
@@ -60,7 +59,6 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
         jRadioDesativado = new javax.swing.JRadioButton();
         jLabel3 = new javax.swing.JLabel();
         jTextDescricao = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
         jComboMarca = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         jComboCategoria = new javax.swing.JComboBox<>();
@@ -91,6 +89,8 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
         jButtonCancelar = new javax.swing.JButton();
         jButtonExcluir = new javax.swing.JButton();
         jButtonPesquisar = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         jTextField4.setText("jTextField4");
 
@@ -102,18 +102,13 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
         jPanel1.setBackground(new java.awt.Color(217, 233, 251));
         jPanel1.setLayout(null);
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel7.setText("Grupo");
-        jPanel1.add(jLabel7);
-        jLabel7.setBounds(18, 143, 33, 15);
-
         jComboGrupo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboGrupoActionPerformed(evt);
             }
         });
         jPanel1.add(jComboGrupo);
-        jComboGrupo.setBounds(18, 164, 140, 20);
+        jComboGrupo.setBounds(18, 164, 140, 26);
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel15.setText("Fornecedor");
@@ -121,10 +116,10 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
         jLabel15.setBounds(371, 143, 62, 15);
 
         jPanel1.add(jComboFornecedor);
-        jComboFornecedor.setBounds(370, 164, 270, 20);
+        jComboFornecedor.setBounds(370, 164, 270, 26);
 
         jPanel6.setBackground(new java.awt.Color(217, 233, 251));
-        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(23, 23, 127), null), "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(23, 23, 127)), "Status", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(23, 23, 127))); // NOI18N
+        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(23, 23, 127), null), "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(23, 23, 127)), "Status", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(23, 23, 127))); // NOI18N
 
         jRadioAtivado.setBackground(new java.awt.Color(217, 233, 251));
         jRadioAtivado.setText("Ativado");
@@ -154,19 +149,14 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
         );
 
         jPanel1.add(jPanel6);
-        jPanel6.setBounds(20, 14, 206, 59);
+        jPanel6.setBounds(20, 14, 209, 57);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText("Descrição do Produto ");
         jPanel1.add(jLabel3);
         jLabel3.setBounds(20, 96, 121, 15);
         jPanel1.add(jTextDescricao);
-        jTextDescricao.setBounds(18, 117, 324, 20);
-
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel5.setText("Marca ");
-        jPanel1.add(jLabel5);
-        jLabel5.setBounds(164, 143, 35, 15);
+        jTextDescricao.setBounds(18, 117, 324, 28);
 
         jComboMarca.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -174,7 +164,7 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(jComboMarca);
-        jComboMarca.setBounds(164, 164, 178, 20);
+        jComboMarca.setBounds(164, 164, 178, 26);
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel6.setText("Categoria/Tipo");
@@ -187,7 +177,7 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(jComboCategoria);
-        jComboCategoria.setBounds(371, 117, 269, 20);
+        jComboCategoria.setBounds(371, 117, 269, 26);
 
         jPanel2.setBackground(new java.awt.Color(217, 233, 251));
 
@@ -226,7 +216,7 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(9, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
@@ -239,7 +229,7 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
         );
 
         jPanel1.add(jPanel2);
-        jPanel2.setBounds(244, 14, 407, 64);
+        jPanel2.setBounds(244, 14, 398, 64);
 
         jPanel3.setBackground(new java.awt.Color(217, 233, 251));
 
@@ -330,6 +320,12 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel7.setText("Grupo");
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel5.setText("Marca ");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -380,13 +376,22 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
                         .addGap(5, 5, 5)
                         .addComponent(jButtonExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(5, 5, 5)
-                        .addComponent(jButtonPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButtonPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel7)
+                        .addGap(114, 114, 114)
+                        .addComponent(jLabel5)))
                 .addContainerGap(41, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(98, 98, 98)
+                .addGap(58, 58, 58)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel5))
+                .addGap(25, 25, 25)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -427,7 +432,7 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 660, 390));
 
-        setBounds(0, 0, 676, 397);
+        setBounds(0, 0, 676, 411);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextCodigoActionPerformed

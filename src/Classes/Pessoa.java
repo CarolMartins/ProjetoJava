@@ -26,6 +26,7 @@ public abstract class Pessoa {
     private Cidade cidade;
     private Estado estado;
     private String observacoes;
+    private Date dataCadastro;
 
     public int getId() {
         return id;
@@ -169,6 +170,36 @@ public abstract class Pessoa {
 
     public void setEstado(Estado estado) {
         this.estado = estado;
+    }
+
+    public Date getDataCadastro() {
+        return dataCadastro;
+    }
+
+    public void setDataCadastro(Date dataCadastro) {
+        this.dataCadastro = dataCadastro;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 41 * hash + this.id;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Pessoa other = (Pessoa) obj;
+        return true;
     }
 
     

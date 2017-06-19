@@ -5,7 +5,11 @@
  */
 package telas;
 
+import Classes.Cliente;
+import Classes.Fornecedor;
 import Classes.Funcionario;
+import conexao.ClienteDAO;
+import conexao.FornecedorDAO;
 import conexao.FuncionarioDAO;
 import java.awt.event.KeyEvent;
 import java.util.List;
@@ -15,13 +19,13 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author carolina
  */
-public class PesquisarFuncionario extends javax.swing.JDialog {
+public class PesquisarFornecedor extends javax.swing.JDialog {
 
     private int codSelecionado;
     /**
      * Creates new form TelaPesquisar
      */
-    public PesquisarFuncionario(java.awt.Frame parent, boolean modal) {
+    public PesquisarFornecedor(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
@@ -40,7 +44,7 @@ public class PesquisarFuncionario extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jTextPesquisa = new javax.swing.JTextField();
         jRadioNome = new javax.swing.JRadioButton();
-        jRadioCpf = new javax.swing.JRadioButton();
+        jRadioCnpj = new javax.swing.JRadioButton();
         jRadioRg = new javax.swing.JRadioButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTablePesquisa = new javax.swing.JTable();
@@ -65,33 +69,33 @@ public class PesquisarFuncionario extends javax.swing.JDialog {
         buttonGroup.add(jRadioNome);
         jRadioNome.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jRadioNome.setSelected(true);
-        jRadioNome.setText("Nome");
+        jRadioNome.setText("Nome Fantasia");
         jRadioNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRadioNomeActionPerformed(evt);
             }
         });
 
-        jRadioCpf.setBackground(new java.awt.Color(221, 231, 239));
-        buttonGroup.add(jRadioCpf);
-        jRadioCpf.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jRadioCpf.setText("CPF");
+        jRadioCnpj.setBackground(new java.awt.Color(221, 231, 239));
+        buttonGroup.add(jRadioCnpj);
+        jRadioCnpj.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jRadioCnpj.setText("CNPJ");
 
         jRadioRg.setBackground(new java.awt.Color(221, 231, 239));
         buttonGroup.add(jRadioRg);
         jRadioRg.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jRadioRg.setText("RG");
+        jRadioRg.setText("Inscrição Estadual");
 
         jTablePesquisa.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Id", "Nome", "CPF", "RG"
+                "Id", "Nome Fantasia", "CNPJ", "Inscrição Estadual"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                true, false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -145,16 +149,15 @@ public class PesquisarFuncionario extends javax.swing.JDialog {
                             .addComponent(jLabel2)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jLabel1)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addComponent(jRadioNome)
                                     .addGap(80, 80, 80)
-                                    .addComponent(jRadioCpf)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jRadioRg)
-                                    .addGap(208, 208, 208))
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE)
+                                    .addComponent(jRadioCnpj)
+                                    .addGap(62, 62, 62)
+                                    .addComponent(jRadioRg))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 562, Short.MAX_VALUE)
                                 .addComponent(jTextPesquisa)))))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -166,7 +169,7 @@ public class PesquisarFuncionario extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jRadioNome)
-                    .addComponent(jRadioCpf)
+                    .addComponent(jRadioCnpj)
                     .addComponent(jRadioRg))
                 .addGap(5, 5, 5)
                 .addComponent(jLabel2)
@@ -226,7 +229,7 @@ public class PesquisarFuncionario extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioCpf;
+    private javax.swing.JRadioButton jRadioCnpj;
     private javax.swing.JRadioButton jRadioNome;
     private javax.swing.JRadioButton jRadioRg;
     private javax.swing.JScrollPane jScrollPane1;
@@ -238,23 +241,22 @@ public class PesquisarFuncionario extends javax.swing.JDialog {
     public void preencherTabela(){
         DefaultTableModel model = (DefaultTableModel) jTablePesquisa.getModel();
         model.setNumRows(0);
-        FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
+        FornecedorDAO fornecedorDAO = new FornecedorDAO();
         
-        List<Funcionario> lista = null;
-        if (jRadioCpf.isSelected())
-            lista = funcionarioDAO.listarFuncionarioPorCpf(jTextPesquisa.getText());
+        List<Fornecedor> lista = null;
+        if (jRadioCnpj.isSelected())
+            lista = fornecedorDAO.listarFornecedorPorCNPJ(jTextPesquisa.getText());
         else if (jRadioNome.isSelected())
-            lista = funcionarioDAO.listarFuncionarioPorNome(jTextPesquisa.getText());
+            lista = fornecedorDAO.listarFornecedorPorNome(jTextPesquisa.getText());
         else
-            lista = funcionarioDAO.listarFuncionarioPorRg(jTextPesquisa.getText());
+            lista = fornecedorDAO.listarFornecedorPorIE(jTextPesquisa.getText());
         
-        for (Funcionario f : lista){
+        for (Fornecedor f : lista){
             model.addRow(new Object []{
               f.getId(),
-              f.getNome(),
-              f.getCpf(),
-              f.getRg(),
-              ""
+              f.getNomeFantasia(),
+              f.getCnpj(),
+              f.getIe()
          });
         }      
     }

@@ -69,6 +69,44 @@ public class CargoDAO {
             throw new RuntimeException ("Erro SQL: " + ex);
         }
         return cargo;
+    }
+
+    public void editar(Cargo cargo){
+        
+        Connection conn = factory.getConnection();
+        try {
+            String sql = ("UPDATE cargo set Descricao = ?, Salario = ?, Comissao = ? where idCargo = ?");
+            
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, cargo.getDescricao());
+            ps.setDouble(2, cargo.getSalario());
+            ps.setDouble (3, cargo.getComissao());
+            ps.setInt(4, cargo.getId());
+            ps.executeUpdate();
+            conn.close();
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao atualizar " + ex);
+              }           
+    }
+    
+    public void excluir(Cargo cargo ){
+        Connection conn = factory.getConnection();
+        
+        try {
+            String sql = "delete from cargo where idCargo = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setLong(1, cargo.getId());
+            ps.executeUpdate();
+            conn.close();
+            JOptionPane.showMessageDialog(null, "Excluido com Sucesso!");
+        } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao deletar " + ex);
+            }
+                
+                
+    }
 }
 
-}
+    
+    
+

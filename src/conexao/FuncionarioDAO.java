@@ -60,8 +60,8 @@ public class FuncionarioDAO {
        try {
            PreparedStatement ps = conn.prepareStatement ("insert into pessoa (Nome, DataNascimento, Sexo, Cpf, Rg,"
                    + "TelefoneResidencial, TelefoneCelular, Email, Cep, idTipoLogradouro,"
-                   + "Logradouro, Numero, Bairro, Complemento, Observacao, IdCidade)"
-                   + "values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
+                   + "Logradouro, Numero, Bairro, Complemento, Observacao, IdCidade, DataCadastro)"
+                   + "values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
            ps.setString(1, f.getNome());
            ps.setDate(2, new java.sql.Date(f.getDatanascimento().getTime()));
            ps.setString(3, f.getSexo());
@@ -78,6 +78,7 @@ public class FuncionarioDAO {
            ps.setString(14, f.getComplemento());
            ps.setString(15, f.getObservacoes());
            ps.setInt(16, f.getCidade().getId());
+           ps.setDate(17, new java.sql.Date(f.getDataCadastro().getTime()));
            ps.executeUpdate();
            
            ResultSet rs = ps.getGeneratedKeys();
@@ -105,9 +106,10 @@ public class FuncionarioDAO {
         Connection conn = factory.getConnection();
         
         try {
-            PreparedStatement ps = conn.prepareStatement("UPDATE pessoa (Nome = ?, DataNascimento = ?, Sexo = ?, Cpf = ?, Rg = ?,"
+            PreparedStatement ps = conn.prepareStatement(
+                    "UPDATE pessoa set Nome = ?, DataNascimento = ?, Sexo = ?, Cpf = ?, Rg = ?,"
                    + "TelefoneResidencial = ?, TelefoneCelular = ?, Email = ?, Cep = ?, idTipoLogradouro = ?,"
-                   + "Logradouro = ?, Numero = ?, Bairro = ?, Complemento = ?, Observacao = ?, IdCidade = ? where idPessoa = ?)");
+                   + "Logradouro = ?, Numero = ?, Bairro = ?, Complemento = ?, Observacao = ?, IdCidade = ? where idPessoa = ?");
             
             ps.setString(1, f.getNome());
             ps.setDate(2, new java.sql.Date(f.getDatanascimento().getTime()));
@@ -128,8 +130,8 @@ public class FuncionarioDAO {
             ps.setInt(17, f.getId());
             ps.executeUpdate();
             
-            ps = conn.prepareStatement("Update funcionario (meta = ?, usuario = ?, senha = ?, situacaoLogin = ?, " +
-                                             " idCargo = ? where idFuncionario = ?)");                    
+            ps = conn.prepareStatement("Update funcionario set meta = ?, usuario = ?, senha = ?, situacaoLogin = ?, " +
+                                             " idCargo = ? where idFuncionario = ?");                    
             
             ps.setDouble (1, f.getMeta());
             ps.setString(2, f.getUsuario());
@@ -144,6 +146,28 @@ public class FuncionarioDAO {
               }           
     }
     
+    public void excluir(Funcionario funcionario){
+        Connection conn = factory.getConnection();
+        try {
+            String sql = "delete from funcionario where idFuncionario = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setLong(1, funcionario.getId());
+            ps.executeUpdate();
+            
+            sql = "delete from pessoa where idPessoa = ?";
+            ps = conn.prepareStatement(sql);
+            ps.setLong(1, funcionario.getId());
+            ps.executeUpdate();
+            
+            conn.close();
+            JOptionPane.showMessageDialog(null, "Excluido com Sucesso!");
+        } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao deletar " + ex);
+            }
+                
+                
+    }
+    
     public List<Funcionario> listarFuncionarioPorNome(String nome){
         Connection conn = factory.getConnection();
         List<Funcionario> funcionarios = new ArrayList <>();
@@ -156,7 +180,7 @@ public class FuncionarioDAO {
                          "       estado.Sigla as siglaEstado,\n" +
                          "       cargo.descricao as descricaoCargo\n" +
                          "from pessoa\n" +
-                         "left join funcionario on pessoa.idPessoa = funcionario.idFuncionario\n" +
+                         "join funcionario on pessoa.idPessoa = funcionario.idFuncionario\n" +
                          "left join tipologradouro on pessoa.idTipoLogradouro = tipologradouro.idTipoLogradouro\n" +
                          "left join cargo on cargo.idCargo = funcionario.idCargo\n" +
                          "left join cidade on cidade.idCidade = pessoa.IdCidade\n" +
@@ -237,7 +261,7 @@ public class FuncionarioDAO {
                          "       estado.Sigla as siglaEstado,\n" +
                          "       cargo.descricao as descricaoCargo\n" +
                          "from pessoa\n" +
-                         "left join funcionario on pessoa.idPessoa = funcionario.idFuncionario\n" +
+                         "join funcionario on pessoa.idPessoa = funcionario.idFuncionario\n" +
                          "left join tipologradouro on pessoa.idTipoLogradouro = tipologradouro.idTipoLogradouro\n" +
                          "left join cargo on cargo.idCargo = funcionario.idCargo\n" +
                          "left join cidade on cidade.idCidade = pessoa.IdCidade\n" +
@@ -318,7 +342,7 @@ public class FuncionarioDAO {
                          "       estado.Sigla as siglaEstado,\n" +
                          "       cargo.descricao as descricaoCargo\n" +
                          "from pessoa\n" +
-                         "left join funcionario on pessoa.idPessoa = funcionario.idFuncionario\n" +
+                         "join funcionario on pessoa.idPessoa = funcionario.idFuncionario\n" +
                          "left join tipologradouro on pessoa.idTipoLogradouro = tipologradouro.idTipoLogradouro\n" +
                          "left join cargo on cargo.idCargo = funcionario.idCargo\n" +
                          "left join cidade on cidade.idCidade = pessoa.IdCidade\n" +
@@ -399,7 +423,7 @@ public class FuncionarioDAO {
                          "       estado.Sigla as siglaEstado,\n" +
                          "       cargo.descricao as descricaoCargo\n" +
                          "from pessoa\n" +
-                         "left join funcionario on pessoa.idPessoa = funcionario.idFuncionario\n" +
+                         "join funcionario on pessoa.idPessoa = funcionario.idFuncionario\n" +
                          "left join tipologradouro on pessoa.idTipoLogradouro = tipologradouro.idTipoLogradouro\n" +
                          "left join cargo on cargo.idCargo = funcionario.idCargo\n" +
                          "left join cidade on cidade.idCidade = pessoa.IdCidade\n" +
@@ -422,9 +446,11 @@ public class FuncionarioDAO {
                 f.setTelefoneCelular(resultSet.getString("TelefoneCelular"));
                 f.setEmail(resultSet.getString("email"));
                 f.setCep(resultSet.getString("cep"));
+                f.setDataCadastro((java.util.Date)resultSet.getDate("DataCadastro"));
                 
                 TipoLogradouro tipoLogradouro = new TipoLogradouro();
                 tipoLogradouro.setId(resultSet.getInt("idTipoLogradouro"));
+                tipoLogradouro.setSigla(resultSet.getString("Sigla"));
                 tipoLogradouro.setNome(resultSet.getString("descricaoTipoLogradouro"));
                 
                 f.setTipoLogradouro(tipoLogradouro);
@@ -436,12 +462,13 @@ public class FuncionarioDAO {
                 
                 Estado estado = new Estado();
                 estado.setId(resultSet.getInt("idEstado"));
-                estado.setNomeEstado("nomeEstado");
-                estado.setSigla("siglaEstado");
+                estado.setNomeEstado(resultSet.getString("nomeEstado"));
+                estado.setSigla(resultSet.getString("siglaEstado"));
+                f.setEstado(estado);
+                
                 
                 Cidade cidade = new Cidade();
                 cidade.setId(resultSet.getInt("idCidade"));
-                cidade.setEstado(estado);
                 cidade.setNomeCidade(resultSet.getString("nomeCidade"));
                 
                 f.setCidade(cidade);
@@ -455,6 +482,11 @@ public class FuncionarioDAO {
                 cargo.setSalario(resultSet.getDouble("salario"));
                 cargo.setId(resultSet.getInt("idCargo"));
                 
+                if (resultSet.getInt("situacaoLogin")==1)
+                    f.setSituacaoLogin(true);
+                else if (resultSet.getInt("situacaoLogin")==0)
+                    f.setSituacaoLogin(false);
+                f.setObservacoes(resultSet.getString("Observacao"));
                 f.setCargo(cargo);
                 
             }

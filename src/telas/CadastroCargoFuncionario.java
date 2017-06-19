@@ -7,8 +7,10 @@ package telas;
 
 import Classes.Cargo;
 import Classes.MarcaProduto;
+import Classes.TipoLogradouro;
 import conexao.CargoDAO;
 import conexao.MarcaDAO;
+import conexao.TipoLogradouroDAO;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -106,8 +108,18 @@ public class CadastroCargoFuncionario extends javax.swing.JInternalFrame {
 
         jBEditar.setText("Editar");
         jBEditar.setPreferredSize(new java.awt.Dimension(75, 23));
+        jBEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBEditarActionPerformed(evt);
+            }
+        });
 
         jBCancelar.setText("Cancelar");
+        jBCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBCancelarActionPerformed(evt);
+            }
+        });
 
         jTableCargo.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jTableCargo.setModel(new javax.swing.table.DefaultTableModel(
@@ -156,6 +168,11 @@ public class CadastroCargoFuncionario extends javax.swing.JInternalFrame {
 
         jBExcluir.setText("Excluir");
         jBExcluir.setPreferredSize(new java.awt.Dimension(75, 23));
+        jBExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBExcluirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -268,10 +285,10 @@ public class CadastroCargoFuncionario extends javax.swing.JInternalFrame {
                cargoDAO.salvar(cargo);
                jTextId.setText(cargo.getId()+ "");
            }
-           //else {
-               //cargo.setId(Integer.parseInt(jTextId.getText()));
-               //cargoDAO.editar(cargo);
-           //}
+           else {
+               cargo.setId(Integer.parseInt(jTextId.getText()));
+               cargoDAO.editar(cargo);
+           }
             //Pega o código que foi gerado na classe e joga na caixinha Id
              jTextId.setText(cargo.getId()+"");
 
@@ -294,6 +311,45 @@ public class CadastroCargoFuncionario extends javax.swing.JInternalFrame {
     private void jTableCargoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableCargoMouseClicked
         pegaLinhaSelecionada();
     }//GEN-LAST:event_jTableCargoMouseClicked
+
+    private void jBEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEditarActionPerformed
+         if (jTableCargo.getSelectedRow() !=-1){
+            
+            preencherTabela();
+            
+            op = "editar";
+            
+            habilitar();
+       }
+    }//GEN-LAST:event_jBEditarActionPerformed
+
+    private void jBCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCancelarActionPerformed
+       limpar();
+       desabilitar();
+       pegaLinhaSelecionada();
+    }//GEN-LAST:event_jBCancelarActionPerformed
+
+    private void jBExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBExcluirActionPerformed
+        if((jTableCargo.getSelectedRow() !=-1)){
+            if (JOptionPane.showConfirmDialog(this, "Deseja excluir?", "Exclusão", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+
+                Cargo cargo = new Cargo();
+                CargoDAO cargoDAO = new CargoDAO();
+
+                cargo.setId((int) jTableCargo.getValueAt(jTableCargo.getSelectedRow(), 0));
+
+                cargoDAO.excluir(cargo);
+
+                limpar();
+
+                preencherTabela();
+
+            
+            } 
+        }else{
+            JOptionPane.showMessageDialog(this, "Selecione um item para excluir");
+        }  
+    }//GEN-LAST:event_jBExcluirActionPerformed
 
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
