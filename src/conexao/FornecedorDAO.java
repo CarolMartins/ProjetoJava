@@ -391,5 +391,34 @@ public class FornecedorDAO {
         }
         return forn;
         } 
+    
+    public List<Fornecedor> listarFornecedor(){
+        Connection conn = factory.getConnection();
+        List<Fornecedor> fornecedores = new ArrayList <>();
+        try {
+            PreparedStatement ps = null;
+            ResultSet resultSet = null;
+            
+           String sql = "SELECT * from fornecedor";
+           
+            ps = conn.prepareStatement(sql); 
+            resultSet = ps.executeQuery();
+            
+            while(resultSet.next()){
+                
+                Fornecedor forn = new Fornecedor();
+                forn.setId(resultSet.getInt("idFornecedor"));
+                forn.setRazaoSocial(resultSet.getString("razaoSocial"));
+                forn.setNomeFantasia(resultSet.getString("NomeFantasia"));
+                
+                fornecedores.add(forn);
         }
+
+        conn.close();
+        } catch (SQLException ex) {
+            //throw new RuntimeException ("Erro SQL: " + ex);
+        }
+        return fornecedores;
+    }
+}
 

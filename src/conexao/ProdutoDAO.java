@@ -30,32 +30,31 @@ public class ProdutoDAO {
     
     public void salvar(Produto p){
         try {
-           PreparedStatement ps = conn.prepareStatement ("insert into produto(CodigoBarra, CodigoProduto, StatusProduto,"
+           PreparedStatement ps = conn.prepareStatement ("insert into produto(CodigoBarra, StatusProduto,"
                                                          + "DescricaoProduto, Peso, PrecoCusto, MargemLucro, PrecoVenda,"
                                                          + "QuantidadeRecebida, EstoqueAtual, IdFornecedor, IdTipoCategoriaProduto,"
-                                                         + " IdMarca, IdGrupo, IdIcmcs)" 
-                                                         + "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
+                                                         + " IdMarca, IdGrupo)" 
+                                                         + "values(?,?,?,?,?,?,?,?,?,?,?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
            ps.setInt(1, p.getCodigoBarra());
-           ps.setInt(2, p.getCodigo());
-           ps.setBoolean(3, p.getStatusProduto());
+           ps.setBoolean(2, p.getStatusProduto());
            ps.setString(3, p.getDescricaoProduto());
-           ps.setDouble(5, p.getPeso());
-           ps.setDouble(6,p.getPrecoCusto());
-           ps.setDouble(7,p.getMargemLucro());
-           ps.setDouble(8, p.getPrecoVenda());
-           ps.setInt(9, p.getQtdRecebida());
-           ps.setInt(10, p.getEstoqueAtual());
-           ps.setInt(11, p.getFornecedor().getId());
-           ps.setInt(12, p.getTipoCategoria().getId());
-           ps.setInt(13, p.getMarca().getId());
+           ps.setDouble(4, p.getPeso());
+           ps.setDouble(5,p.getPrecoCusto());
+           ps.setDouble(6,p.getMargemLucro());
+           ps.setDouble(7, p.getPrecoVenda());
+           ps.setInt(8, p.getQtdRecebida());
+           ps.setInt(9, p.getEstoqueAtual());
+           ps.setInt(10, p.getFornecedor().getId());
+           ps.setInt(11, p.getTipoCategoria().getId());
+           ps.setInt(12, p.getMarca().getId());
            ps.setInt(13, p.getGrupo().getId());
-           ps.setInt(15, p.getIcms().getId());
+           //ps.setInt(14, p.getIcms().getId());
            
            ps.executeUpdate();
            
            ResultSet rs = ps.getGeneratedKeys();
            if(rs.next())
-               p.setCodigo(rs.getInt(1));
+               p.setIdProduto(rs.getInt(1));
            
           conn.close();
            
@@ -67,26 +66,25 @@ public class ProdutoDAO {
     public void editar(Produto p){
         
         try {
-            PreparedStatement ps = conn.prepareStatement("UPDATE produto (CodigoBarra = ?, CodigoProduto = ?, StatusProduto= ?,"
+            PreparedStatement ps = conn.prepareStatement("UPDATE produto (CodigoBarra = ?, StatusProduto= ?,"
                                                          + "DescricaoProduto = ?, Peso = ?, PrecoCusto = ?, MargemLucro = ?, PrecoVenda = ?,"
                                                          + "QuantidadeRecebida = ?, EstoqueAtual = ?, IdFornecedor = ?, IdTipoCategoriaProduto = ?,"
-                                                         + " IdMarca = ?, IdGrupo = ?, IdIcmcs = ? where idProduto  = ?)");
+                                                         + " IdMarca = ?, IdGrupo = ? where idProduto  = ?)");
             
            ps.setInt(1, p.getCodigoBarra());
-           ps.setInt(2, p.getCodigo());
-           ps.setBoolean(3, p.getStatusProduto());
+           ps.setBoolean(2, p.getStatusProduto());
            ps.setString(3, p.getDescricaoProduto());
-           ps.setDouble(5, p.getPeso());
-           ps.setDouble(6,p.getPrecoCusto());
-           ps.setDouble(7,p.getMargemLucro());
-           ps.setDouble(8, p.getPrecoVenda());
-           ps.setInt(9, p.getQtdRecebida());
-           ps.setInt(10, p.getEstoqueAtual());
-           ps.setInt(11, p.getFornecedor().getId());
-           ps.setInt(12, p.getTipoCategoria().getId());
-           ps.setInt(13, p.getMarca().getId());
+           ps.setDouble(4, p.getPeso());
+           ps.setDouble(5,p.getPrecoCusto());
+           ps.setDouble(6,p.getMargemLucro());
+           ps.setDouble(7, p.getPrecoVenda());
+           ps.setInt(8, p.getQtdRecebida());
+           ps.setInt(9, p.getEstoqueAtual());
+           ps.setInt(10, p.getFornecedor().getId());
+           ps.setInt(11, p.getTipoCategoria().getId());
+           ps.setInt(12, p.getMarca().getId());
            ps.setInt(13, p.getGrupo().getId());
-           ps.setInt(15, p.getIcms().getId());
+           ps.setInt(14, p.getIcms().getId());
            ps.executeUpdate();
            
            conn.close();
@@ -119,7 +117,6 @@ public class ProdutoDAO {
                 
                 Produto p = new Produto();
                 p.setIdProduto(resultSet.getInt("idProduto"));
-                p.setCodigo(resultSet.getInt("CodigoProduto"));
                 p.setCodigoBarra(resultSet.getInt("CodigoBarra"));
                 p.setStatusProduto(resultSet.getBoolean("StatusProduto"));
                 p.setDescricaoProduto(resultSet.getString("DescricaoProduto"));
@@ -183,7 +180,6 @@ public class ProdutoDAO {
                 
                 Produto p = new Produto();
                 p.setIdProduto(resultSet.getInt("idProduto"));
-                p.setCodigo(resultSet.getInt("CodigoProduto"));
                 p.setCodigoBarra(resultSet.getInt("CodigoBarra"));
                 p.setStatusProduto(resultSet.getBoolean("StatusProduto"));
                 p.setDescricaoProduto(resultSet.getString("DescricaoProduto"));

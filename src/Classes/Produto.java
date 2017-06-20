@@ -12,7 +12,6 @@ package Classes;
 public class Produto {
     
     private int IdProduto;
-    private int codigo;
     private int codigoBarra;
     private Boolean statusProduto;
     private String descricaoProduto;
@@ -27,14 +26,6 @@ public class Produto {
     private Icms icms;
     private int qtdRecebida;
     private int estoqueAtual;
-
-    public int getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
-    }
 
     public int getCodigoBarra() {
         return codigoBarra;
