@@ -54,20 +54,15 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
         jComboGrupo = new javax.swing.JComboBox<>();
         jLabel15 = new javax.swing.JLabel();
         jComboFornecedor = new javax.swing.JComboBox<>();
-        jPanel6 = new javax.swing.JPanel();
-        jRadioAtivado = new javax.swing.JRadioButton();
-        jRadioDesativado = new javax.swing.JRadioButton();
         jLabel3 = new javax.swing.JLabel();
         jTextDescricao = new javax.swing.JTextField();
         jComboMarca = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         jComboCategoria = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
-        jBGerarCodigo = new javax.swing.JButton();
-        jTextCodigoBarras = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jTextCodigo = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
+        jRadioAtivado = new javax.swing.JRadioButton();
+        jRadioDesativado = new javax.swing.JRadioButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jTextMargemCusto = new javax.swing.JTextField();
@@ -89,6 +84,10 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
         jButtonPesquisar = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jTextCodigo = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jTextCodigoBarras = new javax.swing.JTextField();
 
         jTextField4.setText("jTextField4");
 
@@ -115,6 +114,36 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
 
         jPanel1.add(jComboFornecedor);
         jComboFornecedor.setBounds(370, 164, 270, 26);
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel3.setText("Descrição do Produto ");
+        jPanel1.add(jLabel3);
+        jLabel3.setBounds(20, 96, 121, 15);
+        jPanel1.add(jTextDescricao);
+        jTextDescricao.setBounds(18, 117, 324, 28);
+
+        jComboMarca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboMarcaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jComboMarca);
+        jComboMarca.setBounds(164, 164, 178, 26);
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel6.setText("Categoria/Tipo");
+        jPanel1.add(jLabel6);
+        jLabel6.setBounds(371, 96, 80, 15);
+
+        jComboCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboCategoriaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jComboCategoria);
+        jComboCategoria.setBounds(371, 117, 269, 26);
+
+        jPanel2.setBackground(new java.awt.Color(217, 233, 251));
 
         jPanel6.setBackground(new java.awt.Color(217, 233, 251));
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(23, 23, 127), null), "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(23, 23, 127)), "Status", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(23, 23, 127))); // NOI18N
@@ -148,96 +177,34 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
                 .addContainerGap(9, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel6);
-        jPanel6.setBounds(20, 14, 209, 57);
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel3.setText("Descrição do Produto ");
-        jPanel1.add(jLabel3);
-        jLabel3.setBounds(20, 96, 121, 15);
-        jPanel1.add(jTextDescricao);
-        jTextDescricao.setBounds(18, 117, 324, 28);
-
-        jComboMarca.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboMarcaActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jComboMarca);
-        jComboMarca.setBounds(164, 164, 178, 26);
-
-        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel6.setText("Categoria/Tipo");
-        jPanel1.add(jLabel6);
-        jLabel6.setBounds(371, 96, 80, 15);
-
-        jComboCategoria.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboCategoriaActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jComboCategoria);
-        jComboCategoria.setBounds(371, 117, 269, 26);
-
-        jPanel2.setBackground(new java.awt.Color(217, 233, 251));
-
-        jBGerarCodigo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jBGerarCodigo.setText("GERAR CÓDIGO");
-
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel2.setText("Código de Barra");
-
-        jTextCodigo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextCodigoActionPerformed(evt);
-            }
-        });
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel1.setText("Código");
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(10, 10, 10)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jTextCodigoBarras, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jBGerarCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 61, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(9, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextCodigoBarras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBGerarCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 7, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel2);
-        jPanel2.setBounds(244, 14, 398, 64);
+        jPanel2.setBounds(372, 14, 270, 64);
 
         jPanel3.setBackground(new java.awt.Color(217, 233, 251));
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel9.setText("Margem de Lucro");
 
-        jTextMargemCusto.setEditable(false);
-        jTextMargemCusto.setText("0.8");
+        jTextMargemCusto.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextMargemCustoFocusLost(evt);
+            }
+        });
         jTextMargemCusto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextMargemCustoActionPerformed(evt);
@@ -263,6 +230,11 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
         jTextPrecoCusto.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTextPrecoCustoFocusLost(evt);
+            }
+        });
+        jTextPrecoCusto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextPrecoCustoActionPerformed(evt);
             }
         });
 
@@ -433,6 +405,26 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
         jPanel1.add(jPanel3);
         jPanel3.setBounds(10, 90, 660, 300);
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel1.setText("Código");
+        jPanel1.add(jLabel1);
+        jLabel1.setBounds(20, 20, 37, 15);
+
+        jTextCodigo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextCodigoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jTextCodigo);
+        jTextCodigo.setBounds(20, 40, 69, 28);
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel2.setText("Código de Barra");
+        jPanel1.add(jLabel2);
+        jLabel2.setBounds(100, 20, 86, 15);
+        jPanel1.add(jTextCodigoBarras);
+        jTextCodigoBarras.setBounds(100, 40, 240, 28);
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 660, 390));
 
         setBounds(0, 0, 676, 411);
@@ -506,15 +498,10 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButtonPesquisarActionPerformed
 
     private void jComboCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboCategoriaActionPerformed
-        TipoCategoriaProduto tc= (TipoCategoriaProduto) jComboCategoria.getSelectedItem();
-        //if(tc !=null){
-            //carregartipoCategoria();
-        //}
+        
     }//GEN-LAST:event_jComboCategoriaActionPerformed
     private void jComboGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboGrupoActionPerformed
-        GrupoProduto gp = (GrupoProduto) jComboGrupo.getSelectedItem();
-           /*if (gp != null)
-               carregarGrupo();*/
+        
     }//GEN-LAST:event_jComboGrupoActionPerformed
 
     private void jComboMarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboMarcaActionPerformed
@@ -526,14 +513,19 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTextMargemCustoActionPerformed
 
     private void jTextPrecoCustoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextPrecoCustoFocusLost
-        // TODO add your handling code here:
-        System.out.println(Double.parseDouble(jTextPrecoCusto.getText())+ (Double.parseDouble(jTextPrecoCusto.getText())*0.8));
+        calculaPrecoVenda();
     }//GEN-LAST:event_jTextPrecoCustoFocusLost
 
     private void jTextPrecoVendaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextPrecoVendaFocusLost
-        double resultado;
-        resultado = (Double.parseDouble(jTextPrecoCusto.getText())+ (Double.parseDouble(jTextPrecoCusto.getText())*0.8));
     }//GEN-LAST:event_jTextPrecoVendaFocusLost
+
+    private void jTextPrecoCustoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextPrecoCustoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextPrecoCustoActionPerformed
+
+    private void jTextMargemCustoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextMargemCustoFocusLost
+        calculaPrecoVenda();
+    }//GEN-LAST:event_jTextMargemCustoFocusLost
 
     /**
      * @param args the command line arguments
@@ -542,7 +534,6 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jBGerarCodigo;
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonEdtar;
     private javax.swing.JButton jButtonExcluir;
@@ -691,6 +682,17 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
          jTextDescricao.setText(p.getDescricaoProduto());
          jTextPrecoVenda.setText(p.getPrecoVenda() + "");
      }
+    
+    public void calculaPrecoVenda(){
+        if (!jTextPrecoCusto.getText().equals("") && (!jTextMargemCusto.getText().equals(""))){
+            double precocusto = Double.parseDouble(jTextPrecoCusto.getText());
+            double margemlucro = Double.parseDouble(jTextMargemCusto.getText());
+            double precovenda = (precocusto*margemlucro)+precocusto;
+            jTextPrecoVenda.setText(precovenda+"");
+        }else{
+            jTextPrecoVenda.setText("");
+        }
+    }
     
     
 }
