@@ -50,10 +50,10 @@ public class TelaPrincipal extends javax.swing.JFrame{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
         jDesktopPane = new javax.swing.JDesktopPane();
         jLabel2 = new javax.swing.JLabel();
         jLabelSejaBemVindo = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuCadastrar = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
@@ -80,12 +80,6 @@ public class TelaPrincipal extends javax.swing.JFrame{
         jMenu6 = new javax.swing.JMenu();
         jMenuItem12 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Jalv Sistemas");
-        setExtendedState(MAXIMIZED_BOTH);
-
-        jPanel1.setBackground(new java.awt.Color(217, 233, 251));
 
         jDesktopPane.setBackground(new java.awt.Color(217, 233, 251));
 
@@ -120,18 +114,24 @@ public class TelaPrincipal extends javax.swing.JFrame{
                 .addContainerGap())
         );
 
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Jalv Sistemas");
+        setExtendedState(MAXIMIZED_BOTH);
+
+        jPanel1.setBackground(new java.awt.Color(217, 233, 251));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane)
+            .addGap(0, 743, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane)
+            .addGap(0, 396, Short.MAX_VALUE)
         );
 
-        jMenuBar1.setBackground(new java.awt.Color(185, 209, 238));
+        jMenuBar1.setBackground(new java.awt.Color(222, 252, 254));
         jMenuBar1.setBorder(null);
         jMenuBar1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
