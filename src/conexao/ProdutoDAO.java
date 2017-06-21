@@ -170,7 +170,7 @@ public class ProdutoDAO {
                          "join tipocategoriaproduto on produto.IdTipoCategoriaProduto = tipocategoriaproduto.idTipoCategoriaProduto\n" +
                          "join marca on marca.idMarca = produto.IdMarca\n" +
                          "join grupo on grupo.idGrupo = produto.IdMarca\n" +
-                         "where produto.DescricaoProduto like '%?%'\n" +
+                         "where produto.DescricaoProduto like ?\n" +
                          "order by produto.idProduto";
             ps = conn.prepareStatement(sql); 
             ps.setString(1, "%"+Codigo+"%");
