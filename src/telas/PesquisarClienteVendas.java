@@ -5,10 +5,10 @@
  */
 package telas;
 
+import Classes.Cliente;
 import Classes.Funcionario;
-import Classes.Produto;
+import conexao.ClienteDAO;
 import conexao.FuncionarioDAO;
-import conexao.ProdutoDAO;
 import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
@@ -17,13 +17,13 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author carolina
  */
-public class PesquisarProduto extends javax.swing.JDialog {
+public class PesquisarClienteVendas extends javax.swing.JDialog {
 
     private int codSelecionado;
     /**
      * Creates new form TelaPesquisar
      */
-    public PesquisarProduto(java.awt.Frame parent, boolean modal) {
+    public PesquisarClienteVendas(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
@@ -41,16 +41,16 @@ public class PesquisarProduto extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jTextPesquisa = new javax.swing.JTextField();
-        jRadioCodigo = new javax.swing.JRadioButton();
-        jRadioDescricao = new javax.swing.JRadioButton();
+        jRadioNome = new javax.swing.JRadioButton();
+        jRadioCpf = new javax.swing.JRadioButton();
+        jRadioRg = new javax.swing.JRadioButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTablePesquisa = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        jBPesquisar = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Pesquisar Produto");
 
         jPanel1.setBackground(new java.awt.Color(221, 231, 239));
 
@@ -63,32 +63,37 @@ public class PesquisarProduto extends javax.swing.JDialog {
             }
         });
 
-        jRadioCodigo.setBackground(new java.awt.Color(221, 231, 239));
-        buttonGroup.add(jRadioCodigo);
-        jRadioCodigo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jRadioCodigo.setSelected(true);
-        jRadioCodigo.setText("Código");
-        jRadioCodigo.addActionListener(new java.awt.event.ActionListener() {
+        jRadioNome.setBackground(new java.awt.Color(221, 231, 239));
+        buttonGroup.add(jRadioNome);
+        jRadioNome.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jRadioNome.setSelected(true);
+        jRadioNome.setText("Nome");
+        jRadioNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioCodigoActionPerformed(evt);
+                jRadioNomeActionPerformed(evt);
             }
         });
 
-        jRadioDescricao.setBackground(new java.awt.Color(221, 231, 239));
-        buttonGroup.add(jRadioDescricao);
-        jRadioDescricao.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jRadioDescricao.setText("Descrição");
+        jRadioCpf.setBackground(new java.awt.Color(221, 231, 239));
+        buttonGroup.add(jRadioCpf);
+        jRadioCpf.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jRadioCpf.setText("CPF");
+
+        jRadioRg.setBackground(new java.awt.Color(221, 231, 239));
+        buttonGroup.add(jRadioRg);
+        jRadioRg.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jRadioRg.setText("RG");
 
         jTablePesquisa.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Código", "Descrição", "Preço"
+                "Id", "Nome", "CPF", "RG"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                true, false, false
+                true, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -102,15 +107,16 @@ public class PesquisarProduto extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(jTablePesquisa);
         if (jTablePesquisa.getColumnModel().getColumnCount() > 0) {
-            jTablePesquisa.getColumnModel().getColumn(0).setMaxWidth(100);
-            jTablePesquisa.getColumnModel().getColumn(1).setMaxWidth(350);
-            jTablePesquisa.getColumnModel().getColumn(2).setMaxWidth(100);
+            jTablePesquisa.getColumnModel().getColumn(0).setMaxWidth(60);
+            jTablePesquisa.getColumnModel().getColumn(1).setMaxWidth(300);
+            jTablePesquisa.getColumnModel().getColumn(2).setMaxWidth(150);
+            jTablePesquisa.getColumnModel().getColumn(3).setMaxWidth(150);
         }
 
-        jButton1.setText("Pesquisar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jBPesquisar.setText("Pesquisar");
+        jBPesquisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jBPesquisarActionPerformed(evt);
             }
         });
 
@@ -132,7 +138,7 @@ public class PesquisarProduto extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)
+                        .addComponent(jBPesquisar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton2))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
@@ -142,10 +148,12 @@ public class PesquisarProduto extends javax.swing.JDialog {
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jLabel1)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jRadioCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(81, 81, 81)
-                                    .addComponent(jRadioDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(126, 126, 126))
+                                    .addComponent(jRadioNome)
+                                    .addGap(80, 80, 80)
+                                    .addComponent(jRadioCpf)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jRadioRg)
+                                    .addGap(208, 208, 208))
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE)
                                 .addComponent(jTextPesquisa)))))
                 .addContainerGap(25, Short.MAX_VALUE))
@@ -159,8 +167,9 @@ public class PesquisarProduto extends javax.swing.JDialog {
                 .addComponent(jTextPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioCodigo)
-                    .addComponent(jRadioDescricao))
+                    .addComponent(jRadioNome)
+                    .addComponent(jRadioCpf)
+                    .addComponent(jRadioRg))
                 .addGap(5, 5, 5)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -168,7 +177,7 @@ public class PesquisarProduto extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jBPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(52, 52, 52))
         );
 
@@ -186,13 +195,13 @@ public class PesquisarProduto extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jRadioCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioCodigoActionPerformed
+    private void jRadioNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioNomeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioCodigoActionPerformed
+    }//GEN-LAST:event_jRadioNomeActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jBPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBPesquisarActionPerformed
         preencherTabela();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jBPesquisarActionPerformed
 
     private void jTextPesquisaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextPesquisaKeyPressed
         if (evt.getKeyCode() ==  KeyEvent.VK_ENTER)
@@ -212,64 +221,16 @@ public class PesquisarProduto extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jTablePesquisaMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PesquisarProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PesquisarProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PesquisarProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PesquisarProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                PesquisarProduto dialog = new PesquisarProduto(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jBPesquisar;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioCodigo;
-    private javax.swing.JRadioButton jRadioDescricao;
+    private javax.swing.JRadioButton jRadioCpf;
+    private javax.swing.JRadioButton jRadioNome;
+    private javax.swing.JRadioButton jRadioRg;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTablePesquisa;
     private javax.swing.JTextField jTextPesquisa;
@@ -279,20 +240,23 @@ public class PesquisarProduto extends javax.swing.JDialog {
     public void preencherTabela(){
         DefaultTableModel model = (DefaultTableModel) jTablePesquisa.getModel();
         model.setNumRows(0);
-        ProdutoDAO produtoDAO = new ProdutoDAO();
+        ClienteDAO clienteDAO = new ClienteDAO();
         
-        List<Produto> lista = null;
-        if (jRadioDescricao.isSelected())
-            lista = produtoDAO.listarProdutoporDescricao(jTextPesquisa.getText());
-        else if (jRadioCodigo.isSelected())
-            lista = produtoDAO.listarProdutoporCodigo(Integer.parseInt(jTextPesquisa.getText()));
+        List<Cliente> lista = null;
+        if (jRadioCpf.isSelected())
+            lista = clienteDAO.listarClientePorCpf(jTextPesquisa.getText());
+        else if (jRadioNome.isSelected())
+            lista = clienteDAO.listarClientePorNome(jTextPesquisa.getText());
+        else
+            lista = clienteDAO.listarClientePorRg(jTextPesquisa.getText());
         
-        
-        for (Produto p : lista){
+        for (Cliente c : lista){
             model.addRow(new Object []{
-              p.getIdProduto(),
-              p.getDescricaoProduto(),
-              p.getPrecoVenda()
+              c.getId(),
+              c.getNome(),
+              c.getCpf(),
+              c.getRg(),
+              ""
          });
         }      
     }

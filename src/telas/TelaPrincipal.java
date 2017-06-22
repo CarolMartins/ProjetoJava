@@ -30,6 +30,7 @@ public class TelaPrincipal extends javax.swing.JFrame{
     GrupoProdutos grupo;
     Pagamento pagamento;
     ConsultaVendas consultar;
+    CadastrarEstoque cadastrarEstoque;
     
     
 
@@ -73,6 +74,7 @@ public class TelaPrincipal extends javax.swing.JFrame{
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem11 = new javax.swing.JMenuItem();
         jMenuItem13 = new javax.swing.JMenuItem();
+        jMenuItem16 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem14 = new javax.swing.JMenuItem();
         jMenuItem15 = new javax.swing.JMenuItem();
@@ -246,6 +248,14 @@ public class TelaPrincipal extends javax.swing.JFrame{
         });
         jProduto.add(jMenuItem13);
 
+        jMenuItem16.setText("Estoque");
+        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem16ActionPerformed(evt);
+            }
+        });
+        jProduto.add(jMenuItem16);
+
         jMenuBar1.add(jProduto);
 
         jMenu1.setText("Venda");
@@ -318,9 +328,7 @@ public class TelaPrincipal extends javax.swing.JFrame{
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuTipoActionPerformed
-
-        
-        
+          
         if (cadastrarTipoLogradouro==null || !cadastrarTipoLogradouro.isVisible()){
             cadastrarTipoLogradouro = new CadastrarTipoLogradouro();
             cadastrarTipoLogradouro.setVisible(true);
@@ -439,6 +447,15 @@ public class TelaPrincipal extends javax.swing.JFrame{
        System.exit(0);
     }//GEN-LAST:event_jMenu2MouseClicked
 
+    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
+       if (cadastrarEstoque==null || !cadastrarEstoque.isVisible()){
+            cadastrarEstoque = new CadastrarEstoque();
+            cadastrarEstoque.setVisible(true);
+            jDesktopPane.add(cadastrarEstoque);
+            centralizar(cadastrarEstoque);
+        } 
+    }//GEN-LAST:event_jMenuItem16ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane jDesktopPane;
@@ -459,6 +476,7 @@ public class TelaPrincipal extends javax.swing.JFrame{
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
+    private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;

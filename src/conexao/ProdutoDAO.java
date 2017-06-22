@@ -35,7 +35,7 @@ public class ProdutoDAO {
                                                          + "QuantidadeRecebida, EstoqueAtual, IdFornecedor, IdTipoCategoriaProduto,"
                                                          + " IdMarca, IdGrupo)" 
                                                          + "values(?,?,?,?,?,?,?,?,?,?,?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
-           ps.setInt(1, p.getCodigoBarra());
+           ps.setString(1, p.getCodigoBarra());
            ps.setBoolean(2, p.getStatusProduto());
            ps.setString(3, p.getDescricaoProduto());
            ps.setDouble(4, p.getPeso());
@@ -48,7 +48,6 @@ public class ProdutoDAO {
            ps.setInt(11, p.getTipoCategoria().getId());
            ps.setInt(12, p.getMarca().getId());
            ps.setInt(13, p.getGrupo().getId());
-           //ps.setInt(14, p.getIcms().getId());
            
            ps.executeUpdate();
            
@@ -66,12 +65,12 @@ public class ProdutoDAO {
     public void editar(Produto p){
         
         try {
-            PreparedStatement ps = conn.prepareStatement("UPDATE produto (CodigoBarra = ?, StatusProduto= ?,"
+            PreparedStatement ps = conn.prepareStatement("UPDATE produto set CodigoBarra = ?, StatusProduto= ?,"
                                                          + "DescricaoProduto = ?, Peso = ?, PrecoCusto = ?, MargemLucro = ?, PrecoVenda = ?,"
                                                          + "QuantidadeRecebida = ?, EstoqueAtual = ?, IdFornecedor = ?, IdTipoCategoriaProduto = ?,"
-                                                         + " IdMarca = ?, IdGrupo = ? where idProduto  = ?)");
+                                                         + " IdMarca = ?, IdGrupo = ? where idProduto  = ?");
             
-           ps.setInt(1, p.getCodigoBarra());
+           ps.setString(1, p.getCodigoBarra());
            ps.setBoolean(2, p.getStatusProduto());
            ps.setString(3, p.getDescricaoProduto());
            ps.setDouble(4, p.getPeso());
@@ -84,7 +83,7 @@ public class ProdutoDAO {
            ps.setInt(11, p.getTipoCategoria().getId());
            ps.setInt(12, p.getMarca().getId());
            ps.setInt(13, p.getGrupo().getId());
-           ps.setInt(14, p.getIcms().getId());
+           ps.setInt(14, p.getIdProduto());
            ps.executeUpdate();
            
            conn.close();
@@ -106,8 +105,8 @@ public class ProdutoDAO {
                          "join fornecedor on produto.IdFornecedor = fornecedor.idFornecedor\n" +
                          "join tipocategoriaproduto on produto.IdTipoCategoriaProduto = tipocategoriaproduto.idTipoCategoriaProduto\n" +
                          "join marca on marca.idMarca = produto.IdMarca\n" +
-                         "join grupo on grupo.idGrupo = produto.IdMarca\n" +
-                         "where produto.DescricaoProduto like '%?%'\n" +
+                         "join grupo on grupo.idGrupo = produto.idGrupo\n" +
+                         "where produto.DescricaoProduto like ?\n" +
                          "order by produto.DescricaoProduto";
             ps = conn.prepareStatement(sql); 
             ps.setString(1, "%"+descricaoProduto+"%");
@@ -117,7 +116,7 @@ public class ProdutoDAO {
                 
                 Produto p = new Produto();
                 p.setIdProduto(resultSet.getInt("idProduto"));
-                p.setCodigoBarra(resultSet.getInt("CodigoBarra"));
+                p.setCodigoBarra(resultSet.getString("CodigoBarra"));
                 p.setStatusProduto(resultSet.getBoolean("StatusProduto"));
                 p.setDescricaoProduto(resultSet.getString("DescricaoProduto"));
                 p.setPeso(resultSet.getDouble("Peso"));
@@ -125,6 +124,7 @@ public class ProdutoDAO {
                 p.setMargemLucro(resultSet.getDouble("MargemLucro"));
                 p.setQtdRecebida(resultSet.getInt("QuantidadeRecebida"));
                 p.setEstoqueAtual(resultSet.getInt("EstoqueAtual"));
+                p.setPrecoVenda(resultSet.getFloat("precoVenda"));
                 
                 TipoCategoriaProduto tipoCategoria = new TipoCategoriaProduto();
                 tipoCategoria.setId(resultSet.getInt("idTipoCategoriaProduto"));
@@ -157,9 +157,11 @@ public class ProdutoDAO {
 }
         return produto;
 }
+    
+    
  public List<Produto> listarProdutoporCodigo(int Codigo){
         
-      List<Produto> produto = new ArrayList <>();
+      List<Produto> produtos = new ArrayList <>();
         try {
             PreparedStatement ps = null;
             ResultSet resultSet = null;
@@ -169,18 +171,18 @@ public class ProdutoDAO {
                          "join fornecedor on produto.IdFornecedor = fornecedor.idFornecedor\n" +
                          "join tipocategoriaproduto on produto.IdTipoCategoriaProduto = tipocategoriaproduto.idTipoCategoriaProduto\n" +
                          "join marca on marca.idMarca = produto.IdMarca\n" +
-                         "join grupo on grupo.idGrupo = produto.IdMarca\n" +
-                         "where produto.DescricaoProduto like ?\n" +
+                         "join grupo on grupo.idGrupo = produto.idGrupo\n" +
+                         "where produto.idProduto = ?\n" +
                          "order by produto.idProduto";
             ps = conn.prepareStatement(sql); 
-            ps.setString(1, "%"+Codigo+"%");
+            ps.setString(1, Codigo+"");
             resultSet = ps.executeQuery();
             
             while(resultSet.next()){
                 
                 Produto p = new Produto();
                 p.setIdProduto(resultSet.getInt("idProduto"));
-                p.setCodigoBarra(resultSet.getInt("CodigoBarra"));
+                p.setCodigoBarra(resultSet.getString("CodigoBarra"));
                 p.setStatusProduto(resultSet.getBoolean("StatusProduto"));
                 p.setDescricaoProduto(resultSet.getString("DescricaoProduto"));
                 p.setPeso(resultSet.getDouble("Peso"));
@@ -188,6 +190,7 @@ public class ProdutoDAO {
                 p.setMargemLucro(resultSet.getDouble("MargemLucro"));
                 p.setQtdRecebida(resultSet.getInt("QuantidadeRecebida"));
                 p.setEstoqueAtual(resultSet.getInt("EstoqueAtual"));
+                p.setPrecoVenda(resultSet.getFloat("precovenda"));
                 
                 TipoCategoriaProduto tipoCategoria = new TipoCategoriaProduto();
                 tipoCategoria.setId(resultSet.getInt("idTipoCategoriaProduto"));
@@ -212,14 +215,164 @@ public class ProdutoDAO {
                 
                 p.getFornecedor();
                 
-                produto.add(p);
+                produtos.add(p);
             }   conn.close();
             
         } catch (SQLException ex) {
             throw new RuntimeException ("Erro SQL: " + ex);
         }
-        return null;
+        return produtos;
         
  }
+ 
+ 
+    public Produto buscarPorId(int Codigo){
+        
+      Produto p = null;
+        try {
+            PreparedStatement ps = null;
+            ResultSet resultSet = null;
+            
+            String sql = "select * \n" +
+                         "from produto \n" +
+                         "join fornecedor on produto.IdFornecedor = fornecedor.idFornecedor\n" +
+                         "join tipocategoriaproduto on produto.IdTipoCategoriaProduto = tipocategoriaproduto.idTipoCategoriaProduto\n" +
+                         "join marca on marca.idMarca = produto.IdMarca\n" +
+                         "join grupo on grupo.idGrupo = produto.idGrupo\n" +
+                         "where produto.idProduto = ?\n" +
+                         "order by produto.idProduto";
+            ps = conn.prepareStatement(sql); 
+            ps.setString(1, Codigo+"");
+            resultSet = ps.executeQuery();
+            
+            while(resultSet.next()){
+                
+                p = new Produto();
+                p.setIdProduto(resultSet.getInt("idProduto"));
+                p.setCodigoBarra(resultSet.getString("CodigoBarra"));
+                p.setStatusProduto(resultSet.getBoolean("StatusProduto"));
+                p.setDescricaoProduto(resultSet.getString("DescricaoProduto"));
+                p.setPeso(resultSet.getDouble("Peso"));
+                p.setPrecoCusto(resultSet.getDouble("PrecoCusto"));
+                p.setMargemLucro(resultSet.getDouble("MargemLucro"));
+                p.setQtdRecebida(resultSet.getInt("QuantidadeRecebida"));
+                p.setEstoqueAtual(resultSet.getInt("EstoqueAtual"));
+                p.setPrecoVenda(resultSet.getFloat("precovenda"));
+                
+                TipoCategoriaProduto tipoCategoria = new TipoCategoriaProduto();
+                tipoCategoria.setId(resultSet.getInt("idTipoCategoriaProduto"));
+                tipoCategoria.setTipoCategoria(resultSet.getString("TipoCategoria"));
+                
+                p.setTipoCategoria(tipoCategoria);
+                
+                MarcaProduto marca = new MarcaProduto();
+                marca.setId(resultSet.getInt("idMarca"));
+                marca.setMarca(resultSet.getString("Marca"));
+                
+                p.setMarca(marca);
+                
+                GrupoProduto grupo = new GrupoProduto();
+                grupo.setId(resultSet.getInt("idGrupo"));
+                grupo.setGrupo(resultSet.getString("Grupo"));
+                
+                p.setGrupo(grupo);
+                
+                Fornecedor f = new Fornecedor();
+                f.setId(resultSet.getInt("IdFornecedor"));
+                f.setNomeFantasia(resultSet.getString("nomeFantasia"));
+                
+                p.setFornecedor(f);
+                
+            }   conn.close();
+            
+        } catch (SQLException ex) {
+            throw new RuntimeException ("Erro SQL: " + ex);
+        }
+        return p;
+        
+    }
+    
+   public Produto buscarPorCodigoBarras(String CodigoBarra){
+        
+      Produto p = null;
+        try {
+            PreparedStatement ps = null;
+            ResultSet resultSet = null;
+            
+            String sql = "select * \n" +
+                         "from produto \n" +
+                         "join fornecedor on produto.IdFornecedor = fornecedor.idFornecedor\n" +
+                         "join tipocategoriaproduto on produto.IdTipoCategoriaProduto = tipocategoriaproduto.idTipoCategoriaProduto\n" +
+                         "join marca on marca.idMarca = produto.IdMarca\n" +
+                         "join grupo on grupo.idGrupo = produto.idGrupo\n" +
+                         "where produto.CodigoBarra = ?\n" +
+                         "order by produto.idProduto";
+            ps = conn.prepareStatement(sql); 
+            ps.setString(1, CodigoBarra+"");
+            resultSet = ps.executeQuery();
+            
+            while(resultSet.next()){
+                
+                p = new Produto();
+                p.setIdProduto(resultSet.getInt("idProduto"));
+                p.setCodigoBarra(resultSet.getString("CodigoBarra"));
+                p.setStatusProduto(resultSet.getBoolean("StatusProduto"));
+                p.setDescricaoProduto(resultSet.getString("DescricaoProduto"));
+                p.setPeso(resultSet.getDouble("Peso"));
+                p.setPrecoCusto(resultSet.getDouble("PrecoCusto"));
+                p.setMargemLucro(resultSet.getDouble("MargemLucro"));
+                p.setQtdRecebida(resultSet.getInt("QuantidadeRecebida"));
+                p.setEstoqueAtual(resultSet.getInt("EstoqueAtual"));
+                p.setPrecoVenda(resultSet.getFloat("precovenda"));
+                
+                TipoCategoriaProduto tipoCategoria = new TipoCategoriaProduto();
+                tipoCategoria.setId(resultSet.getInt("idTipoCategoriaProduto"));
+                tipoCategoria.setTipoCategoria(resultSet.getString("TipoCategoria"));
+                
+                p.setTipoCategoria(tipoCategoria);
+                
+                MarcaProduto marca = new MarcaProduto();
+                marca.setId(resultSet.getInt("idMarca"));
+                marca.setMarca(resultSet.getString("Marca"));
+                
+                p.setMarca(marca);
+                
+                GrupoProduto grupo = new GrupoProduto();
+                grupo.setId(resultSet.getInt("idGrupo"));
+                grupo.setGrupo(resultSet.getString("Grupo"));
+                
+                p.setGrupo(grupo);
+                
+                Fornecedor f = new Fornecedor();
+                f.setId(resultSet.getInt("IdFornecedor"));
+                f.setNomeFantasia(resultSet.getString("nomeFantasia"));
+                
+                p.setFornecedor(f);
+                
+            }   conn.close();
+            
+        } catch (SQLException ex) {
+            throw new RuntimeException ("Erro SQL: " + ex);
+        }
+        return p;
+        
+    }    
+    
+    public void excluir(Produto p){
+        Connection conn = factory.getConnection();
+        try {
+            String sql = "delete from produto where idProduto = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setLong(1, p.getIdProduto());
+            ps.executeUpdate();
+                       
+            conn.close();
+            JOptionPane.showMessageDialog(null, "Excluido com Sucesso!");
+            
+        } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao deletar " + ex);
+            }      
+        }
+    
 }
 

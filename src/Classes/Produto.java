@@ -12,7 +12,7 @@ package Classes;
 public class Produto {
     
     private int IdProduto;
-    private int codigoBarra;
+    private String codigoBarra;
     private Boolean statusProduto;
     private String descricaoProduto;
     private TipoCategoriaProduto tipoCategoria;
@@ -27,14 +27,13 @@ public class Produto {
     private int qtdRecebida;
     private int estoqueAtual;
 
-    public int getCodigoBarra() {
+    public String getCodigoBarra() {
         return codigoBarra;
     }
 
-    public void setCodigoBarra(int codigoBarra) {
+    public void setCodigoBarra(String codigoBarra) {
         this.codigoBarra = codigoBarra;
     }
-
     public Boolean getStatusProduto() {
         return statusProduto;
     }
