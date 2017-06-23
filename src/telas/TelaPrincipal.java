@@ -1,5 +1,6 @@
 package telas;
 
+import Classes.Venda;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,7 +27,7 @@ public class TelaPrincipal extends javax.swing.JFrame{
     CadastrarProduto cadastrarProduto;
     Marca marca;
     TipoCategoria categoria;
-    Venda venda;
+    CadastrarVenda venda;
     GrupoProdutos grupo;
     Pagamento pagamento;
     ConsultaVendas consultar;
@@ -404,7 +405,7 @@ public class TelaPrincipal extends javax.swing.JFrame{
 
     private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
         if (venda==null || !venda.isVisible()){
-            venda = new Venda();
+            venda = new CadastrarVenda();
             venda.setVisible(true);
             jDesktopPane.add(venda);
             centralizar(venda);

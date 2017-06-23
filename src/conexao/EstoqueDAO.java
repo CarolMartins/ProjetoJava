@@ -28,11 +28,10 @@ public class EstoqueDAO {
         
         try {
             Connection conn = factory.getConnection();
-            PreparedStatement ps = conn.prepareStatement(" insert into estoque (idProduto, quantidade, dataentrada) " +
-                                                         "values ( ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps = conn.prepareStatement(" insert into estoque (idProduto, quantidade) " +
+                                                         "values ( ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setInt (1, estoque.getProduto().getIdProduto());
             ps.setInt(2, estoque.getQuantidade());
-            ps.setDate(3, new java.sql.Date(estoque.getDataEntrada().getTime()));
             ps.executeUpdate();
             
             //Retornando o código do Id gerado e insere no cargo
@@ -100,7 +99,7 @@ public class EstoqueDAO {
                 p.setDescricaoProduto(rsCodigo.getString("descricaoProduto"));
                 e.setProduto(p);
                 e.setQuantidade(rsCodigo.getInt("quantidade"));
-                e.setDataEntrada(rsCodigo.getDate("dataentrada"));
+                
                 
                 estoques.add(e);
                 

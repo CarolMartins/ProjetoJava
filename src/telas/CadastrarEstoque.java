@@ -2,13 +2,18 @@ package telas;
 
 
 import Classes.Cargo;
+import Classes.Cidade;
 import Classes.Estoque;
 import Classes.Produto;
 import conexao.CargoDAO;
+import conexao.CidadeDAO;
 import conexao.EstoqueDAO;
 import conexao.MarcaDAO;
+import conexao.ProdutoDAO;
 import java.time.Instant;
 import java.util.Date;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -26,6 +31,8 @@ public class CadastrarEstoque extends javax.swing.JInternalFrame {
         initComponents();
         desabilitar();
         preencherTabela();
+        carregarProduto();
+        
     }
 
     /**
@@ -43,7 +50,6 @@ public class CadastrarEstoque extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jBNovo = new javax.swing.JButton();
         jBSalvar = new javax.swing.JButton();
-        jBEditar = new javax.swing.JButton();
         jBCancelar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableEstoque = new javax.swing.JTable();
@@ -51,8 +57,6 @@ public class CadastrarEstoque extends javax.swing.JInternalFrame {
         jComboProduto = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jTextQuantidade = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jDataEntrada = new com.toedter.calendar.JDateChooser();
         jLabel4 = new javax.swing.JLabel();
         jTextId = new javax.swing.JTextField();
 
@@ -94,14 +98,6 @@ public class CadastrarEstoque extends javax.swing.JInternalFrame {
             }
         });
 
-        jBEditar.setText("Editar");
-        jBEditar.setPreferredSize(new java.awt.Dimension(75, 23));
-        jBEditar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBEditarActionPerformed(evt);
-            }
-        });
-
         jBCancelar.setText("Cancelar");
         jBCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -115,14 +111,14 @@ public class CadastrarEstoque extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Id", "Produto", "Quantidade", "Data Entrada"
+                "Id", "Produto", "Quantidade"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
+                java.lang.Object.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -146,9 +142,8 @@ public class CadastrarEstoque extends javax.swing.JInternalFrame {
         jScrollPane2.setViewportView(jTableEstoque);
         if (jTableEstoque.getColumnModel().getColumnCount() > 0) {
             jTableEstoque.getColumnModel().getColumn(0).setMaxWidth(50);
-            jTableEstoque.getColumnModel().getColumn(1).setMaxWidth(400);
+            jTableEstoque.getColumnModel().getColumn(1).setMaxWidth(500);
             jTableEstoque.getColumnModel().getColumn(2).setMaxWidth(100);
-            jTableEstoque.getColumnModel().getColumn(3).setMaxWidth(150);
         }
 
         jBExcluir.setText("Excluir");
@@ -160,10 +155,6 @@ public class CadastrarEstoque extends javax.swing.JInternalFrame {
         });
 
         jLabel2.setText("Quantidade");
-
-        jLabel3.setText("Data Entrada");
-
-        jDataEntrada.setEnabled(false);
 
         jLabel4.setText("Id");
 
@@ -191,18 +182,12 @@ public class CadastrarEstoque extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jTextQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jDataEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(jTextQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(182, 182, 182))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jBNovo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jBSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jBEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jBCancelar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -223,20 +208,15 @@ public class CadastrarEstoque extends javax.swing.JInternalFrame {
                         .addComponent(jTextId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(2, 2, 2))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3))
+                        .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jTextQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jComboProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jDataEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -260,35 +240,38 @@ public class CadastrarEstoque extends javax.swing.JInternalFrame {
 
     private void jBNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBNovoActionPerformed
         habilitar();
-        jDataEntrada.setDate(new Date());
+        op = "novo";
         
     }//GEN-LAST:event_jBNovoActionPerformed
 
     private void jBSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalvarActionPerformed
-        if (jComboProduto.getSelectedItem().equals("")){
+        if (jComboProduto.getSelectedItem() == null){
            JOptionPane.showMessageDialog(this, "Selecione o Produto!");
            jComboProduto.requestFocus();
        }else if (jTextQuantidade.getText().equals("")){
            JOptionPane.showMessageDialog(this, "Informe a quantidade!");
            jTextQuantidade.requestFocus();
-       }else if (jDataEntrada.getDate().equals("")){
-           JOptionPane.showMessageDialog(this, "Informe a Data de Entrada!");
-           jDataEntrada.requestFocus();
        }else{
             desabilitar();
             Estoque e = new Estoque();
             e.setProduto((Produto)jComboProduto.getSelectedItem());
             e.setQuantidade(Integer.parseInt(jTextQuantidade.getText()));
-            
+            ProdutoDAO pdao = new ProdutoDAO();
             EstoqueDAO edao = new EstoqueDAO();
             if (op.equals("novo")){
+               
                edao.salvar(e);
-               jTextId.setText(e.getId()+ "");
-           }
-           else {
-               e.setId(Integer.parseInt(jTextId.getText()));
-               edao.editar(e);
-           }
+               
+               Produto p = e.getProduto();
+               p.setEstoqueAtual(p.getEstoqueAtual()+e.getQuantidade());
+               
+               ProdutoDAO produtoDAO = new ProdutoDAO();
+               produtoDAO.editar(p);
+               
+               jTextId.setText(String.valueOf(pdao.buscarCodigo(jComboProduto.getSelectedItem().toString())));
+               
+               
+            }
             //Pega o código que foi gerado na classe e joga na caixinha Id
              jTextId.setText(e.getId()+"");
 
@@ -298,25 +281,39 @@ public class CadastrarEstoque extends javax.swing.JInternalFrame {
        }
     }//GEN-LAST:event_jBSalvarActionPerformed
 
-    private void jBEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEditarActionPerformed
-     
-       
-    }//GEN-LAST:event_jBEditarActionPerformed
-
     private void jBCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCancelarActionPerformed
       
     }//GEN-LAST:event_jBCancelarActionPerformed
 
     private void jBExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBExcluirActionPerformed
-       
+        if((jTableEstoque.getSelectedRow() !=-1)){
+            if (JOptionPane.showConfirmDialog(this, "Deseja excluir?", "Exclusão", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+
+                Estoque estoque = new Estoque();
+                EstoqueDAO estoqueDAO = new EstoqueDAO();
+
+                estoque.setId((int) jTableEstoque.getValueAt(jTableEstoque.getSelectedRow(), 0));
+
+                estoqueDAO.excluir(estoque);
+
+                limpar();
+
+                preencherTabela();
+
+            
+            } 
+        }else{
+            JOptionPane.showMessageDialog(this, "Selecione um item para excluir");
+        } 
     }//GEN-LAST:event_jBExcluirActionPerformed
 
     private void jTableEstoqueKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTableEstoqueKeyReleased
-        
+        preencherTabela();
     }//GEN-LAST:event_jTableEstoqueKeyReleased
 
     private void jTableEstoqueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableEstoqueMouseClicked
-       
+        pegaLinhaSelecionada();
+        desabilitar();
     }//GEN-LAST:event_jTableEstoqueMouseClicked
 
     /**
@@ -326,15 +323,12 @@ public class CadastrarEstoque extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBCancelar;
-    private javax.swing.JButton jBEditar;
     private javax.swing.JButton jBExcluir;
     private javax.swing.JButton jBNovo;
     private javax.swing.JButton jBSalvar;
     private javax.swing.JComboBox<String> jComboProduto;
-    private com.toedter.calendar.JDateChooser jDataEntrada;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -348,20 +342,19 @@ public void desabilitar(){
       
       jComboProduto.setEnabled(false);
       jTextQuantidade.setEnabled(false);
-      jDataEntrada.setEnabled(false);
       jBNovo.setEnabled(true);
-      jBEditar.setEnabled(false);
       jBSalvar.setEnabled(false);
-      jBExcluir.setEnabled(false);
+      if (jTextId.getText().equals(""))
+          jBExcluir.setEnabled(false);
+      else
+          jBExcluir.setEnabled(true);
       jBCancelar.setEnabled(false);
      
     }
      public void habilitar(){
       jComboProduto.setEnabled(true);
       jTextQuantidade.setEnabled(true);
-      jDataEntrada.setEnabled(true);
       jBNovo.setEnabled(false);
-      jBEditar.setEnabled(false);
       jBSalvar.setEnabled(true);
       jBExcluir.setEnabled(true);
       jBCancelar.setEnabled(true);
@@ -378,7 +371,7 @@ public void desabilitar(){
                  estoque.getId(),
                  estoque.getProduto(),
                  estoque.getQuantidade(),
-                 estoque.getDataEntrada()
+                 
              });
          }
      }
@@ -386,17 +379,23 @@ public void desabilitar(){
      public void pegaLinhaSelecionada(){
          if (jTableEstoque.getSelectedRow() != -1){
              jTextId.setText(jTableEstoque.getValueAt(jTableEstoque.getSelectedRow(),0).toString());
-             jComboProduto.setSelectedItem(jTableEstoque.getValueAt(jTableEstoque.getSelectedRow(),1).toString());
-             jTextQuantidade.setText(jTableEstoque.getValueAt(jTableEstoque.getSelectedRow(),1).toString());
-             //jDataEntrada.setDate(jTableEstoque.getValueAt(jTableEstoque.getSelectedRow(),1).toDate());
+             jComboProduto.getModel().setSelectedItem(jTableEstoque.getValueAt(jTableEstoque.getSelectedRow(),1).toString());
+             jTextQuantidade.setText(jTableEstoque.getValueAt(jTableEstoque.getSelectedRow(),2).toString());
+             
          }
      }
      
      public void limpar(){
         jTextId.setText("");
-        jComboProduto.setSelectedItem("");
+        jComboProduto.setSelectedItem(null);
         jTextQuantidade.setText("");
-        jDataEntrada.setDate(null);
+        
     }
-
+     
+      public void carregarProduto(){
+          ProdutoDAO pdao = new ProdutoDAO();
+           List <Produto> itens = pdao.listarProdutos();
+           itens.add(0, null);
+           jComboProduto.setModel(new DefaultComboBoxModel(itens.toArray()));
+    }      
 }

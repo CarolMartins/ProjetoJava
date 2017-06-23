@@ -16,7 +16,7 @@ public class Estoque {
     private int id;
     private Produto produto;
     private int quantidade; 
-    private Date dataEntrada;
+    
 
     public int getId() {
         return id;
@@ -42,13 +42,7 @@ public class Estoque {
         this.quantidade = quantidade;
     }
 
-    public Date getDataEntrada() {
-        return dataEntrada;
-    }
-
-    public void setDataEntrada(Date dataEntrada) {
-        this.dataEntrada = dataEntrada;
-    }
+    
     
     
     
