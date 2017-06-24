@@ -94,12 +94,21 @@ public class EstoqueDAO {
                 
                 Estoque e = new Estoque();
                 e.setId(rsCodigo.getInt("idestoque"));
+                
                 Produto p = new Produto();
                 p.setIdProduto(rsCodigo.getInt("idProduto"));
-                p.setDescricaoProduto(rsCodigo.getString("descricaoProduto"));
-                e.setProduto(p);
+                p.setCodigoBarra(rsCodigo.getString("CodigoBarra"));
+                p.setStatusProduto(rsCodigo.getBoolean("StatusProduto"));
+                p.setDescricaoProduto(rsCodigo.getString("DescricaoProduto"));
+                p.setPeso(rsCodigo.getDouble("Peso"));
+                p.setPrecoCusto(rsCodigo.getDouble("PrecoCusto"));
+                p.setMargemLucro(rsCodigo.getDouble("MargemLucro"));
+                p.setQtdRecebida(rsCodigo.getInt("QuantidadeRecebida"));
+                p.setEstoqueAtual(rsCodigo.getInt("EstoqueAtual"));
+                p.setPrecoVenda(rsCodigo.getFloat("precoVenda"));
                 e.setQuantidade(rsCodigo.getInt("quantidade"));
                 
+                e.setProduto(p);
                 
                 estoques.add(e);
                 
@@ -110,4 +119,46 @@ public class EstoqueDAO {
         }
         return estoques;
     }
+    
+    public Estoque buscarPorId(int codigo){
+        Connection conn = factory.getConnection();
+        Estoque e = null;
+        try {
+            PreparedStatement ps = null;
+            ResultSet rsCodigo = null;
+            
+            String sql = "select * from estoque \n" +
+                         "join produto on estoque.idProduto = produto.idProduto \n"
+                       + "where estoque.idEstoque = ? \n" +
+                         "order by DescricaoProduto asc";
+            ps = conn.prepareStatement(sql); 
+            ps.setInt(1, codigo);
+            rsCodigo = ps.executeQuery();
+            
+            while(rsCodigo.next()){
+                
+                e = new Estoque();
+                e.setId(rsCodigo.getInt("idestoque"));
+                               Produto p = new Produto();
+                p.setIdProduto(rsCodigo.getInt("idProduto"));
+                p.setCodigoBarra(rsCodigo.getString("CodigoBarra"));
+                p.setStatusProduto(rsCodigo.getBoolean("StatusProduto"));
+                p.setDescricaoProduto(rsCodigo.getString("DescricaoProduto"));
+                p.setPeso(rsCodigo.getDouble("Peso"));
+                p.setPrecoCusto(rsCodigo.getDouble("PrecoCusto"));
+                p.setMargemLucro(rsCodigo.getDouble("MargemLucro"));
+                p.setQtdRecebida(rsCodigo.getInt("QuantidadeRecebida"));
+                p.setEstoqueAtual(rsCodigo.getInt("EstoqueAtual"));
+                p.setPrecoVenda(rsCodigo.getFloat("precoVenda"));
+                e.setProduto(p);
+                e.setQuantidade(rsCodigo.getInt("quantidade"));
+                
+                e.setProduto(p);
+            }
+            conn.close();
+        } catch (SQLException ex) {
+            throw new RuntimeException ("Erro SQL: " + ex);
+        }
+        return e;
+    }    
 }

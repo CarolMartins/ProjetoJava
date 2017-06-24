@@ -649,6 +649,7 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
         desabilitarCampos();
         limparCampos();
+        
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     private void jButtonNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNovoActionPerformed
@@ -770,7 +771,7 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
         jButtonSalvar.setEnabled(true);
         jButtonEdtar.setEnabled(true);
         jButtonExcluir.setEnabled(false);
-        jDateDataCadastro.setEnabled(true);
+        jDateDataCadastro.setEnabled(false);
         jButtonPesquisar.setEnabled(false);
         jTextObservacao.setEnabled(true);
         jRadioAtivo.setEnabled(true);
@@ -833,6 +834,7 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
         jTextBairro.setText("");
         jComboCidade.setSelectedItem(null);
         jComboEstado.setSelectedItem(null);
+        //jDateDataCadastro.setDate(null);
         
  }
     public void carregartipoLogradouro(){

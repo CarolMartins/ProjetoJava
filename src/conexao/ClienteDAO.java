@@ -151,6 +151,7 @@ public class ClienteDAO {
             while(resultSet.next()){
                 
                 Cliente c = new Cliente();
+                c.setIdCliente(resultSet.getInt("idCliente"));
                 c.setId(resultSet.getInt("idCliente"));
                 c.setNome(resultSet.getString("nome"));
                 c.setDatanascimento(resultSet.getDate("dataNascimento"));
@@ -217,6 +218,7 @@ public class ClienteDAO {
                 while(resultSet.next()){
 
                     Cliente c = new Cliente();
+                    c.setIdCliente(resultSet.getInt("idCliente"));
                     c.setId(resultSet.getInt("idCliente"));
                     c.setNome(resultSet.getString("nome"));
                     c.setDatanascimento(resultSet.getDate("dataNascimento"));
@@ -284,6 +286,7 @@ public class ClienteDAO {
             while(resultSet.next()){
 
                 Cliente c = new Cliente();
+                c.setIdCliente(resultSet.getInt("idCliente"));
                 c.setId(resultSet.getInt("idCliente"));
                 c.setNome(resultSet.getString("nome"));
                 c.setDatanascimento(resultSet.getDate("dataNascimento"));
@@ -334,7 +337,7 @@ public class ClienteDAO {
                 PreparedStatement ps = null;
                 ResultSet resultSet = null;
 
-                String sql = "select *, \n" +
+                String sql = "select *,\n" +
                              "       tipologradouro.descricao as descricaoTipoLogradouro,\n" +
                              "       estado.Sigla as siglaEstado\n" +
                              "from pessoa\n" +
@@ -350,6 +353,7 @@ public class ClienteDAO {
 
                 if(resultSet.next()){
                     c = new Cliente();
+                    c.setIdCliente(resultSet.getInt("idCliente"));
                     c.setId(resultSet.getInt("idCliente"));
                     c.setNome(resultSet.getString("nome"));
                     c.setDatanascimento(resultSet.getDate("dataNascimento"));

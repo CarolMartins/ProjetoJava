@@ -27,6 +27,7 @@ public class CadastrarVenda extends javax.swing.JInternalFrame {
      */
     public CadastrarVenda() {
         initComponents();
+        desabilitar();
     }
 
     /**
@@ -48,11 +49,13 @@ public class CadastrarVenda extends javax.swing.JInternalFrame {
         jCheckPedido = new javax.swing.JCheckBox();
         jCheckOrcamento = new javax.swing.JCheckBox();
         jPanel3 = new javax.swing.JPanel();
-        jTextNomeCliente = new javax.swing.JTextField();
+        jTextIdCliente = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jTextCPF = new javax.swing.JTextField();
         jBPesquisar = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
+        jTextNomeCliente = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jTextCodigoBarras = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
@@ -85,6 +88,11 @@ public class CadastrarVenda extends javax.swing.JInternalFrame {
         jLabel2.setText("Número");
 
         jTextNumero.setEnabled(false);
+        jTextNumero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextNumeroActionPerformed(evt);
+            }
+        });
 
         jCheckPedido.setBackground(new java.awt.Color(221, 231, 229));
         jCheckPedido.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -134,7 +142,8 @@ public class CadastrarVenda extends javax.swing.JInternalFrame {
         jPanel3.setBackground(new java.awt.Color(221, 231, 229));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dados Cliente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP));
 
-        jTextNomeCliente.setEditable(false);
+        jTextIdCliente.setEditable(false);
+        jTextIdCliente.setEnabled(false);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel4.setText("Nome");
@@ -153,6 +162,12 @@ public class CadastrarVenda extends javax.swing.JInternalFrame {
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel8.setText("CPF");
 
+        jTextNomeCliente.setEditable(false);
+        jTextNomeCliente.setEnabled(false);
+
+        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel9.setText("ID");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -161,23 +176,36 @@ public class CadastrarVenda extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jTextCPF, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jBPesquisar))
-                    .addComponent(jTextNomeCliente)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel8))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jTextCPF, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jBPesquisar))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel4)
+                                .addGap(198, 198, 198))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jTextIdCliente)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(16, 16, 16))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jLabel4)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextIdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -190,6 +218,7 @@ public class CadastrarVenda extends javax.swing.JInternalFrame {
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel5.setText("Código de Barra");
 
+        jTextCodigoBarras.setEnabled(false);
         jTextCodigoBarras.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jTextCodigoBarrasKeyPressed(evt);
@@ -333,17 +362,15 @@ public class CadastrarVenda extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(17, 17, 17)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jTextTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jBPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jBCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jBNovaVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(12, Short.MAX_VALUE))))
+                            .addComponent(jBNovaVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -365,8 +392,10 @@ public class CadastrarVenda extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTextTotalActionPerformed
 
     private void jBNovaVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBNovaVendaActionPerformed
+        habilitar();
         jDateData.setDate(new Date());
         jTextTotal.setText("0");
+        
     }//GEN-LAST:event_jBNovaVendaActionPerformed
 
     private void jTextCodigoBarrasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextCodigoBarrasKeyPressed
@@ -425,15 +454,19 @@ public class CadastrarVenda extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jBCancelarActionPerformed
 
     private void jBPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBPesquisarActionPerformed
-        PesquisarClienteVendas pesquisar = new PesquisarClienteVendas (null, true);
+        PesquisarCliente pesquisar = new PesquisarCliente(null, true);
         pesquisar.setVisible(true);
         ClienteDAO clienteDAO = new ClienteDAO();
         Cliente cliente = clienteDAO.buscarPorId(pesquisar.getCodSelecionado());
         if (cliente!=null){
-            //preencherTela();
+            preencherCliente(cliente);
             desabilitar();
         }
     }//GEN-LAST:event_jBPesquisarActionPerformed
+
+    private void jTextNumeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextNumeroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextNumeroActionPerformed
 
     /**
      * @param args the command line arguments
@@ -456,6 +489,7 @@ public class CadastrarVenda extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -465,6 +499,7 @@ public class CadastrarVenda extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTextCodigoBarras;
     private javax.swing.JTextField jTextDescricaoProduto;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextIdCliente;
     private javax.swing.JTextField jTextNomeCliente;
     private javax.swing.JTextField jTextNumero;
     private javax.swing.JTextField jTextQtdProduto;
@@ -476,7 +511,7 @@ public class CadastrarVenda extends javax.swing.JInternalFrame {
         jTextNumero.setEnabled(false);
         jCheckPedido.setEnabled(false);
         jCheckOrcamento.setEnabled(false);
-        jTextNomeCliente.setEditable(false);
+        jTextIdCliente.setEditable(false);
         jTextCPF.setEnabled(false);
         jTextCodigoBarras.setEnabled(false);
         jTextDescricaoProduto.setEnabled(false);
@@ -486,7 +521,7 @@ public class CadastrarVenda extends javax.swing.JInternalFrame {
         jBNovaVenda.setEnabled(true);
         jBCancelar.setEnabled(false);
         jBPagamento.setEnabled(false);
-        jBPesquisar.setEnabled(true);
+        jBPesquisar.setEnabled(false);
     }
     
     public void habilitar(){
@@ -494,7 +529,7 @@ public class CadastrarVenda extends javax.swing.JInternalFrame {
         jTextNumero.setEnabled(false);
         jCheckPedido.setEnabled(true);
         jCheckOrcamento.setEnabled(true);
-        jTextNomeCliente.setEditable(false);
+        jTextIdCliente.setEditable(false);
         jTextCPF.setEnabled(false);
         jTextCodigoBarras.setEnabled(true);
         jTextDescricaoProduto.setEnabled(false);
@@ -511,6 +546,13 @@ public class CadastrarVenda extends javax.swing.JInternalFrame {
        jDateData.setDate(venda.getDataVenda());
        
    }
+   
+   public void preencherCliente(Cliente cliente){
+       jTextNomeCliente.setText(cliente.getNome());
+       jTextCPF.setText(cliente.getCpf());
+       jTextIdCliente.setText(cliente.getIdCliente()+"");
+       
+   }   
     
     
 }

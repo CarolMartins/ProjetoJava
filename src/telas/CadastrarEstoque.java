@@ -239,6 +239,7 @@ public class CadastrarEstoque extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBNovoActionPerformed
+        limpar();
         habilitar();
         op = "novo";
         
@@ -259,13 +260,12 @@ public class CadastrarEstoque extends javax.swing.JInternalFrame {
             ProdutoDAO pdao = new ProdutoDAO();
             EstoqueDAO edao = new EstoqueDAO();
             if (op.equals("novo")){
-               
+               ProdutoDAO produtoDAO = new ProdutoDAO();
                edao.salvar(e);
                
-               Produto p = e.getProduto();
+               Produto p = produtoDAO.buscarPorId(e.getProduto().getIdProduto());
                p.setEstoqueAtual(p.getEstoqueAtual()+e.getQuantidade());
                
-               ProdutoDAO produtoDAO = new ProdutoDAO();
                produtoDAO.editar(p);
                
                jTextId.setText(String.valueOf(pdao.buscarCodigo(jComboProduto.getSelectedItem().toString())));
@@ -278,23 +278,32 @@ public class CadastrarEstoque extends javax.swing.JInternalFrame {
              JOptionPane.showMessageDialog(null, "Gravado com Sucesso!");
 
              preencherTabela();
+             
        }
     }//GEN-LAST:event_jBSalvarActionPerformed
 
     private void jBCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCancelarActionPerformed
-      
+        limpar();
+        desabilitar();
     }//GEN-LAST:event_jBCancelarActionPerformed
 
     private void jBExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBExcluirActionPerformed
         if((jTableEstoque.getSelectedRow() !=-1)){
             if (JOptionPane.showConfirmDialog(this, "Deseja excluir?", "Exclusão", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-
+                
                 Estoque estoque = new Estoque();
                 EstoqueDAO estoqueDAO = new EstoqueDAO();
+                ProdutoDAO produtoDAO = new ProdutoDAO();
 
                 estoque.setId((int) jTableEstoque.getValueAt(jTableEstoque.getSelectedRow(), 0));
-
+                estoque.setQuantidade(Integer.parseInt(jTextQuantidade.getText()));
+                
+                Produto produto = produtoDAO.buscarPorId( ((Produto)jComboProduto.getModel().getSelectedItem()).getIdProduto() );
+                produto.setEstoqueAtual(produto.getEstoqueAtual()-estoque.getQuantidade());
                 estoqueDAO.excluir(estoque);
+                
+                
+                produtoDAO.editar(produto);
 
                 limpar();
 
@@ -378,9 +387,11 @@ public void desabilitar(){
      
      public void pegaLinhaSelecionada(){
          if (jTableEstoque.getSelectedRow() != -1){
-             jTextId.setText(jTableEstoque.getValueAt(jTableEstoque.getSelectedRow(),0).toString());
-             jComboProduto.getModel().setSelectedItem(jTableEstoque.getValueAt(jTableEstoque.getSelectedRow(),1).toString());
-             jTextQuantidade.setText(jTableEstoque.getValueAt(jTableEstoque.getSelectedRow(),2).toString());
+             EstoqueDAO estoqueDAO = new EstoqueDAO();
+             Estoque estoque = estoqueDAO.buscarPorId(new Integer(jTableEstoque.getValueAt(jTableEstoque.getSelectedRow(),0).toString()));
+             jTextId.setText(estoque.getId()+"");
+             jComboProduto.getModel().setSelectedItem(estoque.getProduto());
+             jTextQuantidade.setText(estoque.getQuantidade()+"");
              
          }
      }

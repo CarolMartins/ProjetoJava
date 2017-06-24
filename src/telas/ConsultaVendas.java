@@ -68,6 +68,7 @@ public class ConsultaVendas extends javax.swing.JInternalFrame {
         jLabel1.setText("Id");
 
         jTextId.setEditable(false);
+        jTextId.setEnabled(false);
         jTextId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextIdActionPerformed(evt);
@@ -78,6 +79,7 @@ public class ConsultaVendas extends javax.swing.JInternalFrame {
         jLabel2.setText("Funcionário");
 
         jTextNomeFunc.setEditable(false);
+        jTextNomeFunc.setEnabled(false);
 
         jLabel3.setText("Meta Mensal");
 

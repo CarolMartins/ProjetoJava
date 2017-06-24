@@ -63,7 +63,8 @@ public class ProdutoDAO {
 }
     
     public void editar(Produto p){
-        
+        ConnectionFactory factory = new ConnectionFactory();
+        Connection conn = factory.getConnection();        
         try {
             PreparedStatement ps = conn.prepareStatement("UPDATE produto set CodigoBarra = ?, StatusProduto= ?,"
                                                          + "DescricaoProduto = ?, Peso = ?, PrecoCusto = ?, MargemLucro = ?, PrecoVenda = ?,"
