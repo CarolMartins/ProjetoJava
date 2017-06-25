@@ -6,6 +6,7 @@
 package Classes;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -14,9 +15,8 @@ import java.util.Date;
 public class Venda {
     
     private int numeroPedido;
-    private Boolean tipoPedido;
+    private String tipoPedido;
     private Cliente cliente;
-    private String codigoBarra;
     private Produto produto;
     private int quantidade;
     private double valorTotalVenda;
@@ -24,6 +24,8 @@ public class Venda {
     private double valorTotalProduto;
     private Date DataVenda;
     private Funcionario funcionario;
+    private Pagamento pagamento;
+    private List<ItemVenda> itensVendas;
 
     public int getNumeroPedido() {
         return numeroPedido;
@@ -33,11 +35,11 @@ public class Venda {
         this.numeroPedido = numeroPedido;
     }
 
-    public Boolean getTipoPedido() {
+    public String getTipoPedido() {
         return tipoPedido;
     }
 
-    public void setTipoPedido(Boolean tipoPedido) {
+    public void setTipoPedido(String tipoPedido) {
         this.tipoPedido = tipoPedido;
     }
 
@@ -47,14 +49,6 @@ public class Venda {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
-    }
-
-    public String getCodigoBarra() {
-        return codigoBarra;
-    }
-
-    public void setCodigoBarra(String codigoBarra) {
-        this.codigoBarra = codigoBarra;
     }
 
     public Produto getProduto() {
@@ -121,9 +115,19 @@ public class Venda {
         this.funcionario = funcionario;
     }
 
+    public Pagamento getPagamento() {
+        return pagamento;
+    }
 
-    
-    
-    
-    
+    public void setPagamento(Pagamento pagamento) {
+        this.pagamento = pagamento;
+    }
+
+    public List<ItemVenda> getItensVendas() {
+        return itensVendas;
+    }
+
+    public void setItensVendas(List<ItemVenda> itensVendas) {
+        this.itensVendas = itensVendas;
+    }
 }

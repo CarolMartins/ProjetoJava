@@ -1,6 +1,7 @@
 package telas;
 
 
+import Classes.Funcionario;
 import conexao.ConnectionFactory;
 import conexao.FuncionarioDAO;
 import java.awt.event.KeyEvent;
@@ -13,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import outros.FuncionarioLogado;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -237,10 +239,13 @@ public class Login extends javax.swing.JFrame {
 public void entrar(){
     try {
         FuncionarioDAO fdao = new FuncionarioDAO();
-        boolean resp = fdao.logar(jTextUsuario.getText(), jPasswordSenha.getText());
+        Funcionario funcionario = fdao.logar(jTextUsuario.getText(), jPasswordSenha.getText());
             
-            if (resp == true){
-                TelaPrincipal tp = new TelaPrincipal(jTextUsuario.getText());
+            if (funcionario!=null){
+                //Variável Global que guarda usuário logado
+                FuncionarioLogado.funcionario = funcionario;
+                
+                TelaPrincipal tp = new TelaPrincipal();
                 
                 //Código do Icon
                 URL iconURL = getClass().getResource("/images/icon.png");
@@ -250,6 +255,7 @@ public void entrar(){
                 
                 
                 tp.setVisible(true);
+                
                 dispose();
             }else{
                 JOptionPane.showMessageDialog(null, "Usuarío não encontrado!!!");

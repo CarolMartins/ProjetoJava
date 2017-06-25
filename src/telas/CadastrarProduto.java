@@ -16,6 +16,9 @@ import conexao.GrupoProdutoDAO;
 import conexao.MarcaDAO;
 import conexao.ProdutoDAO;
 import conexao.TipoCategoriaDAO;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
@@ -508,6 +511,7 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
 
     private void jButtonPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarActionPerformed
         PesquisarProduto pesquisar = new PesquisarProduto(null, true);
+        centerOnScreen(pesquisar, true);
         pesquisar.setVisible(true);
         ProdutoDAO pDAO = new ProdutoDAO();
         Produto produto = (Produto) pDAO.buscarPorId(pesquisar.getCodSelecionado());
@@ -714,7 +718,7 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
     public void calculaPrecoVenda(){
         if (!jTextPrecoCusto.getText().equals("") && (!jTextMargemCusto.getText().equals(""))){
             double precocusto = Double.parseDouble(jTextPrecoCusto.getText());
-            double margemlucro = Double.parseDouble(jTextMargemCusto.getText());
+            double margemlucro = Double.parseDouble(jTextMargemCusto.getText())/100;
             double precovenda = (precocusto*margemlucro)+precocusto;
             jTextPrecoVenda.setText(precovenda+"");
         }else{
@@ -722,5 +726,16 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
         }
     }
     
-    
+    public void centerOnScreen(final Component c, final boolean absolute) {
+        final int width = c.getWidth();
+        final int height = c.getHeight();
+        final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (screenSize.width / 2) - (width / 2);
+        int y = (screenSize.height / 2) - (height / 2);
+        if (!absolute) {
+            x /= 2;
+            y /= 2;
+        }
+        c.setLocation(x, y);
+    }     
 }

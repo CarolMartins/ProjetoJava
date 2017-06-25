@@ -95,7 +95,8 @@ public class ProdutoDAO {
             }   
 }
     public List<Produto> listarProdutoporDescricao(String descricaoProduto){
-        
+      ConnectionFactory factory = new ConnectionFactory();
+      Connection conn = factory.getConnection();              
       List<Produto> produto = new ArrayList <>();
         
         try {
@@ -160,7 +161,8 @@ public class ProdutoDAO {
         return produto;
 }
     public List<Produto> listarProdutos(){
-        
+      ConnectionFactory factory = new ConnectionFactory();
+      Connection conn = factory.getConnection();              
       List<Produto> produto = new ArrayList <>();
         
         try {
@@ -221,7 +223,9 @@ public class ProdutoDAO {
 }
         return produto;
 }
-    public int  buscarCodigo(String descricaoProduto){
+    public int  buscarCodigo(String descricaoProduto){        
+        ConnectionFactory factory = new ConnectionFactory();
+        Connection conn = factory.getConnection();      
         int id = 0;
       //List<Produto> produto = new ArrayList <>();
         
@@ -261,7 +265,8 @@ public class ProdutoDAO {
 }
     
  public List<Produto> listarProdutoporCodigo(int Codigo){
-        
+      ConnectionFactory factory = new ConnectionFactory();
+      Connection conn = factory.getConnection();              
       List<Produto> produtos = new ArrayList <>();
         try {
             PreparedStatement ps = null;
@@ -311,7 +316,7 @@ public class ProdutoDAO {
                 
                 p.setGrupo(grupo);
                 
-                Fornecedor f = new Fornecedor();
+            Fornecedor f = new Fornecedor();
                 f.setId(resultSet.getInt("IdFornecedor"));
                 
                 p.getFornecedor();
@@ -328,7 +333,8 @@ public class ProdutoDAO {
  
  
     public Produto buscarPorId(int Codigo){
-        
+      ConnectionFactory factory = new ConnectionFactory();
+      Connection conn = factory.getConnection();              
       Produto p = null;
         try {
             PreparedStatement ps = null;
@@ -394,7 +400,8 @@ public class ProdutoDAO {
     }
     
    public Produto buscarPorCodigoBarras(String CodigoBarra){
-        
+      ConnectionFactory factory = new ConnectionFactory();
+      Connection conn = factory.getConnection();              
       Produto p = null;
         try {
             PreparedStatement ps = null;
@@ -460,7 +467,8 @@ public class ProdutoDAO {
     }    
     
     public void excluir(Produto p){
-        Connection conn = factory.getConnection();
+        ConnectionFactory factory = new ConnectionFactory();
+        Connection conn = factory.getConnection();      
         try {
             String sql = "delete from produto where idProduto = ?";
             PreparedStatement ps = conn.prepareStatement(sql);

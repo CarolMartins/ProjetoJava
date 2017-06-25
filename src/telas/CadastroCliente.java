@@ -14,6 +14,9 @@ import conexao.ClienteDAO;
 import conexao.EstadoDAO;
 import conexao.FuncionarioDAO;
 import conexao.TipoLogradouroDAO;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -54,7 +57,6 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
         jLabel15 = new javax.swing.JLabel();
         jTextLogradouro = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
-        jTextNumero = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
         jTextComplemento = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
@@ -65,6 +67,7 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
         jComboCidade = new javax.swing.JComboBox<>();
         jLabel21 = new javax.swing.JLabel();
         jComboEstado = new javax.swing.JComboBox<>();
+        jTextNumero = new javax.swing.JFormattedTextField();
         jButtonNovo = new javax.swing.JButton();
         jButtonCancelar = new javax.swing.JButton();
         jButtonSalvar = new javax.swing.JButton();
@@ -144,6 +147,8 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
             }
         });
 
+        jTextNumero.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -208,9 +213,9 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextLogradouro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel19)
@@ -665,6 +670,7 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
 
     private void jButtonPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarActionPerformed
         PesquisarCliente pesquisar = new PesquisarCliente(null, true);
+        centerOnScreen(pesquisar, true);
         pesquisar.setVisible(true);
         ClienteDAO clienteDAO = new ClienteDAO();
         Cliente cliente = clienteDAO.buscarPorId(pesquisar.getCodSelecionado());
@@ -741,7 +747,7 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTextId;
     private javax.swing.JTextField jTextLogradouro;
     private javax.swing.JTextField jTextNome;
-    private javax.swing.JTextField jTextNumero;
+    private javax.swing.JFormattedTextField jTextNumero;
     private javax.swing.JTextPane jTextObservacao;
     private javax.swing.JTextField jTextRg;
     // End of variables declaration//GEN-END:variables
@@ -890,6 +896,19 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
          
              
      }
+      
+    public void centerOnScreen(final Component c, final boolean absolute) {
+        final int width = c.getWidth();
+        final int height = c.getHeight();
+        final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (screenSize.width / 2) - (width / 2);
+        int y = (screenSize.height / 2) - (height / 2);
+        if (!absolute) {
+            x /= 2;
+            y /= 2;
+        }
+        c.setLocation(x, y);
+    }       
     
 }
 

@@ -228,9 +228,9 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jTextLogradouro" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextNumero" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jTextComplemento" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jComboTipo" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTextNumero" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -279,8 +279,6 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="N&#xfa;mero"/>
               </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="jTextNumero">
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel17">
               <Properties>
@@ -358,6 +356,13 @@
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
+            </Component>
+            <Component class="javax.swing.JFormattedTextField" name="jTextNumero">
+              <Properties>
+                <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+                  <Format format="#0" subtype="-1" type="0"/>
+                </Property>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>

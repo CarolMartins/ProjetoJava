@@ -66,7 +66,6 @@ public class PesquisarProduto extends javax.swing.JDialog {
         jRadioCodigo.setBackground(new java.awt.Color(221, 231, 239));
         buttonGroup.add(jRadioCodigo);
         jRadioCodigo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jRadioCodigo.setSelected(true);
         jRadioCodigo.setText("Código");
         jRadioCodigo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -77,6 +76,7 @@ public class PesquisarProduto extends javax.swing.JDialog {
         jRadioDescricao.setBackground(new java.awt.Color(221, 231, 239));
         buttonGroup.add(jRadioDescricao);
         jRadioDescricao.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jRadioDescricao.setSelected(true);
         jRadioDescricao.setText("Descrição");
 
         jTablePesquisa.setModel(new javax.swing.table.DefaultTableModel(

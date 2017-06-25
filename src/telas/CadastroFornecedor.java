@@ -14,6 +14,9 @@ import conexao.EstadoDAO;
 import conexao.FornecedorDAO;
 import conexao.FuncionarioDAO;
 import conexao.TipoLogradouroDAO;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -383,7 +386,7 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
         jLabel23.setText("Nome Fantasia");
 
         try {
-            jFCnpj.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+            jFCnpj.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###/####-##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -566,6 +569,7 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
 
     private void jBPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBPesquisarActionPerformed
         PesquisarFornecedor pesquisar = new PesquisarFornecedor(null, true);
+        centerOnScreen(pesquisar, true);
         pesquisar.setVisible(true);
         FornecedorDAO fornecedorDAO = new FornecedorDAO();
         Fornecedor fornecedor = fornecedorDAO.buscarPorId(pesquisar.getCodSelecionado());
@@ -780,6 +784,19 @@ public void limpar(){
          
              
      }
+     
+    public void centerOnScreen(final Component c, final boolean absolute) {
+        final int width = c.getWidth();
+        final int height = c.getHeight();
+        final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (screenSize.width / 2) - (width / 2);
+        int y = (screenSize.height / 2) - (height / 2);
+        if (!absolute) {
+            x /= 2;
+            y /= 2;
+        }
+        c.setLocation(x, y);
+    }      
 }
 
 

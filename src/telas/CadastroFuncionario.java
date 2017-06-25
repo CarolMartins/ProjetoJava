@@ -12,9 +12,11 @@ import conexao.CidadeDAO;
 import conexao.EstadoDAO;
 import conexao.FuncionarioDAO;
 import conexao.TipoLogradouroDAO;
+import java.awt.Component;
 import java.awt.Desktop;
 import java.awt.Dialog;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -97,9 +99,9 @@ public class CadastroFuncionario extends javax.swing.JInternalFrame {
         jLabel28 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
         jTextLogin = new javax.swing.JTextField();
-        jTextSenha = new javax.swing.JTextField();
         jRadioAtivo = new javax.swing.JRadioButton();
         jRadioBloqueado = new javax.swing.JRadioButton();
+        jTextSenha = new javax.swing.JPasswordField();
         jPanel5 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jFTelefone1 = new javax.swing.JFormattedTextField();
@@ -429,13 +431,12 @@ public class CadastroFuncionario extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel28)
-                            .addComponent(jTextSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel28)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel29))
-                    .addComponent(jRadioBloqueado))
-                .addGap(18, 18, 18))
+                    .addComponent(jRadioBloqueado)
+                    .addComponent(jTextSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12))
         );
 
         jPanel5.setBackground(new java.awt.Color(221, 231, 229));
@@ -699,6 +700,7 @@ public class CadastroFuncionario extends javax.swing.JInternalFrame {
 
     private void jButtonPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarActionPerformed
         PesquisarFuncionario pesquisar = new PesquisarFuncionario(null, true);
+        centerOnScreen(pesquisar, true);
         pesquisar.setVisible(true);
         FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
         Funcionario funcionario = funcionarioDAO.buscarPorId(pesquisar.getCodSelecionado());
@@ -882,7 +884,7 @@ public class CadastroFuncionario extends javax.swing.JInternalFrame {
     private javax.swing.JTextPane jTextObservacao;
     private javax.swing.JTextField jTextRg;
     private javax.swing.JFormattedTextField jTextSalario;
-    private javax.swing.JTextField jTextSenha;
+    private javax.swing.JPasswordField jTextSenha;
     // End of variables declaration//GEN-END:variables
 
 public void habilitarCampos(){
@@ -1056,6 +1058,19 @@ public void desabilitarCampos(){
          jDataNascimento.setDate(funcionario.getDataCadastro());
              
      }
+     
+    public void centerOnScreen(final Component c, final boolean absolute) {
+        final int width = c.getWidth();
+        final int height = c.getHeight();
+        final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (screenSize.width / 2) - (width / 2);
+        int y = (screenSize.height / 2) - (height / 2);
+        if (!absolute) {
+            x /= 2;
+            y /= 2;
+        }
+        c.setLocation(x, y);
+    }      
 }
 
 

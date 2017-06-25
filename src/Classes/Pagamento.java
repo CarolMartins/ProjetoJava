@@ -10,12 +10,20 @@ package Classes;
  * @author Carol
  */
 public class Pagamento {
-    
+    private int idPagamento;
     private TipoPagamento tipoPagamento;
-    private Venda valorTotalVenda;
+    private double valorTotalVenda;
     private double valorRecebido; 
     private double troco;
 
+    public int getIdPagamento() {
+        return idPagamento;
+    }
+
+    public void setIdPagamento(int idPagamento) {
+        this.idPagamento = idPagamento;
+    }
+    
     public TipoPagamento getTipoPagamento() {
         return tipoPagamento;
     }
@@ -24,11 +32,11 @@ public class Pagamento {
         this.tipoPagamento = tipoPagamento;
     }
 
-    public Venda getValorTotalVenda() {
+    public double getValorTotalVenda() {
         return valorTotalVenda;
     }
 
-    public void setValorTotalVenda(Venda valorTotalVenda) {
+    public void setValorTotalVenda(double valorTotalVenda) {
         this.valorTotalVenda = valorTotalVenda;
     }
 

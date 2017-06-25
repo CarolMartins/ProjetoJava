@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.swing.JInternalFrame;
+import outros.FuncionarioLogado;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -29,7 +30,7 @@ public class TelaPrincipal extends javax.swing.JFrame{
     TipoCategoria categoria;
     CadastrarVenda venda;
     GrupoProdutos grupo;
-    Pagamento pagamento;
+    CadastrarPagamento pagamento;
     ConsultaVendas consultar;
     CadastrarEstoque cadastrarEstoque;
     
@@ -38,9 +39,9 @@ public class TelaPrincipal extends javax.swing.JFrame{
     /**
      * Creates new form TelaPrincipal
      */
-    public TelaPrincipal(String usuarioLogado) {
+    public TelaPrincipal() {
         initComponents();
-        jLabelSejaBemVindo.setText("Seja bem vindo "+usuarioLogado);
+        jLabelSejaBemVindo.setText("Seja bem vindo "+FuncionarioLogado.funcionario.getNome());
     }
 
     /**
@@ -107,18 +108,20 @@ public class TelaPrincipal extends javax.swing.JFrame{
         jDesktopPaneLayout.setHorizontalGroup(
             jDesktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPaneLayout.createSequentialGroup()
-                .addContainerGap(234, Short.MAX_VALUE)
+                .addContainerGap(240, Short.MAX_VALUE)
                 .addGroup(jDesktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelSejaBemVindo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPaneLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPaneLayout.createSequentialGroup()
+                        .addComponent(jLabelSejaBemVindo, javax.swing.GroupLayout.PREFERRED_SIZE, 475, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28))))
         );
         jDesktopPaneLayout.setVerticalGroup(
             jDesktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPaneLayout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jLabelSejaBemVindo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 188, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 194, Short.MAX_VALUE)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -413,12 +416,7 @@ public class TelaPrincipal extends javax.swing.JFrame{
     }//GEN-LAST:event_jMenuItem14ActionPerformed
 
     private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
-        if (pagamento==null || !pagamento.isVisible()){
-            pagamento = new Pagamento();
-            pagamento.setVisible(true);
-            jDesktopPane.add(pagamento);
-            centralizar(pagamento);
-        }
+
     }//GEN-LAST:event_jMenuItem17ActionPerformed
 
     private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed

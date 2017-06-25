@@ -26,32 +26,91 @@ public class FuncionarioDAO {
    
    
    
-    public boolean logar(String usuario, String senha){
+    public Funcionario logar(String usuario, String senha){
         Connection conn = factory.getConnection();
+        Funcionario f = null;
         try {
             
             
             //Cria um comando sql para enviar para o banco de dados
-            PreparedStatement ps = conn.prepareStatement("select * from " +
-                                                         " funcionario " +
-                                                         " where usuario = ? and " +
-                                                         "       senha = ? and situacaoLogin = 1");
+            PreparedStatement ps = conn.prepareStatement(
+                         "select *, \n" +
+                         "       tipologradouro.descricao as descricaoTipoLogradouro,\n" +
+                         "       estado.Sigla as siglaEstado,\n" +
+                         "       cargo.descricao as descricaoCargo\n" +
+                         "from pessoa\n" +
+                         "join funcionario on pessoa.idPessoa = funcionario.idFuncionario\n" +
+                         "left join tipologradouro on pessoa.idTipoLogradouro = tipologradouro.idTipoLogradouro\n" +
+                         "left join cargo on cargo.idCargo = funcionario.idCargo\n" +
+                         "left join cidade on cidade.idCidade = pessoa.IdCidade\n" +
+                         "left join estado on estado.idEstado = cidade.IdEstado\n" +
+                         " where usuario = ? and\n" +
+                         "       senha = ? and situacaoLogin = 1\n"+
+                         "order by pessoa.nome asc"                    
+            );
             
             //Substitui variaveis pelos valores informados pelo usuário
             ps.setString(1, usuario);
             ps.setString(2, senha);
             //Enviar comando para o banco de dados e retorna o resultado (ResultSet)
-            ResultSet rs = ps.executeQuery();
+            ResultSet resultSet = ps.executeQuery();
             //Verifica se foi retornado algum resultado,
             //Se sim, então o usuário existe, caso contrário, usuário não existe
-            boolean resp = rs.next();
+            if (resultSet.next()){
+                f = new Funcionario();
+                f.setId(resultSet.getInt("idFuncionario"));
+                f.setNome(resultSet.getString("nome"));
+                f.setDatanascimento(resultSet.getDate("dataNascimento"));
+                f.setSexo(resultSet.getString("sexo"));
+                f.setCpf(resultSet.getString("cpf"));
+                f.setRg(resultSet.getString("rg"));
+                f.setTelefoneresidencial(resultSet.getString("Telefoneresidencial"));
+                f.setTelefoneCelular(resultSet.getString("TelefoneCelular"));
+                f.setEmail(resultSet.getString("email"));
+                f.setCep(resultSet.getString("cep"));
+                
+                TipoLogradouro tipoLogradouro = new TipoLogradouro();
+                tipoLogradouro.setId(resultSet.getInt("idTipoLogradouro"));
+                tipoLogradouro.setNome(resultSet.getString("descricaoTipoLogradouro"));
+                
+                f.setTipoLogradouro(tipoLogradouro);
+                
+                f.setLogradouro(resultSet.getString("logradouro"));
+                f.setNumero(resultSet.getInt("numero"));
+                f.setBairro(resultSet.getString("bairro"));
+                f.setComplemento(resultSet.getString("complemento"));
+                
+                Estado estado = new Estado();
+                estado.setId(resultSet.getInt("idEstado"));
+                estado.setNomeEstado("nomeEstado");
+                estado.setSigla("siglaEstado");
+                
+                Cidade cidade = new Cidade();
+                cidade.setId(resultSet.getInt("idCidade"));
+                cidade.setEstado(estado);
+                cidade.setNomeCidade(resultSet.getString("nomeCidade"));
+                
+                f.setCidade(cidade);
+                f.setMeta(resultSet.getDouble("meta"));
+                f.setUsuario(resultSet.getString("usuario"));
+                f.setSenha(resultSet.getString("senha"));
+                
+                Cargo cargo = new Cargo();
+                cargo.setComissao(resultSet.getDouble("comissao"));
+                cargo.setDescricao(resultSet.getString("descricaoCargo"));
+                cargo.setSalario(resultSet.getDouble("salario"));
+                cargo.setId(resultSet.getInt("idCargo"));
+                
+                f.setCargo(cargo);
+                
+            }
             //Fecha Conexão
             conn.close();
             
-            return resp;
         } catch (SQLException ex) {
             throw new RuntimeException("Problemas ao buscar usuário!");
         }
+        return f;
     }
     
     

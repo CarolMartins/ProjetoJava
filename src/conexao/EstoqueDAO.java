@@ -27,6 +27,8 @@ public class EstoqueDAO {
     public void salvar(Estoque estoque){
         
         try {
+            
+            //Insere no Estoque
             Connection conn = factory.getConnection();
             PreparedStatement ps = conn.prepareStatement(" insert into estoque (idProduto, quantidade) " +
                                                          "values ( ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
@@ -38,6 +40,12 @@ public class EstoqueDAO {
             ResultSet rscodigo = ps.getGeneratedKeys();
             if(rscodigo.next())
                 estoque.setId(rscodigo.getInt(1));
+            
+            //Altera estoque do produto
+            ps = conn.prepareStatement(" update produto set EstoqueAtual = EstoqueAtual + ? where idProduto = ?");
+            ps.setInt(1, estoque.getQuantidade());
+            ps.setInt(2, estoque.getProduto().getIdProduto());
+            ps.executeUpdate();
             
             conn.close();
         } catch (SQLException ex) {
@@ -66,10 +74,19 @@ public class EstoqueDAO {
         Connection conn = factory.getConnection();
         
         try {
+            //Essclui o estoque
             String sql = "delete from estoque where idestoque = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setLong(1, estoque.getId());
             ps.executeUpdate();
+            
+            //Altera estoque do produto
+            //Altera estoque do produto
+            ps = conn.prepareStatement(" update produto set EstoqueAtual = EstoqueAtual - ? where idProduto = ?");
+            ps.setInt(1, estoque.getQuantidade());
+            ps.setInt(2, estoque.getProduto().getIdProduto());
+            ps.executeUpdate();            
+            
             conn.close();
             JOptionPane.showMessageDialog(null, "Excluido com Sucesso!");
         } catch (SQLException ex) {
