@@ -225,6 +225,10 @@ public class TipoCategoria extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jBNovoActionPerformed
 
     private void jBSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalvarActionPerformed
+       if (jtfTipoCategoria.getText().equals("")){
+           JOptionPane.showMessageDialog(this, "Informe o Tipo ou Categoria do produto!");
+           jtfTipoCategoria.requestFocus();
+      }else{
       desabilitar();
       TipoCategoriaProduto tipoCategoria = new TipoCategoriaProduto();
       tipoCategoria.setTipoCategoria(jtfTipoCategoria.getText());
@@ -242,6 +246,7 @@ public class TipoCategoria extends javax.swing.JInternalFrame {
        JOptionPane.showMessageDialog(null, "Gravado com Sucesso!");
         
         preencherTabela();
+       }
       
     }//GEN-LAST:event_jBSalvarActionPerformed
 

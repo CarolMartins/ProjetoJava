@@ -33,6 +33,7 @@ public class TelaPrincipal extends javax.swing.JFrame{
     CadastrarPagamento pagamento;
     ConsultaVendas consultar;
     CadastrarEstoque cadastrarEstoque;
+    PesquisarVenda pesquisarVenda;
     
     
 
@@ -61,15 +62,11 @@ public class TelaPrincipal extends javax.swing.JFrame{
         jMenuCadastrar = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem9 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
-        jMenuItem10 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
         jMenuTipo = new javax.swing.JMenuItem();
         jProduto = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -80,9 +77,6 @@ public class TelaPrincipal extends javax.swing.JFrame{
         jMenu1 = new javax.swing.JMenu();
         jMenuItem14 = new javax.swing.JMenuItem();
         jMenuItem15 = new javax.swing.JMenuItem();
-        jMenuItem17 = new javax.swing.JMenuItem();
-        jMenu6 = new javax.swing.JMenu();
-        jMenuItem12 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -107,15 +101,13 @@ public class TelaPrincipal extends javax.swing.JFrame{
         jDesktopPane.setLayout(jDesktopPaneLayout);
         jDesktopPaneLayout.setHorizontalGroup(
             jDesktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jDesktopPaneLayout.createSequentialGroup()
-                .addContainerGap(240, Short.MAX_VALUE)
-                .addGroup(jDesktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPaneLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPaneLayout.createSequentialGroup()
+                .addContainerGap(383, Short.MAX_VALUE)
+                .addGroup(jDesktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabelSejaBemVindo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
+                    .addGroup(jDesktopPaneLayout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPaneLayout.createSequentialGroup()
-                        .addComponent(jLabelSejaBemVindo, javax.swing.GroupLayout.PREFERRED_SIZE, 475, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28))))
+                        .addContainerGap())))
         );
         jDesktopPaneLayout.setVerticalGroup(
             jDesktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -160,12 +152,6 @@ public class TelaPrincipal extends javax.swing.JFrame{
         });
         jMenu4.add(jMenuItem4);
 
-        jMenuItem6.setText("Relatório do Cadastro");
-        jMenu4.add(jMenuItem6);
-
-        jMenuItem9.setText("Relatório Aniversariante do Mês");
-        jMenu4.add(jMenuItem9);
-
         jMenuCadastrar.add(jMenu4);
 
         jMenu3.setText("Funcionário");
@@ -186,9 +172,6 @@ public class TelaPrincipal extends javax.swing.JFrame{
         });
         jMenu3.add(jMenuItem8);
 
-        jMenuItem10.setText("Relatório do Cadastro");
-        jMenu3.add(jMenuItem10);
-
         jMenuCadastrar.add(jMenu3);
 
         jMenu5.setText("Fornecedor");
@@ -200,9 +183,6 @@ public class TelaPrincipal extends javax.swing.JFrame{
             }
         });
         jMenu5.add(jMenuItem1);
-
-        jMenuItem7.setText("Relatório do Cadastro");
-        jMenu5.add(jMenuItem7);
 
         jMenuCadastrar.add(jMenu5);
 
@@ -281,21 +261,6 @@ public class TelaPrincipal extends javax.swing.JFrame{
             }
         });
         jMenu1.add(jMenuItem15);
-
-        jMenuItem17.setText("Pagamento");
-        jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem17ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem17);
-
-        jMenu6.setText("Relatórios");
-
-        jMenuItem12.setText("Relatórios Venda por Funcinário");
-        jMenu6.add(jMenuItem12);
-
-        jMenu1.add(jMenu6);
 
         jMenuBar1.add(jMenu1);
 
@@ -415,10 +380,6 @@ public class TelaPrincipal extends javax.swing.JFrame{
         }
     }//GEN-LAST:event_jMenuItem14ActionPerformed
 
-    private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
-
-    }//GEN-LAST:event_jMenuItem17ActionPerformed
-
     private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
         if (grupo == null || !grupo.isVisible()){
             grupo = new GrupoProdutos();
@@ -465,26 +426,19 @@ public class TelaPrincipal extends javax.swing.JFrame{
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
-    private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuCadastrar;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
-    private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem16;
-    private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JMenuItem jMenuTipo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JMenu jProduto;

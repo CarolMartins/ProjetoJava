@@ -225,9 +225,14 @@ public class GrupoProdutos extends javax.swing.JInternalFrame
         habilitar();
         op = "novo";
         limpar();
+        jtfGrupo.requestFocus();
     }//GEN-LAST:event_jBNovoActionPerformed
 
     private void jBSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalvarActionPerformed
+      if (jtfGrupo.getText().equals("")){
+           JOptionPane.showMessageDialog(this, "Informe o Grupo!");
+           jtfGrupo.requestFocus();
+      }else{
       desabilitar();
       GrupoProduto grupo = new GrupoProduto();
       grupo.setGrupo(jtfGrupo.getText());
@@ -244,6 +249,7 @@ public class GrupoProdutos extends javax.swing.JInternalFrame
       }
         JOptionPane.showMessageDialog(null, "Gravado com Sucesso!");     
         preencherTabela();
+       }
     }//GEN-LAST:event_jBSalvarActionPerformed
 
     private void jBEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEditarActionPerformed

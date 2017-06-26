@@ -25,6 +25,7 @@ public class CadastrarTipoLogradouro extends javax.swing.JInternalFrame {
         initComponents();
         desabilitar();
         preencherTabela();
+      
     }
 
     /**
@@ -182,7 +183,7 @@ public class CadastrarTipoLogradouro extends javax.swing.JInternalFrame {
                             .addComponent(jTextSigla, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextNome)))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -208,30 +209,38 @@ public class CadastrarTipoLogradouro extends javax.swing.JInternalFrame {
                     .addComponent(jBExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 422, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE)
         );
 
-        setBounds(0, 0, 450, 334);
+        setBounds(0, 0, 434, 329);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBNovoActionPerformed
         habilitar();
         op = "novo";
         limpar();
+        jTextSigla.requestFocus();
     }//GEN-LAST:event_jBNovoActionPerformed
 
     private void jBSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalvarActionPerformed
+        if (jTextSigla.getText().equals("")){
+           JOptionPane.showMessageDialog(this, "Informe a Sigla!");
+           jTextSigla.requestFocus();
+       }else if (jTextNome.getText().equals("")){
+           JOptionPane.showMessageDialog(this, "Informe o nome do logradouro!");
+           jTextNome.requestFocus();
+       }else{
         desabilitar();
         TipoLogradouro tipoLogradouro = new TipoLogradouro();
         tipoLogradouro.setSigla(jTextSigla.getText());
@@ -250,6 +259,7 @@ public class CadastrarTipoLogradouro extends javax.swing.JInternalFrame {
         JOptionPane.showMessageDialog(null, "Gravado com Sucesso!");
         
         preencherTabela();
+       }
        
     }//GEN-LAST:event_jBSalvarActionPerformed
 

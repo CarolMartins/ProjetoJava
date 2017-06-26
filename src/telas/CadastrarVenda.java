@@ -86,6 +86,7 @@ public class CadastrarVenda extends javax.swing.JInternalFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableVenda = new javax.swing.JTable();
         jBNovaVenda = new javax.swing.JButton();
+        jBPedidosRealizados = new javax.swing.JButton();
 
         jTextField1.setText("jTextField1");
 
@@ -359,6 +360,13 @@ public class CadastrarVenda extends javax.swing.JInternalFrame {
             }
         });
 
+        jBPedidosRealizados.setText("Pedidos Realizados");
+        jBPedidosRealizados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBPedidosRealizadosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -394,9 +402,11 @@ public class CadastrarVenda extends javax.swing.JInternalFrame {
                                 .addComponent(jTextTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jBNovaVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jBCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jBPedidosRealizados)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jBPagamento))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 760, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(217, 217, 217))
@@ -430,7 +440,8 @@ public class CadastrarVenda extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBNovaVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jBNovaVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBPedidosRealizados, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10))
         );
 
@@ -621,6 +632,17 @@ public class CadastrarVenda extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jTextIdClienteKeyPressed
 
+    private void jBPedidosRealizadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBPedidosRealizadosActionPerformed
+        PesquisarVenda pesquisarVenda = new PesquisarVenda(null, true);
+        centerOnScreen(pesquisarVenda, true);
+        pesquisarVenda.setVisible(true);
+        int cod = pesquisarVenda.getCodSelecionado();
+        VendaDAO vendaDAO = new VendaDAO();
+        Venda venda = vendaDAO.buscarPorId(cod);
+        preencherTela(venda);
+        
+    }//GEN-LAST:event_jBPedidosRealizadosActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -630,6 +652,7 @@ public class CadastrarVenda extends javax.swing.JInternalFrame {
     private javax.swing.JButton jBCancelar;
     private javax.swing.JButton jBNovaVenda;
     private javax.swing.JButton jBPagamento;
+    private javax.swing.JButton jBPedidosRealizados;
     private javax.swing.JButton jBPesquisar;
     private com.toedter.calendar.JDateChooser jDateData;
     private javax.swing.JLabel jLabel1;
@@ -704,7 +727,15 @@ public class CadastrarVenda extends javax.swing.JInternalFrame {
     
    public void preencherTela(Venda venda){
        jDateData.setDate(venda.getDataVenda());
+       jTextNumero.setText(venda.getNumeroPedido()+"");
+       jTextIdVendedor.setText(venda.getFuncionario().getId()+"");
+       jTextNomeVendedor.setText(venda.getFuncionario().getNome());
        
+       List<ItemVenda> listaItensVenda = venda.getItensVendas();
+       for(int i = 0; i < listaItensVenda.size();i++){
+           ItemVenda itemVenda = listaItensVenda.get(i);
+           insereProdutoLista(venda.getProduto(), itemVenda.getQuantidade());
+       }
    }
    
    public void preencherCliente(Cliente cliente){

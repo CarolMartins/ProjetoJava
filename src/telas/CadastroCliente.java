@@ -84,6 +84,8 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jDateDataCadastro = new com.toedter.calendar.JDateChooser();
         jLabel5 = new javax.swing.JLabel();
+        jTextNome = new javax.swing.JTextField();
+        jDataNascimento = new com.toedter.calendar.JDateChooser();
         jFCpf = new javax.swing.JFormattedTextField();
         jTextRg = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
@@ -97,11 +99,9 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
         jRadioFeminino = new javax.swing.JRadioButton();
         jRadioMasculino = new javax.swing.JRadioButton();
         jLabel7 = new javax.swing.JLabel();
-        jDataNascimento = new com.toedter.calendar.JDateChooser();
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jTextId = new javax.swing.JTextField();
-        jTextNome = new javax.swing.JTextField();
 
         setClosable(true);
         setIconifiable(true);
@@ -279,7 +279,13 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
         jRadioAtivo.setBackground(new java.awt.Color(217, 233, 251));
         buttonSituacaoCliente.add(jRadioAtivo);
         jRadioAtivo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jRadioAtivo.setSelected(true);
         jRadioAtivo.setText("Ativo");
+        jRadioAtivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioAtivoActionPerformed(evt);
+            }
+        });
 
         jRadioBloqueado.setBackground(new java.awt.Color(217, 233, 251));
         buttonSituacaoCliente.add(jRadioBloqueado);
@@ -325,6 +331,12 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel5.setText("CPF");
+
+        jTextNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextNomeActionPerformed(evt);
+            }
+        });
 
         try {
             jFCpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
@@ -385,12 +397,6 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
         jTextId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextIdActionPerformed(evt);
-            }
-        });
-
-        jTextNome.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextNomeActionPerformed(evt);
             }
         });
 
@@ -530,8 +536,9 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
                                             .addComponent(jLabel10)
                                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(9, 9, 9)
                                         .addComponent(jButtonNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(15, 15, 15)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(5, 5, 5)
                                         .addComponent(jButtonEdtar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -560,8 +567,9 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jButtonEdtar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -609,7 +617,37 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButtonEdtarActionPerformed
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
-        
+        if (jTextNome.getText().equals("")){
+           JOptionPane.showMessageDialog(this, "Informe o Nome!");
+           jTextNome.requestFocus();
+       }else if (jDataNascimento.getDate()==null){
+           JOptionPane.showMessageDialog(this, "Informe a Data de Nascimento!");
+           jDataNascimento.requestFocus();
+       }else if (jFCpf.getText().equals("   .   .   -  ")){
+           JOptionPane.showMessageDialog(this, "Informe o CPF!");
+           jFCpf.requestFocus();
+       }else if (jFTelefone2.getText().equals("   -           ")){
+           JOptionPane.showMessageDialog(this, "Informe um Telefone!");
+           jFTelefone2.requestFocus();
+       }else if (jComboTipo.getSelectedItem()==null){
+           JOptionPane.showMessageDialog(this, "Informe o Tipo de Logradouro!");
+           jComboTipo.requestFocus();
+       }else if (jTextLogradouro.getText().equals("")){
+           JOptionPane.showMessageDialog(this, "Informe o nome do Logradouro!");
+           jTextLogradouro.requestFocus();
+       }else if (jTextNumero.getText().equals("")){
+           JOptionPane.showMessageDialog(this, "Informe o Número!");
+           jTextNumero.requestFocus();
+       }else if (jTextBairro.getText().equals("")){
+           JOptionPane.showMessageDialog(this, "Informe o Bairro!");
+           jTextBairro.requestFocus();
+       }else if (jComboEstado.getSelectedItem()==null){
+           JOptionPane.showMessageDialog(this, "Informe o Estado!");
+           jComboEstado.requestFocus();
+       }else if (jComboCidade.getSelectedItem()==null){
+           JOptionPane.showMessageDialog(this, "Informe a Cidade!");
+           jComboCidade.requestFocus();
+       }else{
         
         Cliente c = new Cliente();
         c.setNome(jTextNome.getText());
@@ -649,6 +687,7 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
             desabilitarCampos();
         
         JOptionPane.showMessageDialog(this, "Cliente Gravado com sucesso!");
+       }
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
@@ -662,6 +701,7 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
         jDateDataCadastro.setDate(new Date());
         op = "novo";
         limparCampos();
+        jTextNome.requestFocus();
     }//GEN-LAST:event_jButtonNovoActionPerformed
 
     private void jTextIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextIdActionPerformed
@@ -693,6 +733,10 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
     private void jTextNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextNomeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextNomeActionPerformed
+
+    private void jRadioAtivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioAtivoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioAtivoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

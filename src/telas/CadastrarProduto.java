@@ -107,6 +107,7 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
 
         jRadioAtivado.setBackground(new java.awt.Color(217, 233, 251));
         buttonGroup1.add(jRadioAtivado);
+        jRadioAtivado.setSelected(true);
         jRadioAtivado.setText("Ativado");
 
         jRadioDesativado.setBackground(new java.awt.Color(217, 233, 251));
@@ -468,41 +469,72 @@ public class CadastrarProduto extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButtonEdtarActionPerformed
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
-        Produto p = new Produto();
-        p.setCodigoBarra(jTextCodigoBarras.getText());
-        p.setDescricaoProduto(jTextDescricao.getText());
-        if(jRadioAtivado.isSelected())
-        p.setStatusProduto(true);
-        else if (jRadioDesativado.isSelected())
-        p.setStatusProduto(false);
-        p.setTipoCategoria((TipoCategoriaProduto) jComboCategoria.getSelectedItem());
-        p.setFornecedor((Fornecedor) jComboFornecedor.getSelectedItem());
-        p.setGrupo((GrupoProduto) jComboGrupo.getSelectedItem());
-        p.setMarca((MarcaProduto) jComboMarca.getSelectedItem());
-        p.setPeso(Double.parseDouble(jTextPesoUni.getText()));
-        p.setPrecoCusto(Double.parseDouble(jTextPrecoCusto.getText()));
-        p.setPrecoVenda(Double.parseDouble(jTextPrecoVenda.getText()));
-        //p.setEstoqueAtual(Integer.parseInt(jtfEstoque.getText()));
-        p.setMargemLucro(Double.parseDouble(jTextMargemCusto.getText()));
-        
-        ProdutoDAO pDAO = new ProdutoDAO();
-         if(op.equals("novo")){
-             pDAO.salvar(p);
-             jTextCodigo.setText(p.getIdProduto()+"");
-         }
-         else{
-             p.setIdProduto(Integer.parseInt(jTextCodigo.getText()));
-             pDAO.editar(p);
-         }
-         
-        desabilitarCampos(); 
-        JOptionPane.showMessageDialog(this, "Produto Gravado com sucesso!"); 
+        if (jTextCodigoBarras.getText().equals("")){
+           JOptionPane.showMessageDialog(this, "Informe o Código de Barra!");
+           jTextCodigoBarras.requestFocus();
+       }else if (jTextDescricao.getText().equals("")){
+           JOptionPane.showMessageDialog(this, "Informe o nome do Produto!");
+           jTextDescricao.requestFocus();
+       }else if (jComboCategoria.getSelectedItem()==null){
+           JOptionPane.showMessageDialog(this, "Informe o Tipo ou Categoria do Produto!");
+           jComboCategoria.requestFocus();
+       }else if (jComboGrupo.getSelectedItem()==null){
+           JOptionPane.showMessageDialog(this, "Informe o Grupo do produto!");
+           jComboGrupo.requestFocus();
+       }else if (jComboMarca.getSelectedItem()==null){
+           JOptionPane.showMessageDialog(this, "Informe a Marca!");
+           jComboMarca.requestFocus();
+       }else if (jComboFornecedor.getSelectedItem()==null){
+           JOptionPane.showMessageDialog(this, "Informe o Fornecedor!");
+           jComboFornecedor.requestFocus();
+       }else if (jTextPesoUni.getText().equals("")){
+           JOptionPane.showMessageDialog(this, "Informe o Peso!");
+           jTextPesoUni.requestFocus();
+       }else if (jTextPrecoCusto.getText().equals("")){
+           JOptionPane.showMessageDialog(this, "Informe o Preço de Custo!");
+           jTextPrecoCusto.requestFocus();
+       }else if (jTextMargemCusto.getText().equals("")){
+           JOptionPane.showMessageDialog(this, "Informe a Margem de Lucro!");
+           jTextMargemCusto.requestFocus();
+       }else{
+            Produto p = new Produto();
+            p.setCodigoBarra(jTextCodigoBarras.getText());
+            p.setDescricaoProduto(jTextDescricao.getText());
+            if(jRadioAtivado.isSelected())
+            p.setStatusProduto(true);
+            else if (jRadioDesativado.isSelected())
+            p.setStatusProduto(false);
+            p.setTipoCategoria((TipoCategoriaProduto) jComboCategoria.getSelectedItem());
+            p.setFornecedor((Fornecedor) jComboFornecedor.getSelectedItem());
+            p.setGrupo((GrupoProduto) jComboGrupo.getSelectedItem());
+            p.setMarca((MarcaProduto) jComboMarca.getSelectedItem());
+            p.setPeso(Double.parseDouble(jTextPesoUni.getText()));
+            p.setPrecoCusto(Double.parseDouble(jTextPrecoCusto.getText()));
+            p.setPrecoVenda(Double.parseDouble(jTextPrecoVenda.getText()));
+            //p.setEstoqueAtual(Integer.parseInt(jtfEstoque.getText()));
+            p.setMargemLucro(Double.parseDouble(jTextMargemCusto.getText()));
+
+            ProdutoDAO pDAO = new ProdutoDAO();
+             if(op.equals("novo")){
+                 pDAO.salvar(p);
+                 jTextCodigo.setText(p.getIdProduto()+"");
+             }
+             else{
+                 p.setIdProduto(Integer.parseInt(jTextCodigo.getText()));
+                 pDAO.editar(p);
+             }
+               
+            desabilitarCampos(); 
+            JOptionPane.showMessageDialog(this, "Produto Gravado com sucesso!");
+       }
+     
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
     private void jButtonNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNovoActionPerformed
             habilitarCampos();
             op = "novo";
             limpar();
+            jTextCodigoBarras.requestFocus();
     }//GEN-LAST:event_jButtonNovoActionPerformed
 
     private void jTextPrecoVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextPrecoVendaActionPerformed

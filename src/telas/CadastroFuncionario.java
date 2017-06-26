@@ -65,7 +65,6 @@ public class CadastroFuncionario extends javax.swing.JInternalFrame {
         jLabel15 = new javax.swing.JLabel();
         jTextLogradouro = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
-        jTextNumero = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
         jTextComplemento = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
@@ -76,6 +75,7 @@ public class CadastroFuncionario extends javax.swing.JInternalFrame {
         jComboCidade = new javax.swing.JComboBox<>();
         jLabel21 = new javax.swing.JLabel();
         jComboEstado = new javax.swing.JComboBox<>();
+        jTextNumero = new javax.swing.JFormattedTextField();
         jPanel3 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jComboCargo = new javax.swing.JComboBox<>();
@@ -172,6 +172,8 @@ public class CadastroFuncionario extends javax.swing.JInternalFrame {
             }
         });
 
+        jTextNumero.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -179,11 +181,6 @@ public class CadastroFuncionario extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel14)
-                        .addGap(31, 31, 31)
-                        .addComponent(jFCep, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
@@ -216,7 +213,12 @@ public class CadastroFuncionario extends javax.swing.JInternalFrame {
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel17)
                                     .addComponent(jTextComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 12, Short.MAX_VALUE))))
+                        .addGap(0, 12, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel14)
+                        .addGap(31, 31, 31)
+                        .addComponent(jFCep, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -234,9 +236,9 @@ public class CadastroFuncionario extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextLogradouro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel19)
@@ -390,6 +392,7 @@ public class CadastroFuncionario extends javax.swing.JInternalFrame {
 
         jRadioAtivo.setBackground(new java.awt.Color(221, 231, 229));
         buttonSituacaoLogin.add(jRadioAtivo);
+        jRadioAtivo.setSelected(true);
         jRadioAtivo.setText("Ativado");
 
         jRadioBloqueado.setBackground(new java.awt.Color(221, 231, 229));
@@ -516,20 +519,19 @@ public class CadastroFuncionario extends javax.swing.JInternalFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(jDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(27, 27, 27)
-                                .addComponent(jRadioMasculino)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jRadioFeminino))
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(81, 81, 81)
-                                .addComponent(jLabel7)))
+                            .addComponent(jDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(jFCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(jRadioMasculino)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jRadioFeminino))
+                            .addComponent(jLabel7))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jFCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
@@ -584,15 +586,15 @@ public class CadastroFuncionario extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel5)
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel7)
+                        .addComponent(jLabel5))
                     .addComponent(jLabel6))
                 .addGap(6, 6, 6)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jRadioMasculino)
-                        .addComponent(jRadioFeminino))
+                    .addComponent(jRadioMasculino)
+                    .addComponent(jRadioFeminino)
                     .addComponent(jFCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextRg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -735,7 +737,49 @@ public class CadastroFuncionario extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButtonEdtarActionPerformed
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
-        
+        if (jTextNome.getText().equals("")){
+           JOptionPane.showMessageDialog(this, "Informe o Nome!");
+           jTextNome.requestFocus();
+       }else if (jDataNascimento.getDate()==null){
+           JOptionPane.showMessageDialog(this, "Informe a Data de Nascimento!");
+           jDataNascimento.requestFocus();
+       }else if (jFCpf.getText().equals("   .   .   -  ")){
+           JOptionPane.showMessageDialog(this, "Informe o CPF!");
+           jFCpf.requestFocus();
+       }else if (jFTelefone2.getText().equals("   -           ")){
+           JOptionPane.showMessageDialog(this, "Informe um Telefone!");
+           jFTelefone2.requestFocus();
+       }else if (jComboTipo.getSelectedItem()==null){
+           JOptionPane.showMessageDialog(this, "Informe o Tipo de Logradouro!");
+           jComboTipo.requestFocus();
+       }else if (jTextLogradouro.getText().equals("")){
+           JOptionPane.showMessageDialog(this, "Informe o nome do Logradouro!");
+           jTextLogradouro.requestFocus();
+       }else if (jTextNumero.getText().equals("")){
+           JOptionPane.showMessageDialog(this, "Informe o Número!");
+           jTextNumero.requestFocus();
+       }else if (jTextBairro.getText().equals("")){
+           JOptionPane.showMessageDialog(this, "Informe o Bairro!");
+           jTextBairro.requestFocus();
+       }else if (jComboEstado.getSelectedItem()==null){
+           JOptionPane.showMessageDialog(this, "Informe o Estado!");
+           jComboEstado.requestFocus();
+       }else if (jComboCidade.getSelectedItem()==null){
+           JOptionPane.showMessageDialog(this, "Informe a Cidade!");
+           jComboCidade.requestFocus();
+       }else if (jComboCargo.getSelectedItem()==null){
+           JOptionPane.showMessageDialog(this, "Informe o Cargo!");
+           jComboCargo.requestFocus();
+       }else if (jTextMeta.getText().equals("")){
+           JOptionPane.showMessageDialog(this, "Informe a Meta!");
+           jTextMeta.requestFocus();
+       }else if (jTextLogin.getText().equals("")){
+           JOptionPane.showMessageDialog(this, "Informe o Login!");
+           jTextLogin.requestFocus();
+       }else if (jTextSenha.getText().equals("")){
+           JOptionPane.showMessageDialog(this, "Informe a Senha!");
+           jTextSenha.requestFocus();
+       }else{
         Funcionario funcionario = new Funcionario();
         funcionario.setNome(jTextNome.getText());
         funcionario.setDatanascimento(jDataNascimento.getDate());
@@ -778,6 +822,7 @@ public class CadastroFuncionario extends javax.swing.JInternalFrame {
         }
         desabilitarCampos();
         JOptionPane.showMessageDialog(this, "Funcionário Gravado com sucesso!");
+       }
 
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
@@ -791,6 +836,7 @@ public class CadastroFuncionario extends javax.swing.JInternalFrame {
         limpar();
         jDateDataCadastro.setDate(new Date());
         op = "novo";
+        jTextNome.requestFocus();
     }//GEN-LAST:event_jButtonNovoActionPerformed
 
     private void jComboCargoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboCargoItemStateChanged
@@ -880,7 +926,7 @@ public class CadastroFuncionario extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTextLogradouro;
     private javax.swing.JFormattedTextField jTextMeta;
     private javax.swing.JTextField jTextNome;
-    private javax.swing.JTextField jTextNumero;
+    private javax.swing.JFormattedTextField jTextNumero;
     private javax.swing.JTextPane jTextObservacao;
     private javax.swing.JTextField jTextRg;
     private javax.swing.JFormattedTextField jTextSalario;

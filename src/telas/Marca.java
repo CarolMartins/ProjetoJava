@@ -232,9 +232,14 @@ public class Marca extends javax.swing.JInternalFrame {
         habilitar();
         op = "novo";
         limpar();
+        jTextMarca.requestFocus();
     }//GEN-LAST:event_jBNovoActionPerformed
 
     private void jBSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalvarActionPerformed
+       if (jTextMarca.getText().equals("")){
+           JOptionPane.showMessageDialog(this, "Informe a Marca!");
+           jTextMarca.requestFocus();
+      }else{
       desabilitar();
       MarcaProduto marca = new MarcaProduto();
       marca.setMarca(jTextMarca.getText());
@@ -253,6 +258,7 @@ public class Marca extends javax.swing.JInternalFrame {
         JOptionPane.showMessageDialog(null, "Gravado com Sucesso!");
         
         preencherTabela();
+       }
     }//GEN-LAST:event_jBSalvarActionPerformed
 
     private void jBEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEditarActionPerformed

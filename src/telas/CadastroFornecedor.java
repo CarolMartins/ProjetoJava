@@ -65,7 +65,6 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
         jLabel15 = new javax.swing.JLabel();
         jTextLogradouro = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
-        jTextNumero = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
         jTextComplemento = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
@@ -76,6 +75,7 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
         jComboCidade = new javax.swing.JComboBox<>();
         jLabel21 = new javax.swing.JLabel();
         jComboEstado = new javax.swing.JComboBox<>();
+        jTextNumero = new javax.swing.JFormattedTextField();
         jDataCadastro = new com.toedter.calendar.JDateChooser();
         jButtonNovo = new javax.swing.JButton();
         jButtonCancelar = new javax.swing.JButton();
@@ -179,6 +179,8 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
             }
         });
 
+        jTextNumero.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -206,22 +208,24 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
                                     .addComponent(jComboCidade, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addComponent(jLabel20)
-                                        .addGap(0, 311, Short.MAX_VALUE))))
+                                        .addGap(0, 0, Short.MAX_VALUE))))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel18)
                                     .addComponent(jComboTipoLogradouro, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabel15)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(jTextLogradouro))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jLabel15)
+                                    .addComponent(jTextLogradouro, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel16)
-                                    .addComponent(jTextNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(5, 5, 5)
+                                        .addComponent(jTextNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel16)
+                                        .addGap(18, 18, 18)))
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel17)
                                     .addComponent(jTextComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -243,9 +247,9 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextLogradouro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboTipoLogradouro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboTipoLogradouro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel19)
@@ -261,6 +265,8 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
 
         jPanel1.add(jPanel2);
         jPanel2.setBounds(14, 230, 730, 180);
+
+        jDataCadastro.setEnabled(false);
         jPanel1.add(jDataCadastro);
         jDataCadastro.setBounds(563, 20, 161, 28);
 
@@ -327,6 +333,7 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
         jRadioAtivo.setBackground(new java.awt.Color(221, 231, 229));
         buttonSituacao.add(jRadioAtivo);
         jRadioAtivo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jRadioAtivo.setSelected(true);
         jRadioAtivo.setText("Ativo");
 
         jRadioBloqueado.setBackground(new java.awt.Color(221, 231, 229));
@@ -378,6 +385,7 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
         jLabel3.setText("Razão Social");
 
         jTextId.setEditable(false);
+        jTextId.setEnabled(false);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText("ID");
@@ -515,6 +523,41 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButtonEdtarActionPerformed
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
+        if (jTextRazaoSocial.getText().equals("")){
+           JOptionPane.showMessageDialog(this, "Informe a Razão Social!");
+           jTextRazaoSocial.requestFocus();
+       }else if (jTextNomeFantasia.getText().equals("")){
+           JOptionPane.showMessageDialog(this, "Informe o nome Fantasia!");
+           jTextNomeFantasia.requestFocus();
+       }else if (jFCnpj.getText().equals("  .   .   /    -  ")){
+           JOptionPane.showMessageDialog(this, "Informe o CNPJ!");
+           jFCnpj.requestFocus();
+       }else if (jFTelefone1.getText().equals("   -          ")){
+           JOptionPane.showMessageDialog(this, "Informe um Telefone!");
+           jFTelefone1.requestFocus();
+       }else if (jTextEmail.getText().equals("")){
+           JOptionPane.showMessageDialog(this, "Informe o Email!");
+           jTextEmail.requestFocus();
+       }else if (jComboTipoLogradouro.getSelectedItem()==null){
+           JOptionPane.showMessageDialog(this, "Informe o Tipo de Logradouro!");
+           jComboTipoLogradouro.requestFocus();
+       }else if (jTextLogradouro.getText().equals("")){
+           JOptionPane.showMessageDialog(this, "Informe o nome do Logradouro!");
+           jTextLogradouro.requestFocus();
+       }else if (jTextNumero.getText().equals("")){
+           JOptionPane.showMessageDialog(this, "Informe o Número!");
+           jTextNumero.requestFocus();
+       }else if (jTextBairro.getText().equals("")){
+           JOptionPane.showMessageDialog(this, "Informe o Bairro!");
+           jTextBairro.requestFocus();
+       }else if (jComboEstado.getSelectedItem()==null){
+           JOptionPane.showMessageDialog(this, "Informe o Estado!");
+           jComboEstado.requestFocus();
+       }else if (jComboCidade.getSelectedItem()==null){
+           JOptionPane.showMessageDialog(this, "Informe a Cidade!");
+           jComboCidade.requestFocus();
+       }else{
+        
         FornecedorDAO fornecedorDAO = new FornecedorDAO();
         Fornecedor fornecedor = new Fornecedor();
         fornecedor.setRazaoSocial(jTextRazaoSocial.getText());
@@ -553,6 +596,7 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
         desabilitarCampos();
         
         JOptionPane.showMessageDialog(this, "Fornecedor Gravado com sucesso!");
+       }
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
@@ -565,6 +609,7 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
         jDataCadastro.setDate(new Date());
         habilitarCampos();
         op = "novo";
+        jTextRazaoSocial.requestFocus();
     }//GEN-LAST:event_jButtonNovoActionPerformed
 
     private void jBPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBPesquisarActionPerformed
@@ -644,7 +689,7 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTextIe;
     private javax.swing.JTextField jTextLogradouro;
     private javax.swing.JTextField jTextNomeFantasia;
-    private javax.swing.JTextField jTextNumero;
+    private javax.swing.JFormattedTextField jTextNumero;
     private javax.swing.JTextPane jTextObservacao;
     private javax.swing.JTextField jTextRazaoSocial;
     // End of variables declaration//GEN-END:variables
